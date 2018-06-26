@@ -1,0 +1,28 @@
+[user]
+	email = canonw@users.noreply.github.com
+	name = Ken Wong
+[push]
+	default = simple
+[core]
+	editor = vi
+[alias]
+	amend = !git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
+	cm = commit -v
+	cm-a = !git add -A && git commit -m
+	co = checkout
+	co-b = checkout -b
+	pl = pull
+	pl-r = pull --rebase
+	mm = merge --no-ff
+	up = !git fetch origin && git rebase origin/master
+	ignore = !([ ! -e .gitignore ] && touch .gitignore) | echo $1 >>.gitignore
+	lg = log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate
+	lg-f = log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --numstat
+	lg-d = log --pretty=format:\"%C(yellow)%h\\\\ %ad%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --date=short
+	lg-r = log --pretty=format:\"%C(yellow)%h\\\\ %ad%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --date=relative
+	lg-g = log --pretty=format:\"%C(yellow)%h\\\\ %C(green)%ad%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --date=short --graph
+	df-s = diff --stat
+	df-c = diff --cached
+	al-lst = !git config -l | grep alias | sort | cut -c 7-
+	wipe = "!sh -c \" !git add -A && git commit -qm '$1' && git reset HEAD~1 --hard\" "
+	w1 = "!f() { !git add -A && git commit -qm \"$1\" ; };f"
