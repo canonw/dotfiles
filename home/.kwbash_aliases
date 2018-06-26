@@ -92,11 +92,20 @@ alias .....='cd ../../../../'
 alias .4='cd ../../../../'
 alias .5='cd ../../../../..'
 
+## Copy and paste
+case "$THISOS" in
+    linux*)
+        alias pbcopy='xclip -selection clipboard'
+        alias pbpaste='xclip -selection clipboard -o'
+        ;;
+    *)
+	;;
+esac
 
 ## Directory listing
 case "$THISOS" in
     macos*)
-	;;
+    ;;
     linux*)
         alias ls='ls --color=auto'
         ;;
