@@ -1,3 +1,4 @@
+#-*- mode: sh;-*-
 # curl https://gist.githubusercontent.com/canonw/d2b8f0a0c10d9a71be3f53f69d3c94b9/raw -o "$HOME/.kwbash_aliases"
 
 case "$OSTYPE" in
