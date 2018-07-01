@@ -138,3 +138,16 @@ if [ `type -t git` = 'file' ] ; then
     alias git-rp="find . -name ".git" -type d | sed 's/\/.git//' | xargs -P10 -i -- echo echo '$(tput setaf 3)Pulling  {}...$(tput setaf 7)' \; git -C {} pull \; | sh"
     alias git-rs="find . -name ".git" -type d | sed 's/\/.git//' | xargs -P10 -i -- echo echo '$(tput setaf 3)Status checking {}...$(tput setaf 7)' \; git -C {} status \; | sh"
 fi
+
+
+## open directory to GUI
+case "$THISOS" in
+    macos*)
+        alias open-d="open"
+	;;
+    linux*)
+        alias open-d="xdg-open"
+	;;
+    *)
+	;;
+esac
