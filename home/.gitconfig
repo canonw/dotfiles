@@ -26,3 +26,4 @@
 	al-lst = !git config -l | grep alias | sort | cut -c 7-
 	wipe = "!sh -c \" !git add -A && git commit -qm '$1' && git reset HEAD~1 --hard\" "
 	w1 = "!f() { !git add -A && git commit -qm \"$1\" ; };f"
+        root="cd $(git rev-parse --show-toplevel)"

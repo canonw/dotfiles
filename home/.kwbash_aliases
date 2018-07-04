@@ -92,12 +92,19 @@ alias ....='cd ../../../../'
 alias .....='cd ../../../../'
 alias .4='cd ../../../../'
 alias .5='cd ../../../../..'
+alias .dhd='cd ~/.homesick/repos/dotfiles'
+alias .docg='cd ~/Documents/git'
+alias .doc='cd ~/Documents'
+
 
 ## Copy and paste
 case "$THISOS" in
     linux*)
-        alias pbcopy='xclip -selection clipboard'
-        alias pbpaste='xclip -selection clipboard -o'
+        if [[ $(command -v xclip) ]] ; then
+        # if [ `type -t git` = 'file' ] ; then
+            alias pbcopy='xclip -selection clipboard'
+            alias pbpaste='xclip -selection clipboard -o'
+        fi
         ;;
     *)
 	;;
@@ -117,6 +124,15 @@ alias ll='ls -la'
 alias l.='ls -d .* --color=auto'
 
 
+## Silverserach ag
+# less(1)
+#   -M (-M or --LONG-PROMPT) Prompt very verbosely
+#   -I (-I or --IGNORE-CASE) Searches with '/' ignore case
+#   -R (-R or --RAW-CONTROL-CHARS) For handling ANSI colors
+#   -F (-F or --quit-if-one-screen) Auto exit if <1 screen
+#   -X (-X or --no-init) Disable termcap init & deinit
+alias ag='ag --smart-case --pager="less -MIRFX"'
+
 ## grep
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
@@ -131,15 +147,17 @@ case "$THISOS" in
     *)
 	;;
 esac
+emacsc() { (emacsclient $@ &) }
+
 
 ## git
 if [ `type -t git` = 'file' ] ; then
     alias git-rf="find . -name ".git" -type d | sed 's/\/.git//' | xargs -P10 -i -- echo echo '$(tput setaf 3)Fetching  {}...$(tput setaf 7)' \; git -C {} fetch \; | sh"
     alias git-rp="find . -name ".git" -type d | sed 's/\/.git//' | xargs -P10 -i -- echo echo '$(tput setaf 3)Pulling  {}...$(tput setaf 7)' \; git -C {} pull \; | sh"
     alias git-rs="find . -name ".git" -type d | sed 's/\/.git//' | xargs -P10 -i -- echo echo '$(tput setaf 3)Status checking {}...$(tput setaf 7)' \; git -C {} status \; | sh"
+    alias git-root='cd $(git rev-parse --show-toplevel)'
 fi
-
-
+ 
 ## open directory to GUI
 case "$THISOS" in
     macos*)
@@ -151,3 +169,25 @@ case "$THISOS" in
     *)
 	;;
 esac
+
+
+# Get week number
+alias week='date +%V'
+
+
+## IP addresses
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+
+alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
+
+
+## Java
+function jar_manifest {
+  # about "extracts the specified JAR file's MANIFEST file and prints it to stdout"
+  # group 'java'
+  # param '1: JAR file to extract the MANIFEST from'
+  # example 'jar_manifest lib/foo.jar'
+
+  unzip -c $1 META-INF/MANIFEST.MF
+}
