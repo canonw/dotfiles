@@ -154,7 +154,7 @@ emacsc() { (emacsclient $@ &) }
 if [ `type -t git` = 'file' ] ; then
     alias git-rf="find . -name ".git" -type d | sed 's/\/.git//' | xargs -P10 -i -- echo echo '$(tput setaf 3)Fetching  {}...$(tput setaf 7)' \; git -C {} fetch \; | sh"
     alias git-rp="find . -name ".git" -type d | sed 's/\/.git//' | xargs -P10 -i -- echo echo '$(tput setaf 3)Pulling  {}...$(tput setaf 7)' \; git -C {} pull \; | sh"
-    alias git-rs="find . -name ".git" -type d | sed 's/\/.git//' | xargs -P10 -i -- echo echo '$(tput setaf 3)Status checking {}...$(tput setaf 7)' \; git -C {} status \; | sh"
+    alias git-rs="find . -name ".git" -type d | sed 's/\/.git//' | xargs -P10 -i -- echo echo '$(tput setaf 3)Status checking {}...$(tput setaf 7)' \; git -C {} status -s \; | sh"
     alias git-root='cd $(git rev-parse --show-toplevel)'
 fi
  
