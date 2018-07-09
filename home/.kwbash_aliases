@@ -191,3 +191,24 @@ function jar_manifest {
 
   unzip -c $1 META-INF/MANIFEST.MF
 }
+
+
+## Homebrew
+if [ $THISOS == "macos" ] && [ $(command -v brew) ]
+then
+    alias bw-up='brew update && brew upgrade --cleanup'
+    alias bw-out='brew outdated'
+    alias bw-in='brew install'
+    alias bw-rm='brew uninstall'
+    alias bw-cl='brew cleanup'
+    alias bw-ls='brew list'
+    alias bw-sr='brew search'
+    alias bw-inf='brew info'
+    alias bw-dr='brew doctor'
+    alias bw-ed='brew edit'
+fi
+
+## ansible-playbook
+if [[ $(command -v ansible-playbook) ]] ; then
+    alias apk='ansible-playbook playbook.yml'
+fi
