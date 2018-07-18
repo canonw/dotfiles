@@ -9,6 +9,7 @@
 	amend = !git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
 	cm = commit -v
 	cm-a = !git add -A && git commit -m
+        cm-aq = !git add -A && git commit -m \"Update from $(echo `uname -a | awk '{print $2}'`) on $(echo `date +%FT%T%Z`)\"
 	co = checkout
 	co-b = checkout -b
 	pl = pull
