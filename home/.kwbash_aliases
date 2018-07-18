@@ -141,6 +141,13 @@ alias fgrep='fgrep --color=auto'
 
 ## emacs
 case "$THISOS" in
+    linux*)
+        alias em='emacs'
+        alias en='emacs -nw'
+        alias e='emacsclient -n'
+        alias et='emacsclient -t'
+        alias ed='emacs --daemon'
+        ;;
     macos*)
         alias emacs="open -a Emacs"
 	;;
@@ -211,4 +218,16 @@ fi
 ## ansible-playbook
 if [[ $(command -v ansible-playbook) ]] ; then
     alias apk='ansible-playbook playbook.yml'
+fi
+
+## mvn
+if [[ $(command -v mvn) ]] ; then
+    alias mci='mvn clean install'
+    alias mi='mvn install'
+    alias mrprep='mvn release:prepare'
+    alias mrperf='mvn release:perform'
+    alias mrrb='mvn release:rollback'
+    alias mdep='mvn dependency:tree'
+    alias mpom='mvn help:effective-pom'
+    alias mcisk='mci -Dmaven.test.skip=true'
 fi
