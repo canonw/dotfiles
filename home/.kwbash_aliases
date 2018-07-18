@@ -61,7 +61,7 @@ if [ $UID -ne 0 ]; then
 	    alias update-y='sudo dnf update --refresh -y && sudo dnf autoremove -y'
 	    ;;
 	ubuntu*)
-	    alias update-y='sudo apt-get update -y && sudo apt-get autoremove -y'
+	    alias update-y='sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get autoremove -y'
 	    ;;
 	centos*)
 	    alias update-y='sudo yum update -y && sudo yum autoremove -y'
