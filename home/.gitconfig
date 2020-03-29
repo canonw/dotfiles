@@ -28,3 +28,14 @@
 	wipe = "!sh -c \" !git add -A && git commit -qm '$1' && git reset HEAD~1 --hard\" "
 	w1 = "!f() { !git add -A && git commit -qm \"$1\" ; };f"
         # WIP root="cd $(git rev-parse --show-toplevel)"
+[gitflow "branch"]
+	master = master
+	develop = develop
+
+[gitflow "prefix"]
+	feature = feature/
+	release = release/
+	hotfix = hotfix/
+	support = support/
+	versiontag = v
+

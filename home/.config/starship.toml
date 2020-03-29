@@ -1,0 +1,37 @@
+[character]
+use_symbol_for_status = true  # Show "✖" when the command faild
+
+[hostname]
+ssh_only = false
+prefix = "❮ "
+suffix = "❯"
+style = "bold dimmed white"
+disabled = true
+
+[username]
+style_user = "bold dimmed blue"
+show_always = true
+
+[directory]
+truncation_length = 5
+
+
+[git_branch]
+symbol = "🍣 "
+style = "bold yellow"
+
+[git_status]
+conflicted = "⚔️ "
+ahead = "🏎️ 💨 "
+behind = "🐢 "
+diverged = "🔱 "
+untracked = "🛤️ "
+stashed = "📦 "
+modified = "📝 "
+staged = "🗃️ "
+renamed = "📛 "
+deleted = "🗑️ "
+prefix = "with "
+suffix = ""
+style = "bright-white"
+
