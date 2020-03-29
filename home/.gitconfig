@@ -5,6 +5,16 @@
 	default = simple
 [core]
 	editor = vi
+[diff]
+	tool = bc3 
+[difftool "bc3"]
+	trustExitCode = true
+[difftool]
+	prompt = false
+[merge]
+	tool = bc3
+[mergetool "bc3"]
+	trustExitCode = true
 [alias]
 	amend = !git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
 	cm = commit -v
@@ -38,4 +48,3 @@
 	hotfix = hotfix/
 	support = support/
 	versiontag = v
-
