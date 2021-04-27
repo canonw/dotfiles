@@ -1,19 +1,19 @@
 [credential]
     helper = manager
 [core]
-	editor = vi
-#	excludesfile = C:\\Users\\ken\\Documents\\gitignore_global.txt
+    autocrlf = Input
+    excludesfile = C:\\Users\\ken\\Documents\\gitignore_global.txt
 #	editor = \"C:/Program Files (x86)/GitExtensions/GitExtensions.exe\" fileeditor
-[diff]
-	tool = bc3 
-[difftool "bc3"]
-	trustExitCode = true
-[difftool]
-	prompt = false
-[merge]
-	tool = bc3
-[mergetool "bc3"]
-	trustExitCode = true
+# [diff]
+# 	tool = bc3
+# [difftool "bc3"]
+# 	trustExitCode = true
+# [difftool]
+# 	prompt = false
+# [merge]
+# 	tool = bc3
+# [mergetool "bc3"]
+# 	trustExitCode = true
 # [mergetool "kdiff3"]
 # 	path = C:/Program Files/KDiff3/kdiff3.exe
 # [mergetool "p4merge"]
