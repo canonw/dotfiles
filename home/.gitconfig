@@ -1,19 +1,5 @@
-# Personal or work specific
-[include]
-  path = ~/.gitconfig-work
-[include]
-  path = ~/.gitconfig-personal
-
-# OS specific setup
-[includeIf "gitdir/i:/Users/"]
-  path = ~/.my-git/.gitconfig-macos
-[includeIf "gitdir/i:C:/"]
-  path = ~/.my-git/.gitconfig-windows
-[includeIf "gitdir/i:D:/"]
-  path = ~/.my-git/.gitconfig-windows
-[includeIf "gitdir/i:/home/"]
-  path = ~/.my-git/.gitconfig-linux
-
+# Note: Value seems to be set in LIFO.  So OS specific and work/personal
+#       settings will override this file value.
 [core]
 	editor = vi
 [push]
@@ -60,3 +46,19 @@
 	tool = bc3
 [mergetool "bc3"]
 	trustExitCode = true
+
+# OS specific setup
+[includeIf "gitdir/i:/Users/"]
+  path = ~/.my-git/.gitconfig-macos
+[includeIf "gitdir/i:C:/"]
+  path = ~/.my-git/.gitconfig-windows
+[includeIf "gitdir/i:D:/"]
+  path = ~/.my-git/.gitconfig-windows
+[includeIf "gitdir/i:/home/"]
+  path = ~/.my-git/.gitconfig-linux
+
+# Personal or work specific
+[include]
+  path = ~/.gitconfig-work
+[include]
+  path = ~/.gitconfig-personal
