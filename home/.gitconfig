@@ -1,8 +1,19 @@
-# Personal Work Setup
-[includeIf "gitdir:~/personal/"]
-  path = ~/.my-git/.gitconfig-personal
-[includeIf "gitdir:~/work/"]
-  path = ~/.my-git/.gitconfig-work
+# Personal or work specific
+[include]
+  path = ~/.gitconfig-work
+[include]
+  path = ~/.gitconfig-personal
+
+# OS specific setup
+[includeIf "gitdir/i:/Users/"]
+  path = ~/.my-git/.gitconfig-macos
+[includeIf "gitdir/i:C:/"]
+  path = ~/.my-git/.gitconfig-windows
+[includeIf "gitdir/i:D:/"]
+  path = ~/.my-git/.gitconfig-windows
+[includeIf "gitdir/i:/home/"]
+  path = ~/.my-git/.gitconfig-linux
+
 [core]
 	editor = vi
 [push]
@@ -11,18 +22,11 @@
 	ui = auto
 	branch = auto
 	status = auto
-# OS specific setup
-[includeIf "gitdir:/Users"]
-    path = ~/.my-git/.gitconfig-macos
-[includeIf "gitdir:C:"]
-    path = ~/.my-git/.gitconfig-windows
-[includeIf "gitdir:/home"]
-    path = ~/.my-git/.gitconfig-linux
 [alias]
 	amend = !git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
 	cm = commit -v
 	cm-a = !git add -A && git commit -m
-        cm-aq = !git add -A && git commit -m \"Update from $(echo `uname -a | awk '{print $2}'`) on $(echo `date +%FT%T%Z`)\"
+	cm-aq = !git add -A && git commit -m \"Update from $(echo `uname -a | awk '{print $2}'`) on $(echo `date +%FT%T%Z`)\"
 	co = checkout
 	co-b = checkout -b
 	pl = pull
@@ -50,3 +54,9 @@
 	hotfix = hotfix/
 	support = support/
 	versiontag = v
+[diff]
+	tool = bc3
+[merge]
+	tool = bc3
+[mergetool "bc3"]
+	trustExitCode = true

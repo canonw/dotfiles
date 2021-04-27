@@ -1,2 +1,15 @@
 [credential]
-    helper = osxkeychain
+	helper = osxkeychain
+[core]
+	editor = code
+ 	excludesfile = /Users/kwong/.gitignore_global
+
+# SourceTree specific setting
+[difftool "sourcetree"]
+	cmd = /usr/local/bin/bcomp \"$LOCAL\" \"$REMOTE\"
+	path = -ro
+[mergetool "sourcetree"]
+	cmd = /usr/local/bin/bcomp \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = /Users/kwong/.stCommitMsg
