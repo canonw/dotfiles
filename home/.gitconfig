@@ -20,11 +20,10 @@
 	mm = merge --no-ff
 	up = !git fetch origin && git rebase origin/master
 	ignore = !([ ! -e .gitignore ] && touch .gitignore) | echo $1 >>.gitignore
-	lg = log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate
+	lg = log --pretty=format:\"%C(yellow)%h\\\\ %C(green)%ad%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --date=short --graph --all --oneline
 	lg-f = log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --numstat
 	lg-d = log --pretty=format:\"%C(yellow)%h\\\\ %ad%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --date=short
 	lg-r = log --pretty=format:\"%C(yellow)%h\\\\ %ad%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --date=relative
-	lg-g = log --pretty=format:\"%C(yellow)%h\\\\ %C(green)%ad%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --date=short --graph
 	df-s = diff --stat
 	df-c = diff --cached
 	al-lst = !git config -l | grep alias | sort | cut -c 7-
