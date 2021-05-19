@@ -1,0 +1,54 @@
+[[snippets]]
+  description = "Add last command to pet"
+  command = "pet new \"!!\""
+  tag = ["pet"]
+  output = ""
+
+[[snippets]]
+  description = "Copy to clipboard"
+  command = "pet search | pbcopy"
+  output = ""
+
+[[snippets]]
+  description = "Execute bash to existing container and enter to root"
+  command = "docker exec -it ubuntu /bin/bash"
+  output = ""
+
+[[snippets]]
+  description = "Display all (active and inactive) containers"
+  command = "docker ps -a"
+  output = ""
+
+[[snippets]]
+  description = "Display images"
+  command = "docker images"
+  output = ""
+
+[[snippets]]
+  description = "Run container as daemon"
+  command = "docker run -d -i -t --name ubuntu ubuntu"
+  output = ""
+
+[[snippets]]
+  description = "Run container"
+  command = "docker run -it ubuntu bash"
+  output = ""
+
+[[snippets]]
+  description = "Pull images"
+  command = "docker pull alphine"
+  output = ""
+
+[[snippets]]
+  description = "Inspect image"
+  command = "docker inspect 4e5021d210f6"
+  output = ""
+
+[[snippets]]
+  description = "Multi line"
+  command = '''This string
+has ' a quote character
+and more than
+one newline
+in it.'''
+  output = ""
