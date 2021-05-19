@@ -1,7 +1,7 @@
 [credential]
 	helper = osxkeychain
 [core]
-	editor = code
+	editor = vi
  	excludesfile = /Users/kwong/.gitignore_global
 
 # SourceTree specific setting
