@@ -7,48 +7,58 @@
 [[snippets]]
   description = "Copy to clipboard"
   command = "pet search | pbcopy"
+  tag = ["pet"]
+  output = ""
+
+[[snippets]]
+  description = "Mac reset audio"
+  command = "sudo killall coreaudiod"
+  tag = ["mac"]
   output = ""
 
 [[snippets]]
   description = "Execute bash to existing container and enter to root"
   command = "docker exec -it ubuntu /bin/bash"
+  tag = ["docker"]
   output = ""
 
 [[snippets]]
   description = "Display all (active and inactive) containers"
   command = "docker ps -a"
+  tag = ["docker"]
   output = ""
 
 [[snippets]]
   description = "Display images"
-  command = "docker images"
+  command = "docker images "
+  tag = ["docker"]
   output = ""
 
 [[snippets]]
   description = "Run container as daemon"
   command = "docker run -d -i -t --name ubuntu ubuntu"
+  tag = ["docker"]
   output = ""
 
 [[snippets]]
   description = "Run container"
   command = "docker run -it ubuntu bash"
+  tag = ["docker"]
   output = ""
 
 [[snippets]]
   description = "Pull images"
   command = "docker pull alphine"
+  tag = ["docker"]
   output = ""
 
 [[snippets]]
   description = "Inspect image"
   command = "docker inspect 4e5021d210f6"
+  tag = ["docker"]
   output = ""
 
 [[snippets]]
   description = "Multi line"
-  command = '''This string
-has ' a quote character
-and more than
-one newline
-in it.'''
+  command = "This string\nhas ' a quote character\nand more than\none newline\nin it."
   output = ""
