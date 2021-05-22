@@ -1,0 +1,168 @@
+# espanso configuration file
+
+# This is the default configuration file, change it as you like it
+# You can refer to the official documentation:
+# https://espanso.org/docs/
+
+secure_input_notification: false
+
+# Matches are the substitution rules, when you type the "trigger" string
+# it gets replaced by the "replace" string.
+matches:
+  # Simple text replacement
+  - trigger: ":espanso"
+    replace: "Hi there!"
+
+  # Dates
+  - trigger: ":date"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%m/%d/%Y"
+
+  - trigger: ":time"
+    replace: "{{time}}"
+    vars:
+      - name: time
+        type: date
+        params:
+          format: "%H:%M"
+
+  # Shell commands
+  - trigger: ":shell"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "echo Hello from your shell"
+
+  - trigger: ":aws-cf\t"
+    replace: "aws cloudformation "
+
+  - trigger: ":aws-cf-ds\t"
+    replace: "aws cloudformation describe-stacks "
+
+  - trigger: ":aws-cf-ec\t"
+    replace: "aws cloudformation estimate-cost"
+
+  - trigger: ":aws-cf-cs\t"
+    replace: "aws cloudformation create-stack --stack-name   --template-body file://  --paramaters ParameterKey= ,Parameter-Value= "
+
+  - trigger: ":awsp-p\t"
+    replace: "--paramaters ParameterKey=$|$,Parameter-Value="
+
+  - trigger: ":awspv-p\t"
+    replace: "ParameterKey=$|$,Parameter-Value="
+
+  - trigger: ":aws-cf-vt\t"
+    replace: "aws cloudformation validate-template --template-body file://$|$"
+
+# aws estimate cost, create stack, pv, pk,
+
+# Docker
+
+  - trigger: ":d-a\t"
+    replace: "docker attach $|$  # Exit by C-p C-q "
+
+  - trigger: ":d-b\t"
+    replace: "docker build -it $|$ ."
+
+  - trigger: ":d-e\t"
+    replace: "docker exec -it "
+
+  - trigger: ":d-i\t"
+    replace: "docker images "
+
+  - trigger: ":d-ps\t"
+    replace: "docker ps "
+
+  - trigger: ":d-st\t"
+    replace: "docker start "
+
+  - trigger: ":d-sp\t"
+    replace: "docker stop "
+
+  - trigger: ":d-rs\t"
+    replace: "docker restart "
+
+  - trigger: ":d-rm\t"
+    replace: "docker rm "
+
+  - trigger: ":d-rmi\t"
+    replace: "docker rmi "
+
+  - trigger: ":d-pl\t"
+    replace: "docker pull "
+
+  - trigger: ":d-ib\t"
+    replace: "docker image build -t $|$ ."
+
+  - trigger: ":d-ii\t"
+    replace: "docker image inspect $|$"
+
+  - trigger: ":d-it\t"
+    replace: "docker image tag $|$"
+
+  - trigger: ":d-cr\t"
+    replace: "docker container run "
+
+  - trigger: ":d-pr\t"
+    replace: "docker system prune -fa ??? "
+
+  - trigger: ":d-h\t"
+    replace: "docker history $|$"
+    # replace: "docker history {{imageid}}"
+    # vars:
+    #   - name: imageid
+    #     type: echo
+    #     params:
+    #       echo: "${MY_IMAGE}"
+# Given imageId get all containers, or delete
+
+  # https://www.jhelvy.com/posts/2021-05-04-expand-your-productivity-with-espanso/
+  - trigger: "-ppp\t"
+    force_clipboard: true
+    replace: "{{clipboard}}"
+    vars:
+      - name: "clipboard"
+        type: "clipboard"
+
+  # TO DELETE
+  - trigger: "rrsetup"
+    force_clipboard: true
+    replace: |
+              ```{r setup, include=FALSE}
+              knitr::opts_chunk$set(
+                warning = FALSE,
+                message = FALSE,
+                fig.path = "figs/",
+                fig.width = 7.252,
+                fig.height = 4,
+                comment = "#>",
+                fig.retina = 3
+              )
+              ```
+
+  # TO DELETE
+  - trigger: "rrgs"
+    force_clipboard: true
+    replace: "group_by($|$) %>%\n    summarise()\n"
+
+  - trigger: ":greet"
+    replace: "Hey $0$, how are you?\nIt's been a while!"
+    passive_only: true
+
+  - trigger: ":reversed"
+    replace: "Reversed {{myshell}}"
+    vars:
+      - name: mytime
+        type: date
+        params:
+          format: "%H:%M"
+      - name: myshell
+        type: shell
+        params:
+          cmd: "echo $ESPANSO_MYTIME | rev"
