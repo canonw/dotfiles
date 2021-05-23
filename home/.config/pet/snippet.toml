@@ -11,12 +11,6 @@
   output = ""
 
 [[snippets]]
-  description = "Mac reset audio"
-  command = "sudo killall coreaudiod"
-  tag = ["mac"]
-  output = ""
-
-[[snippets]]
   description = "Execute bash to existing container and enter to root"
   command = "docker exec -it ubuntu /bin/bash"
   tag = ["docker"]
@@ -54,8 +48,54 @@
 
 [[snippets]]
   description = "Inspect image"
-  command = "docker inspect 4e5021d210f6"
+  command = "docker inspect <container>"
   tag = ["docker"]
+  output = ""
+
+[[snippets]]
+  description = "Find untagged images"
+  command = "docker images --filter \"dangling=true\""
+  tag = ["docker"]
+  output = ""
+
+[[snippets]]
+  description = "Foo"
+  command = "docker images --filter since=<container>"
+  output = ""
+
+[[snippets]]
+  description = "bar"
+  command = "docker images --filter before=<container>"
+  output = ""
+
+[[snippets]]
+  description = "Remove untagged images"
+  command = "docker rmi $(docker images --filter \"dangling=true\" -q)"
+  tag = ["docker"]
+  output = ""
+
+[[snippets]]
+  description = "Stop all containers"
+  command = "docker stop $(docker ps -q)"
+  tag = ["docker"]
+  output = ""
+
+[[snippets]]
+  description = "Remove all running containers"
+  command = "docker rm $(docker ps -a -q) # Destructive"
+  tag = ["docker"]
+  output = ""
+
+[[snippets]]
+  description = "Mac reset audio"
+  command = "sudo killall coreaudiod"
+  tag = ["mac"]
+  output = ""
+
+[[snippets]]
+  description = "Figlet and Boxes (Pound)"
+  command = "figlet -f big \"<message>\" | boxes -d pound-cmt -pa2l2 -a hcvc | sed -e 's/^[ \t]*//' -e '$s/$/ <message>/'"
+  tag = ["boxes", "figlet"]
   output = ""
 
 [[snippets]]

@@ -68,7 +68,7 @@ matches:
     replace: "docker attach $|$  # Exit by C-p C-q "
 
   - trigger: ":d-b\t"
-    replace: "docker build -it $|$ ."
+    replace: "docker build -t $|$ ."
 
   - trigger: ":d-e\t"
     replace: "docker exec -it "
@@ -85,15 +85,6 @@ matches:
   - trigger: ":d-sp\t"
     replace: "docker stop "
 
-  - trigger: ":d-rs\t"
-    replace: "docker restart "
-
-  - trigger: ":d-rm\t"
-    replace: "docker rm "
-
-  - trigger: ":d-rmi\t"
-    replace: "docker rmi "
-
   - trigger: ":d-pl\t"
     replace: "docker pull "
 
@@ -106,11 +97,30 @@ matches:
   - trigger: ":d-it\t"
     replace: "docker image tag $|$"
 
+  - trigger: ":d-l\t"
+    replace: "docker logs "
+
   - trigger: ":d-cr\t"
     replace: "docker container run "
 
   - trigger: ":d-pr\t"
     replace: "docker system prune -fa ??? "
+
+  - trigger: ":d-rD\t"
+    replace: "docker run --detach $|$   #-d"
+
+  - trigger: ":d-rs\t"
+    replace: "docker restart "
+
+  - trigger: ":d-rmA\t"
+    replace: "[[ $(docker container ls -q) ]] && docker rm -f $(docker ps -q)"
+    # replace: "if [[ $(docker container ls -q) ]]; then docker rm -f$|$ $(docker ps -a -q) ;fi"
+
+  - trigger: ":d-rm\t"
+    replace: "docker rm -f $|$"
+
+  - trigger: ":d-rmi\t"
+    replace: "docker rmi "
 
   - trigger: ":d-h\t"
     replace: "docker history $|$"
@@ -122,29 +132,21 @@ matches:
     #       echo: "${MY_IMAGE}"
 # Given imageId get all containers, or delete
 
-  # https://www.jhelvy.com/posts/2021-05-04-expand-your-productivity-with-espanso/
-  - trigger: "-ppp\t"
+  - trigger: ":d-v\t"
+    replace: "docker --version $|$"
+
+  # pet script
+  - trigger: ";pet\t"
     force_clipboard: true
-    replace: "{{clipboard}}"
+    replace: |
+              [[snippets]]
+                description = "$|$"
+                command = "{{clipboard}}"
+                tag = [""]
+                output = ""
     vars:
       - name: "clipboard"
         type: "clipboard"
-
-  # TO DELETE
-  - trigger: "rrsetup"
-    force_clipboard: true
-    replace: |
-              ```{r setup, include=FALSE}
-              knitr::opts_chunk$set(
-                warning = FALSE,
-                message = FALSE,
-                fig.path = "figs/",
-                fig.width = 7.252,
-                fig.height = 4,
-                comment = "#>",
-                fig.retina = 3
-              )
-              ```
 
   # TO DELETE
   - trigger: "rrgs"
