@@ -4,6 +4,11 @@
 # You can refer to the official documentation:
 # https://espanso.org/docs/
 
+# Naming rule
+# 1.  dash to delimit subcommand
+# 2.  Upper case to differentiate word
+# 3.  dash to delimite switch
+
 secure_input_notification: false
 
 # Matches are the substitution rules, when you type the "trigger" string
@@ -39,6 +44,18 @@ matches:
         params:
           cmd: "echo Hello from your shell"
 
+  #
+  #
+  #       __          _______
+  #      /\ \        / / ____|
+  #     /  \ \  /\  / / (___
+  #    / /\ \ \/  \/ / \___ \
+  #   / ____ \  /\  /  ____) |
+  #  /_/    \_\/  \/  |_____/
+  #
+  #
+  #
+  # AWS
   - trigger: ":aws-cf\t"
     replace: "aws cloudformation "
 
@@ -46,7 +63,7 @@ matches:
     replace: "aws cloudformation describe-stacks "
 
   - trigger: ":aws-cf-ec\t"
-    replace: "aws cloudformation estimate-cost"
+    replace: "aws cloudformation estimate-cost "
 
   - trigger: ":aws-cf-cs\t"
     replace: "aws cloudformation create-stack --stack-name   --template-body file://  --paramaters ParameterKey= ,Parameter-Value= "
@@ -64,6 +81,9 @@ matches:
 
 # Docker
 
+  - trigger: ":d--v\t"
+    replace: "docker --version $|$"
+
   - trigger: ":d-a\t"
     replace: "docker attach $|$  # Exit by C-p C-q "
 
@@ -73,8 +93,69 @@ matches:
   - trigger: ":d-e\t"
     replace: "docker exec -it "
 
+  - trigger: ":d-h\t"
+    replace: "docker history $|$"
+    # replace: "docker history {{imageid}}"
+    # vars:
+    #   - name: imageid
+    #     type: echo
+    #     params:
+    #       echo: "${MY_IMAGE}"
+
   - trigger: ":d-i\t"
-    replace: "docker images "
+    replace: "docker image "
+
+  - trigger: ":d-il\t"
+    replace: "docker image ls "
+
+  - trigger: ":d-iN\t"
+    replace: "docker info"
+
+  - trigger: ":d-ib\t"
+    replace: "docker image build -t $|$ ."
+
+  - trigger: ":d-ii\t"
+    replace: "docker image inspect $|$"
+
+  - trigger: ":d-it\t"
+    replace: "docker image tag $|$"
+    # Given imageId get all containers, or delete
+
+  - trigger: ":d-l\t"
+    replace: "docker logs "
+
+  - trigger: ":d-c\t"
+    replace: "docker container "
+
+  - trigger: ":d-cl\t"
+    replace: "docker container ls "
+
+  - trigger: ":d-cl-s\t"
+    replace: "docker container ls --size"
+
+  - trigger: ":d-cr\t"
+    replace: "docker container run "
+
+  - trigger: ":d-crM\t"
+    replace: "docker container rm "
+
+  - trigger: ":d-crM-v\t"
+    replace: "docker container rm --force --volumes "
+
+  - trigger: ":d-cs\t"
+    replace: "docker container start "
+
+  - trigger: ":d-cs-a\t"
+    replace: "docker container start --attach "
+
+  - trigger: ":d-cp\t"
+    replace: "docker container pause "
+
+  - trigger: ":d-cu\t"
+    replace: "docker container unpause "
+
+  - trigger: ":d-nl\t"
+    replace: "docker network ls"
 
   - trigger: ":d-ps\t"
     replace: "docker ps "
@@ -88,21 +169,6 @@ matches:
   - trigger: ":d-pl\t"
     replace: "docker pull "
 
-  - trigger: ":d-ib\t"
-    replace: "docker image build -t $|$ ."
-
-  - trigger: ":d-ii\t"
-    replace: "docker image inspect $|$"
-
-  - trigger: ":d-it\t"
-    replace: "docker image tag $|$"
-
-  - trigger: ":d-l\t"
-    replace: "docker logs "
-
-  - trigger: ":d-cr\t"
-    replace: "docker container run "
-
   - trigger: ":d-pr\t"
     replace: "docker system prune -fa ??? "
 
@@ -112,32 +178,76 @@ matches:
   - trigger: ":d-rs\t"
     replace: "docker restart "
 
-  - trigger: ":d-rmA\t"
-    replace: "[[ $(docker container ls -q) ]] && docker rm -f $(docker ps -q)"
+  - trigger: ":d-rM-A\t"
+    replace: "[[ $(docker container ls -aq) ]] && docker rm -f $(docker ps -aq)"
     # replace: "if [[ $(docker container ls -q) ]]; then docker rm -f$|$ $(docker ps -a -q) ;fi"
 
-  - trigger: ":d-rm\t"
+  - trigger: ":d-rM\t"
+    replace: "docker rm $|$"
+
+  - trigger: ":d-rM-f\t"
     replace: "docker rm -f $|$"
 
-  - trigger: ":d-rmi\t"
+  - trigger: ":d-rMI\t"
     replace: "docker rmi "
 
-  - trigger: ":d-h\t"
-    replace: "docker history $|$"
-    # replace: "docker history {{imageid}}"
-    # vars:
-    #   - name: imageid
-    #     type: echo
-    #     params:
-    #       echo: "${MY_IMAGE}"
-# Given imageId get all containers, or delete
+  - trigger: ":d-sd\t"
+    replace: "docker system df "
 
   - trigger: ":d-v\t"
-    replace: "docker --version $|$"
+    replace: "docker volume "
+
+  - trigger: ":d-vc\t"
+    replace: "docker volume create "
+
+  - trigger: ":d-vi\t"
+    replace: "docker volume inspect "
+
+  - trigger: ":d-vl\t"
+    replace: "docker volume ls "
+
+  - trigger: ":d-vr\t"
+    replace: "docker volume rm "
+
+  - trigger: ":d-vrM\t"
+    replace: "docker volume rm "
+
+  - trigger: ":d-vp\t"
+    replace: "docker volume prune "
+
+  #
+  #
+  #   _____             _                _____
+  #  |  __ \           | |              / ____|
+  #  | |  | | ___   ___| | _____ _ __  | |     ___  _ __ ___  _ __   ___  ___  ___
+  #  | |  | |/ _ \ / __| |/ / _ \ '__| | |    / _ \| '_ ` _ \| '_ \ / _ \/ __|/ _ \
+  #  | |__| | (_) | (__|   <  __/ |    | |___| (_) | | | | | | |_) | (_) \__ \  __/
+  #  |_____/ \___/ \___|_|\_\___|_|     \_____\___/|_| |_| |_| .__/ \___/|___/\___|
+  #                                                          | |
+  #                                                          |_|
+  #
+  # Docker Compose
+  - trigger: ":dc-d\t"
+    replace: "docker-compose down $|$"
+
+  - trigger: ":dc-ps\t"
+    replace: "docker-compose ps $|$"
+
+  - trigger: ":dc-v\t"
+    replace: "docker-compose version $|$"
+
+  - trigger: ":dc-u\t"
+    replace: "docker-compose up --remove-orphans $|$"
+
+  - trigger: ":dc-uD\t"
+    replace: "docker-compose up --detach $|$"
+
+  - trigger: ":dn-wr\t"
+    replace: "dotnet watch run --project $|$"
 
   # pet script
   - trigger: ";pet\t"
-    force_clipboard: true
+    # force_clipboard: true
     replace: |
               [[snippets]]
                 description = "$|$"
@@ -148,7 +258,28 @@ matches:
       - name: "clipboard"
         type: "clipboard"
 
-  # TO DELETE
+  #
+  #
+  #                   _
+  #                  | |
+  #    ___ _   _ _ __| |
+  #   / __| | | | '__| |
+  #  | (__| |_| | |  | |
+  #   \___|\__,_|_|  |_|
+  #
+  #
+  #
+  # curl
+  - trigger: ":curl-Pon\t"
+    replace: "export http_proxy=localhost:8080;export https_proxy=localhost:8080"
+
+  - trigger: ":curl-Poff\t"
+    replace: "unset http_proxy; unset https_proxy"
+
+  - trigger: ":g-c-an\t"
+    replace: "git commit --amend --no-edit"
+
+  # TO DELETE below.
   - trigger: "rrgs"
     force_clipboard: true
     replace: "group_by($|$) %>%\n    summarise()\n"

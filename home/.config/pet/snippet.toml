@@ -11,9 +11,29 @@
   output = ""
 
 [[snippets]]
+  description = "S3 check if bucket versioning is on"
+  command = "aws s3api get-bucket-versioning --bucket <bucket=$BUCKET_NAME>"
+  tag = ["aws"]
+  output = ""
+  #  aws s3api list-objects-v2 --bucket $BUCKET_NAME
+
+[[snippets]]
   description = "Execute bash to existing container and enter to root"
   command = "docker exec -it ubuntu /bin/bash"
   tag = ["docker"]
+  output = ""
+
+# source: https://forums.docker.com/t/restart-docker-from-command-line/9420/7
+[[snippets]]
+  description = "Stop Docker in Mac gracefully"
+  command = "test -z \"$(docker ps -q 2>/dev/null)\" && osascript -e 'quit app \"Docker\"'"
+  tag = ["docker", "mac"]
+  output = ""
+
+[[snippets]]
+  description = "Start Docker in Mac"
+  command = "open --background -a Docker"
+  tag = ["docker", "mac"]
   output = ""
 
 [[snippets]]
@@ -59,12 +79,12 @@
   output = ""
 
 [[snippets]]
-  description = "Foo"
+  description = "List images created after container created"
   command = "docker images --filter since=<container>"
   output = ""
 
 [[snippets]]
-  description = "bar"
+  description = "List images created prior to container created"
   command = "docker images --filter before=<container>"
   output = ""
 
