@@ -18,6 +18,30 @@
   #  aws s3api list-objects-v2 --bucket $BUCKET_NAME
 
 [[snippets]]
+  description = "Display a live stream of containers resource usage statistics"
+  command = "docker stats"
+  tag = ["docker"]
+  output = ""
+
+[[snippets]]
+  description = "Display a live stream of containers CPU usage statistics"
+  command = "docker stats --format \"table {{.Name}}\\t{{.Container}}\\t{{.CPUPerc}}\""
+  tag = ["docker"]
+  output = ""
+
+[[snippets]]
+  description = "Display a live stream of containers Memory usage statistics"
+  command = "docker stats --format \"table {{.Name}}\\t{{.Container}}\\t{{.MemPerc}}\\t{{.MemUsage}}\""
+  tag = ["docker"]
+  output = ""
+
+[[snippets]]
+  description = "Display a live stream of containers BlockIO usage statistics"
+  command = "docker stats --format \"table {{.Name}}\\t{{.Container}}\\t{{.BlockIO}}\""
+  tag = ["docker"]
+  output = ""
+
+[[snippets]]
   description = "Execute bash to existing container and enter to root"
   command = "docker exec -it ubuntu /bin/bash"
   tag = ["docker"]
@@ -116,6 +140,12 @@
   description = "Figlet and Boxes (Pound)"
   command = "figlet -f big \"<message>\" | boxes -d pound-cmt -pa2l2 -a hcvc | sed -e 's/^[ \t]*//' -e '$s/$/ <message>/'"
   tag = ["boxes", "figlet"]
+  output = ""
+
+[[snippets]]
+  description = "Kill processes at given port(s)"
+  command = "kill $(lsof -ti:<bucket=3000,3001>)"
+  tag = ["port"]
   output = ""
 
 [[snippets]]
