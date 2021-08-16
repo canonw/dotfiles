@@ -87,8 +87,8 @@ alias headerc='curl -I --compress'
 
 ## Traverse directory
 alias ..='cd ..'
-alias ...='cd ../../../'
-alias ....='cd ../../../../'
+alias ...='cd ../..'
+alias ....='cd ../../..'
 alias .....='cd ../../../../'
 alias .4='cd ../../../../'
 alias .5='cd ../../../../..'
@@ -96,6 +96,8 @@ alias .dhd='cd ~/.homesick/repos/dotfiles'
 alias .docg='cd ~/Documents/git'
 alias .doc='cd ~/Documents'
 
+alias .am='cd ~/git-zego/amenity-microservice'
+alias .aw='cd ~/git-zego/adminweb'
 
 ## Copy and paste
 case "$THISOS" in

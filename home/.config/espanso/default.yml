@@ -258,6 +258,20 @@ matches:
       - name: "clipboard"
         type: "clipboard"
 
+  # markdown
+  - trigger: ";md-title,"
+    # Note: Need to TBD to fix dash line parsing issue.
+    replace: |
+              ---
+              title: "$|$"
+              keywords:
+                - TBD
+
+              ...
+    vars:
+      - name: "clipboard"
+        type: "clipboard"
+
   #
   #
   #                   _

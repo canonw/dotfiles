@@ -1,0 +1,27 @@
+name: react
+parent: default
+
+matches:
+  # Import React
+  - trigger: ";j-imr,"
+    replace: "import React from 'react';"
+
+  # Import React / Component
+  - trigger: ";j-imrc,"
+    replace: "import React, { Component } from 'react';"
+    
+  # Import React / useState
+  - trigger: ";j-imrs,"
+    replace: "import React, { useState } from 'react';"
+
+  # Import React / useState useEffect
+  - trigger: ";j-imrse,"
+    replace: "import React, { useState, useEffect } from 'react';"
+
+  # Import PropTypes
+  - trigger: ";j-impt,"
+    replace: "import PropTypes from 'prop-types';"
+
+  # Import React / PureComponent
+  - trigger: ";j-impc,"
+    replace: "import React, { PureComponent } from 'react';"
