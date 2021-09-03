@@ -75,3 +75,5 @@
 	required = true
 [commit]
 	template = /Users/kwong/.stCommitMsg
+[init]
+	defaultBranch = main
