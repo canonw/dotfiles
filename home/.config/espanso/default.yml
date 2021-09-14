@@ -121,6 +121,9 @@ matches:
     replace: "docker image tag $|$"
     # Given imageId get all containers, or delete
 
+  - trigger: ":d-iRD,"
+    replace: "docker rmi -f $(docker images -f \"dangling=true\" -q)"
+
   - trigger: ":d-l,"
     replace: "docker logs "
 
@@ -128,7 +131,7 @@ matches:
     replace: "docker container "
 
   - trigger: ":d-cl,"
-    replace: "docker container ls "
+    replace: "docker container ls $|$ -a"
 
   - trigger: ":d-cl-s,"
     replace: "docker container ls --size"
