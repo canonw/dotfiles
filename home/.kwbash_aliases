@@ -95,6 +95,7 @@ alias .5='cd ../../../../..'
 alias .dhd='cd ~/.homesick/repos/dotfiles'
 alias .docg='cd ~/Documents/git'
 alias .doc='cd ~/Documents'
+alias .espanso='.dhd && cd home/.config/espanso/'
 
 ## Copy and paste
 case "$THISOS" in
