@@ -1,3 +1,4 @@
+# Docker based command line
 yq() {
   docker run --rm -i -v "${PWD}":/workdir mikefarah/yq "$@"
 }
@@ -6,12 +7,39 @@ aws2() {
   docker run --rm -it -v ${PWD}/.aws:/root/.aws amazon/aws-cli "$@"
 }
 
+#
 # Git helper functions
 git-currentbranch() {
   git branch | sed -n -e 's/^\* \(.*\)/\1/p'
 }
 
 #  https://kapeli.com/cheat_sheets/Gitmoji.docset/Contents/Resources/Documents/index
+# Begin a project
+gitc-startproject() {
+  git commit -m ":tada: $@"
+}
+
+# Introduce new features
 gitc-features() {
-  git commit -m ':sparkles: $1'  
+  git commit -m ":sparkles: $@"
+}
+
+# Improve structure / format of the code
+gitc-format() {
+  git commit -m ":art: $@"
+}
+
+# Fix typos
+gitc-typos() {
+  git commit -m ":pencil2: $@"
+}
+
+# Fix typos
+gitc-merge() {
+  git commit -m ":twisted_rightwards_arrows: $@"
+}
+
+# Move or rename resources (e.g.: files, paths, routes)
+gitc-moverenamefile() {
+  git commit -m ":truck: $@"
 }
