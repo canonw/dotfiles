@@ -1,0 +1,17 @@
+yq() {
+  docker run --rm -i -v "${PWD}":/workdir mikefarah/yq "$@"
+}
+
+aws2() {
+  docker run --rm -it -v ${PWD}/.aws:/root/.aws amazon/aws-cli "$@"
+}
+
+# Git helper functions
+git-currentbranch() {
+  git branch | sed -n -e 's/^\* \(.*\)/\1/p'
+}
+
+#  https://kapeli.com/cheat_sheets/Gitmoji.docset/Contents/Resources/Documents/index
+gitc-features() {
+  git commit -m ':sparkles: $1'  
+}

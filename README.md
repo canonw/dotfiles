@@ -14,6 +14,21 @@ homesick symlink dotfiles
 ```
 
 ## Other config
+bash file
+
+Add the following to .bash_profile
+``` sh
+[ -f ~/.kwbash_profile ] && . ~/.kwbash_profile
+
+if [ -f ~/.kwbash_aliases ]; then
+  . ~/.kwbash_aliases
+fi
+
+if [ -f ~/.kwwork_aliases ]; then
+  . ~/.kwwork_aliases
+fi
+```
+
 espano
 
 Each OS has its own directory setting.  Checkout [https://espanso.org/docs/get-started/](https://espanso.org/docs/get-started/)
