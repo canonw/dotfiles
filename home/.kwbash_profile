@@ -25,7 +25,7 @@ gitc-features() {
 }
 
 # Improve structure / format of the code
-gitc-format() {
+gitc-beatuify() {
   git commit -m ":art: $@"
 }
 
@@ -42,4 +42,13 @@ gitc-merge() {
 # Move or rename resources (e.g.: files, paths, routes)
 gitc-moverenamefile() {
   git commit -m ":truck: $@"
+}
+
+gitc-refactor() {
+  git commit -m ":recycle: $@"
+}
+
+# WIP (e.g.: files, paths, routes)
+gitc-wip() {
+  git commit -m ":construction: $@"
 }
