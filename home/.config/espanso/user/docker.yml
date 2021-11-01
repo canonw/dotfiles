@@ -24,6 +24,12 @@ matches:
     #     params:
     #       echo: "${MY_IMAGE}"
 
+  - trigger: ":dc,"
+    replace: "docker compose "
+
+  - trigger: ":dc-l,"
+    replace: "docker compose ls"
+
   - trigger: ":d-i,"
     replace: "docker image "
 
@@ -104,7 +110,7 @@ matches:
     replace: "docker run --detach $|$   #-d"
 
   - trigger: ":d-rI,"
-    replace: "docker run --it --rm -p "
+    replace: "docker run -it --rm -p "
     # Run throw away container with port prefix
 
   - trigger: ":d-rs,"
