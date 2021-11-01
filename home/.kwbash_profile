@@ -13,25 +13,48 @@ git-currentbranch() {
   git branch | sed -n -e 's/^\* \(.*\)/\1/p'
 }
 
+# Open files in commit(s)
+git-of() {
+  git diff-tree --no-commit-id --name-only -r "$@" | xargs -I {} sh -c "code {}"
+}
+
+git-of() {
+  git diff-tree --no-commit-id --name-only -r "$@" | xargs -I {} sh -c "code {}"
+}
+
 #  https://kapeli.com/cheat_sheets/Gitmoji.docset/Contents/Resources/Documents/index
-# Begin a project
-gitc-startproject() {
-  git commit -m ":tada: $@"
-}
-
-# Introduce new features
-gitc-features() {
-  git commit -m ":sparkles: $@"
-}
-
 # Improve structure / format of the code
 gitc-beatuify() {
   git commit -m ":art: $@"
 }
 
-# Fix typos
-gitc-typos() {
-  git commit -m ":pencil2: $@"
+# Fix a bug.
+gitc-bug() {
+  git commit -m ":bug: $@"
+}
+
+# Config file
+gitc-comment() {
+  git commit -m ":bulb: $@"
+}
+
+# Config file
+gitc-configfile() {
+  git commit -m ":wrench: $@"
+}
+
+# Improve structure / format of the code
+gitc-docker() {
+  git commit -m ":whale: $@"
+}
+
+# Git ignore
+gitc-gitignore() {
+  git commit -m ":see_no_evil: $@"
+}
+# Introduce new features
+gitc-features() {
+  git commit -m ":sparkles: $@"
 }
 
 # Fix typos
@@ -44,8 +67,32 @@ gitc-moverenamefile() {
   git commit -m ":truck: $@"
 }
 
+gitc-package() {
+  git commit -m ":package: $@"
+}
+
 gitc-refactor() {
   git commit -m ":recycle: $@"
+}
+
+# Remove code or files
+gitc-removecodefile() {
+  git commit -m ":fire: $@"
+}
+
+# Begin a project
+gitc-startproject() {
+  git commit -m ":tada: $@"
+}
+
+# Fix typos
+gitc-test() {
+  git commit -m ":white_check_mark: $@"
+}
+
+# Fix typos
+gitc-typos() {
+  git commit -m ":pencil2: $@"
 }
 
 # WIP (e.g.: files, paths, routes)
