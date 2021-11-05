@@ -121,6 +121,12 @@ matches:
   - trigger: ":dn-wr,"
     replace: "dotnet watch run --project $|$"
 
+  - trigger: ":dn-wt,"
+    replace: "dotnet watch test --project $|$"
+
+  - trigger: ":dn-wb,"
+    replace: "dotnet watch build --project $|$"
+
   # pet script
   - trigger: ";pet,"
     # force_clipboard: true
