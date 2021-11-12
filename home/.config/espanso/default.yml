@@ -40,6 +40,14 @@ matches:
         params:
           format: "%H:%M"
 
+  - trigger: ":uuid"
+    replace: "{{myuuid}}"
+    vars:
+      - name: myuuid
+        type: shell
+        params:
+           cmd: "uuidgen | tr 'A-Z' 'a-z'"
+
   # Shell commands
   - trigger: ":shell"
     replace: "{{output}}"
@@ -122,10 +130,14 @@ matches:
     replace: "dotnet watch run --project $|$"
 
   - trigger: ":dn-wt,"
-    replace: "dotnet watch test --project $|$"
+    replace: "dotnet watch test  /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=../coverage/lcov.info --project $|$"
 
   - trigger: ":dn-wb,"
     replace: "dotnet watch build --project $|$"
+
+  # EF list migration
+  - trigger: ":dn-ef-ml,"
+    replace: "dotnet ef migrations list $|$"
 
   # pet script
   - trigger: ";pet,"
