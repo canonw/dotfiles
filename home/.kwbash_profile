@@ -48,10 +48,21 @@ gitc-docker() {
   git commit -m ":whale: $@"
 }
 
+# Add or update documentation
+gitc-document() {
+  git commit -m ":memo: $@"
+}
+
 # Git ignore
 gitc-gitignore() {
   git commit -m ":see_no_evil: $@"
 }
+
+# Fix compiler / linter warnings
+gitc-lint() {
+  git commit -m ":rotating_light: $@"
+}
+
 # Introduce new features
 gitc-features() {
   git commit -m ":sparkles: $@"
