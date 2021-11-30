@@ -159,13 +159,20 @@ matches:
       dotnet watch test /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=../coverage/lcov.info \
       --project {} \
 
-
   - trigger: ":dn-wb,"
     replace: "dotnet watch build --project $|$"
 
   # EF list migration
   - trigger: ":dn-ef-ml,"
     replace: "dotnet ef migrations list $|$"
+
+  - trigger: ":ip"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "curl 'https://api.ipify.org'"
 
   # pet script
   - trigger: ";pet,"
