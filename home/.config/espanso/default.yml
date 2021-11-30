@@ -40,13 +40,29 @@ matches:
         params:
           format: "%H:%M"
 
-  - trigger: ":uuid"
+  - trigger: ":uuid,"
     replace: "{{myuuid}}"
     vars:
       - name: myuuid
         type: shell
         params:
            cmd: "uuidgen | tr 'A-Z' 'a-z'"
+
+  - trigger: ":uuid0,"
+    replace: "{{myuuid}}"
+    vars:
+      - name: myuuid
+        type: shell
+        params:
+           cmd: "uuidgen | sed s/[a-zA-Z0-9]/0/g"
+
+  - trigger: ":uuid1,"
+    replace: "{{myuuid}}"
+    vars:
+      - name: myuuid
+        type: shell
+        params:
+           cmd: "uuidgen | sed s/[a-zA-Z0-9]/1/g"
 
   # Shell commands
   - trigger: ":shell"
