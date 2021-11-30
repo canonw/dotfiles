@@ -142,11 +142,23 @@ matches:
   - trigger: ":dc-uD,"
     replace: "docker-compose up --detach $|$"
 
+  - trigger: ":dn-rg,"
+    replace: reportgenerator "-reports:coverage/lcov.info" "-targetdir:coverage/reports" "-reporttypes:Html;HtmlSummary" $|$
+
+  - trigger: ":dn-t,"
+    replace: "dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=..coverage/lcov.info $|$"
+
   - trigger: ":dn-wr,"
     replace: "dotnet watch run --project $|$"
 
+  # - trigger: ":dn-wt,"
+  #   replace: "dotnet watch test /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=../coverage/lcov.info --project $|$"
   - trigger: ":dn-wt,"
-    replace: "dotnet watch test  /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=../coverage/lcov.info --project $|$"
+    replace: |
+      find . -name '*.sln' -maxdepth 1 -print -quit | xargs -I {} \
+      dotnet watch test /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=../coverage/lcov.info \
+      --project {} \
+
 
   - trigger: ":dn-wb,"
     replace: "dotnet watch build --project $|$"
