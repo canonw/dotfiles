@@ -3,6 +3,8 @@
 [core]
 	editor = vi
 	excludesfile = /Users/kwong/.gitignore_global
+	# Disable hook check
+  # hooksPath = /tmp
 [push]
 	default = simple
 [color]
