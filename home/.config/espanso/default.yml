@@ -162,9 +162,20 @@ matches:
   - trigger: ":dn-wb,"
     replace: "dotnet watch build --project $|$"
 
+  # https://docs.microsoft.com/en-us/ef/core/cli/dotnet
   # EF list migration
   - trigger: ":dn-ef-ml,"
     replace: "dotnet ef migrations list $|$"
+
+  - trigger: ":dn-ef-ci,"
+    replace: "dotnet ef dbcontext info"
+
+  - trigger: ":dn-ef-cl,"
+    replace: "dotnet ef dbcontext list"
+
+  # DROP database and migration
+  - trigger: ":dn-ef-DNM,"
+    replace: "dotnet ef database drop -f -v && dotnet ef database update"
 
   - trigger: ":ip"
     replace: "{{output}}"
