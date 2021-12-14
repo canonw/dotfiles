@@ -238,7 +238,10 @@ matches:
   - trigger: ":curl-Poff,"
     replace: "unset http_proxy; unset https_proxy"
 
-  - trigger: ":g-c-an,"
+  - trigger: ":g-ac-ANe,"
+    replace: "git add -A && git commit --amend --no-edit"
+
+  - trigger: ":g-c-ANe,"
     replace: "git commit --amend --no-edit"
 
   # TO DELETE below.
