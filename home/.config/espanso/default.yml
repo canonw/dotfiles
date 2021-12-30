@@ -238,6 +238,10 @@ matches:
   - trigger: ":curl-Poff,"
     replace: "unset http_proxy; unset https_proxy"
 
+  # Add hunk manually
+  - trigger: ":g-a-P,"
+    replace: "git add --patch"
+
   - trigger: ":g-ac-ANe,"
     replace: "git add -A && git commit --amend --no-edit"
 
