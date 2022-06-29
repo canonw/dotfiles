@@ -81,6 +81,10 @@ matches:
         params:
           cmd: "echo Hello from your shell"
 
+  # JWT command line
+  - trigger: ":jwt"
+    replace: "pbpaste | jq -R 'split(\".\") | .[0],.[1] | @base64d | fromjson'"
+
   #
   #
   #       __          _______
