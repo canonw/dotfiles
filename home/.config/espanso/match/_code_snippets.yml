@@ -1,0 +1,4 @@
+matches:
+  - trigger: ":pad"
+    label: 'Sample to Remove'
+    replace: "padding: 10px"
