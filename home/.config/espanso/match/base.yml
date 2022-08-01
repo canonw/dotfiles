@@ -193,14 +193,10 @@ matches:
   - trigger: ":curl-Poff,"
     replace: unset http_proxy; unset https_proxy
 
-  # Add hunk manually
-  - trigger: ":g-a-P,"
-    replace: git add --patch
-  - trigger: ":g-ac-ANe,"
-    replace: git add -A && git commit --amend --no-edit
-  - trigger: ":g-c-ANe,"
-    replace: git commit --amend --no-edit
-
+  # rg
+  - trigger: ":rg;i,"
+    label: "rg ignore test folder search"
+    replace: rg $|$ -g '!test/'
   # TO DELETE below.
   - trigger: rrgs
     force_clipboard: true

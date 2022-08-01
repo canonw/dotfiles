@@ -13,15 +13,6 @@ git-currentbranch() {
   git branch | sed -n -e 's/^\* \(.*\)/\1/p'
 }
 
-# Open files in commit(s)
-git-of() {
-  git diff-tree --no-commit-id --name-only -r "$@" | xargs -I {} sh -c "code {}"
-}
-
-git-of() {
-  git diff-tree --no-commit-id --name-only -r "$@" | xargs -I {} sh -c "code {}"
-}
-
 #  https://kapeli.com/cheat_sheets/Gitmoji.docset/Contents/Resources/Documents/index
 # Improve structure / format of the code
 gitc-beatuify() {

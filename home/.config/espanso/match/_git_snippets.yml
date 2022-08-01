@@ -1,0 +1,41 @@
+# git commands
+matches:
+  - triggers: [":git-ca,"]
+    label: "git amends staged commit without editing"
+    replace: git commit --amend$|$ --no-edit
+  - triggers: [":git-dd,", ":git-dd."]
+    label: "git diff directory"
+    replace: git difftool --dir-diff $|$ &
+  - triggers: [":git-dd-no,", ":git-dd."]
+    label: "git diff file name only"
+    replace: git difftool --name-only $|$ &
+  - triggers: [":git-rb,", ":git-rb."]
+    label: "git rebase interactive"
+    replace: git rebase --interactive HEAD~$|$
+  - triggers: [":git-rs-s,", ":git-rs."]
+    label: "git reset soft"
+    replace: git reset --soft HEAD~$|$
+  - triggers: [":git-rs-h,", ":git-rs."]
+    label: "git reset hard"
+    replace: git reset --hard HEAD~$|$
+
+  # Complex commands
+  # TODO: Check git local repo.  https://remarkablemark.org/blog/2020/06/05/check-git-repository/
+  - triggers: 
+    - ":git-code-d,"
+    - ":git-code."
+    - ":code."
+    label: "open git diff files to Visual Studio Code"
+    replace: code $(git diff --name-only)
+  - triggers: [":git-code-c,", ":git-code.", ":code."]
+    label: "open git files in a commit to Visual Studio Code"
+    replace: code $(git diff --no-commit-id --name-only -r HEAD~$|$)
+  - triggers: [":git-root,", ":cd."]
+    label: "cd to top level of git repository directory"
+    replace: cd $(git rev-parse --show-toplevel)
+
+  # Add later
+  - trigger: ":g-a-P,"
+    replace: git add --patch
+  - trigger: ":g-ac-ANe,"
+    replace: git add -A && git commit --amend --no-edit
