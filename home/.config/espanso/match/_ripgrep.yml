@@ -1,0 +1,29 @@
+# ripgrep commands
+matches:
+  - triggers: [":rg-f,", "#rg,"]
+    label: "ripgrep displays file names only"
+    replace: rg --sort path -l $|$
+  - triggers: [":rg-f-nt,", "#rg,"]
+    label: "ripgrep displays file name only and without test files"
+    replace: rg --sort path -g '!*test*' -l $|$
+  - triggers: [":rg-si,", "#rg,"]
+    label: "ripgrep search as case insensitive "
+    replace: rg --sort path -i $|$
+  - triggers: [":rg-sw,", "#rg,"]
+    label: "ripgrep search as word"
+    replace: rg --sort path -w $|$
+  - triggers: [":rg-sf,", "#rg,"]
+    label: "ripgrep search as literal string"
+    replace: rg --sort path -F "$|$"
+  - triggers: [":rg-dn,", "#rg,"]
+    label: "ripgrep displays without line number"
+    replace: rg --sort path -N $|$
+  - triggers: [":rg-c,", "#rg,"]
+    label: "ripgrep displays 3 lines before and after each match"
+    replace: rg --sort path -C 3 $|$
+  - triggers: [":rg-cb,", "#rg,"]
+    label: "ripgrep displays 3 line before each match"
+    replace: rg --sort path -B 3 $|$
+  - triggers: [":rg-ca,", "#rg,"]
+    label: "ripgrep displays 3 line after each match"
+    replace: rg --sort path -A 3 $|$

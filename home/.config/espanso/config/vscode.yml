@@ -3,3 +3,4 @@ filter_exec: Code
 extra_includes:
   - "../match/_code_snippets.yml"
   - "../match/_git_snippets.yml"
+  - "../match/_ripgrep.yml"

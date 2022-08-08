@@ -1,4 +1,5 @@
 imports:
+  - "./_ripgrep.yml"
   - "./_docker_snippets.yml"
 
 matches:
