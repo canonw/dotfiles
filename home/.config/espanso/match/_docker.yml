@@ -1,14 +1,46 @@
+# Docker command https://docs.docker.com/engine/reference/commandline
 matches:
-  - trigger: ":d--v,"
+  - triggers: [":dk-v,", "#dk,"]
+    label: "Docker version"
     replace: docker --version $|$
-  - trigger: ":d-a,"
+  - triggers: [":dk-a,", "#dk,"]
+    label: "Docker container attach running instant"
     replace: "docker attach $|$  # Exit by C-p C-q "
-  - trigger: ":d-b,"
-    replace: docker build -t $|$ .
-  - trigger: ":d-e,"
-    replace: "docker exec -it "
-  - trigger: ":d-h,"
+  - triggers: [":dk-b,", "#dk,"]
+    label: "Docker build Dockerfile file"
+    replace: docker build -f Dockerfile$|$
+  - triggers: [":dk-b-t,", "#dk,"]
+    label: "Docker build Dockerfile file with tag"
+    replace: docker build -f Dockerfile -t $|$
+  - triggers: [":dk-r,", "#dk,", "#dk-r,"]
+    label: "Docker run container, allocate pseudo-TTY"
+    replace: docker run $|$
+  - triggers: [":dk-r-it,", "#dk,", "#dk-r,"]
+    label: "Docker run container, allocate pseudo-TTY"
+    replace: docker run -it $|$
+  - triggers: [":dk-r-it-r,", "#dk,", "#dk-r,"]
+    label: "Docker run container allocate pseudo-TTY, dispose"
+    replace: docker run --rm -it $|$
+  - triggers: [":dk-r-d,", "#dk,", "#dk-r,"]
+    label: "Docker run container, detach"
+    replace: docker run -d $|$
+  - triggers: [":dk-r-dn,", "#dk,", "#dk-r,"]
+    label: "Docker run container, named, detach"
+    replace: docker run --name $|$ -d 
+  - triggers: [":dk-ps,", "#dk,", "#dk-ps,"]
+    label: "Docker list container"
+    replace: docker ps -a $|$
+  - triggers: [":dk-e-i,", "#dk,", "#dk-ps,"]
+    label: "Docker exec running container, allocate pseudo-TTY"
+    replace: "docker exec -it"
+  - triggers: [":dk-e-d,", "#dk,", "#dk-ps,"]
+    label: "Docker exec running container, detached"
+    replace: "docker exec -d"
+  - triggers: [":dk-h,", "#dk-ps,"]
+    label: "Docker show the history of an image "
     replace: docker history $|$
+
+#    replace: "docker run --detach $|$   #-d"
   - trigger: ":dc,"
     replace: "docker compose "
   - trigger: ":dc-l,"
@@ -29,14 +61,7 @@ matches:
     replace: "docker rmi -f $(docker images -f \"dangling=true\" -q)"
   - trigger: ":d-l,"
     replace: "docker logs "
-  - trigger: ":d-c,"
-    replace: "docker container $|$"
-  - trigger: ":d-cl,"
-    replace: docker container ls $|$ -a
-  - trigger: ":d-cl-s,"
-    replace: docker container ls --size
-  - trigger: ":d-cr,"
-    replace: "docker container run "
+    # add --rm
   - trigger: ":d-crM,"
     replace: "docker container rm "
   - trigger: ":d-crM-v,"
@@ -53,8 +78,6 @@ matches:
     replace: docker network $|$
   - trigger: ":d-nl,"
     replace: docker network ls
-  - trigger: ":d-ps,"
-    replace: "docker ps "
   - trigger: ":d-st,"
     replace: "docker start "
   - trigger: ":d-sp,"
@@ -63,10 +86,6 @@ matches:
     replace: "docker pull "
   - trigger: ":d-pr,"
     replace: "docker system prune -fa ??? "
-  - trigger: ":d-rD,"
-    replace: "docker run --detach $|$   #-d"
-  - trigger: ":d-rI,"
-    replace: "docker run -it --rm -p "
   - trigger: ":d-rs,"
     replace: "docker restart "
   - trigger: ":d-rM-A,"

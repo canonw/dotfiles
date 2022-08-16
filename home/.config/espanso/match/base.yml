@@ -1,6 +1,6 @@
 imports:
+  - "./_docker.yml"
   - "./_ripgrep.yml"
-  - "./_docker_snippets.yml"
 
 matches:
   - trigger: ":espanso"
