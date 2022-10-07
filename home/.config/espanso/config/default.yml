@@ -1,4 +1,4 @@
 backend: Clipboard
 
 extra_includes:
-  - "../match/_git_snippets.yml"
+  - "../match/_git.yml"
