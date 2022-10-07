@@ -194,10 +194,10 @@ matches:
   - trigger: ":curl-Poff,"
     replace: unset http_proxy; unset https_proxy
 
-  # rg
-  - trigger: ":rg;i,"
-    label: "rg ignore test folder search"
-    replace: rg $|$ -g '!test/'
+  # xargs
+  - triggers: [":x-sed,", "#xargs,"]
+    label: "xargs with sample gnu sed"
+    replace: "| xargs -I {} gsed -i 's/$|$/g' {}"
   # TO DELETE below.
   - trigger: rrgs
     force_clipboard: true
