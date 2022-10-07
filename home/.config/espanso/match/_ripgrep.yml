@@ -1,29 +1,38 @@
 # ripgrep commands
 matches:
-  - triggers: [":rg-f,", "#rg,"]
-    label: "ripgrep displays file names only"
-    replace: rg --sort path -l $|$
-  - triggers: [":rg-f-nt,", "#rg,"]
-    label: "ripgrep displays file name only and without test files"
-    replace: rg --sort path -g '!*test*' -l $|$
+  # Primary features - command
   - triggers: [":rg-si,", "#rg,"]
     label: "ripgrep search as case insensitive "
     replace: rg --sort path -i $|$
   - triggers: [":rg-sw,", "#rg,"]
     label: "ripgrep search as word"
     replace: rg --sort path -w $|$
-  - triggers: [":rg-sf,", "#rg,"]
+  - triggers: [":rg-sl,", "#rg,"]
     label: "ripgrep search as literal string"
     replace: rg --sort path -F "$|$"
-  - triggers: [":rg-dn,", "#rg,"]
-    label: "ripgrep displays without line number"
-    replace: rg --sort path -N $|$
-  - triggers: [":rg-c,", "#rg,"]
-    label: "ripgrep displays 3 lines before and after each match"
-    replace: rg --sort path -C 3 $|$
-  - triggers: [":rg-cb,", "#rg,"]
-    label: "ripgrep displays 3 line before each match"
-    replace: rg --sort path -B 3 $|$
-  - triggers: [":rg-ca,", "#rg,"]
-    label: "ripgrep displays 3 line after each match"
-    replace: rg --sort path -A 3 $|$
+  - triggers: [":rg-f,", "#rg,"]
+    label: "ripgrep display file name only"
+    replace: rg --sort path --files-with-matches $|$
+
+  # Secondary features - parameters
+  - triggers: [";rg-f,", ";rg,"]
+    label: "ripgrep switch to display file names only"
+    replace: --files-with-matches
+  - triggers: [";rg-fih,", ";rg,"]
+    label: "ripgrep switch to include hidden files, but exclude git directory"
+    replace: -g '!.git' --hidden $|$
+  - triggers: [";rg-fxt,", ";rg,"]
+    label: "ripgrep switch to ignore test files"
+    replace: -g '!*test*' $|$
+  - triggers: [";rg-nx,", ";rg,"]
+    label: "ripgrep switch to exclude line number"
+    replace: -N $|$
+  - triggers: [";rg-c,", ";rg,"]
+    label: "ripgrep switch to display 3 lines of content  before and after each match"
+    replace: -C 3$|$
+  - triggers: [";rg-cb,", ";rg,"]
+    label: "ripgrep switch to display 3 line of content  before each match"
+    replace: -B 3$|$
+  - triggers: [";rg-ca,", ";rg,"]
+    label: "ripgrep switch to display 3 line of content after each match"
+    replace: -A 3$|$
