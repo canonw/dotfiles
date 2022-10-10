@@ -1,4 +1,5 @@
 imports:
+  - "./_aws.yml"
   - "./_docker.yml"
   - "./_ripgrep.yml"
 

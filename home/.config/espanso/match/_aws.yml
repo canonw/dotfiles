@@ -1,0 +1,5 @@
+# AWS CLI command https://docs.aws.amazon.com/cli/latest/index.html
+matches:
+  - triggers: [":aws-v,", "#aws,"]
+    label: "AWS CLI version"
+    replace: "aws --version $|$"
