@@ -167,9 +167,12 @@ matches:
     replace: unset http_proxy; unset https_proxy
 
   # xargs
+  - triggers: [":x,", "#xargs,"]
+    label: "xargs starter"
+    replace: "| xargs -I {} $|$ {}"
   - triggers: [":x-sed,", "#xargs,"]
     label: "xargs with sample gnu sed"
-    replace: "| xargs -I {} gsed -i 's/$|$/g' {}"
+    replace: "| xargs -I {} gsed -i -e 's/$|$/g' {}"
 
   # mongosh
   - triggers: [":mongosh-e,", "#mongosh,"]
