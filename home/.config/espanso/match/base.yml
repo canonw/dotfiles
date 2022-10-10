@@ -198,6 +198,12 @@ matches:
   - triggers: [":x-sed,", "#xargs,"]
     label: "xargs with sample gnu sed"
     replace: "| xargs -I {} gsed -i 's/$|$/g' {}"
+
+  # mongosh
+  - triggers: [":mongosh-e,", "#mongosh,"]
+    label: "Start mongosh with eval"
+    replace: mongosh --quiet --norc --eval "db.version()$|$"
+
   # TO DELETE below.
   - trigger: rrgs
     force_clipboard: true
