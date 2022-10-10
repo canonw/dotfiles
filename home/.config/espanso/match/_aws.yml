@@ -1,5 +1,27 @@
 # AWS CLI command https://docs.aws.amazon.com/cli/latest/index.html
 matches:
+  # Primary features - command
   - triggers: [":aws-v,", "#aws,"]
     label: "AWS CLI version"
     replace: "aws --version $|$"
+  ## aws configure
+  - triggers: [":aws-cfg-g,","#aws-cfg,","#aws,"]
+    label: "AWS CLI - get configuration"
+    replace: "aws configure get$|$"
+  - triggers: [":aws-cfg-i,","#aws-cfg,","#aws,"]
+    label: "AWS CLI - import configuration CSV"
+    replace: "aws configure import --csv $|$"
+  - triggers: [":aws-cfg-l,","#aws-cfg,","#aws,"]
+    label: "AWS CLI - list configuration"
+    replace: "aws configure list$|$"
+  - triggers: [":aws-cfg-lp,","#aws-cfg,","#aws,"]
+    label: "AWS CLI - list configuration profiles"
+    replace: "aws configure list-profiles$|$"
+  - triggers: [":aws-cfg-s,","#aws-cfg,","#aws,"]
+    label: "AWS CLI - set configuration"
+    replace: "aws configure set$|$"
+
+  # Secondary features - parameters
+  - triggers: [";aws-p,",";#aws,"]
+    label: "AWS CLI - parameter profile"
+    replace: "--profile $|$"
