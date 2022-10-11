@@ -166,6 +166,11 @@ matches:
   - trigger: ":curl-Poff,"
     replace: unset http_proxy; unset https_proxy
 
+  # code
+  - triggers: [":code$,", "#code,"]
+    label: "code - open files"
+    replace: "code ${$|$}"
+
   # xargs
   - triggers: [":x,", "#xargs,"]
     label: "xargs starter"
