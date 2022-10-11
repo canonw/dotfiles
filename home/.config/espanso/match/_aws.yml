@@ -20,6 +20,10 @@ matches:
   - triggers: [":aws-cfg-s,","#aws-cfg,","#aws,"]
     label: "AWS CLI - set configuration"
     replace: "aws configure set$|$"
+  ## aws sts
+  - triggers: [":aws-sts,","#aws-sts,","#aws,"]
+    label: "AWS CLI - sts"
+    replace: "aws sts get-caller-identity$|$"
 
   # Secondary features - parameters
   - triggers: [";aws-p,",";#aws,"]
