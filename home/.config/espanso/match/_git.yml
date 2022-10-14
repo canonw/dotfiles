@@ -1,41 +1,60 @@
 # git commands
 matches:
-  - triggers: [":git-ca,"]
+  # Primary features - command
+  ## git branch
+  - triggers: [":git-b-l,", "#git,"]
+    label: "git branch list local"
+    replace: git branch --list $|$
+  ## git commit
+  - triggers: [":git-ca,", "#git,"]
     label: "git amends staged commit without editing"
     replace: git commit --amend$|$ --no-edit
-  - triggers: [":git-dd,", ":git-dd."]
+  ## git difftool
+  - triggers: [":git-dd,", "#git,"]
     label: "git diff directory"
     replace: git difftool --dir-diff $|$ &
-  - triggers: [":git-dd-no,", ":git-dd."]
+  - triggers: [":git-dd-no,", "#git,"]
     label: "git diff file name only"
     replace: git difftool --name-only $|$ &
-  - triggers: [":git-rb,", ":git-rb."]
+  ## git push
+  - triggers: [":git-ph,", "#git,"]
+    label: "git push current branch"
+    replace: git push origin -u$|$ `git branch --show-current`
+  ## git rebase
+  - triggers: [":git-rb,", "#git,"]
     label: "git rebase interactive"
     replace: git rebase --interactive HEAD~$|$
-  - triggers: [":git-rs-s,", ":git-rs."]
+  ## git reset
+  - triggers: [":git-rs-s,", "#git,"]
     label: "git reset soft"
     replace: git reset --soft HEAD~$|$
-  - triggers: [":git-rs-h,", ":git-rs."]
+  - triggers: [":git-rs-h,", "#git,"]
     label: "git reset hard"
     replace: git reset --hard HEAD~$|$
+  ## git log
+  - triggers: [":git-l,", "#git-l,", "#git,"]
+    label: "git - commit log abbreviated"
+    replace: "git log --abbrev-commit --oneline --show-linear-break -5$|$"
+  - triggers: [":git-l-g,", "#git-l,", "#git,"]
+    label: "git - commit log as graph"
+    replace: "git log --abbrev-commit --oneline --graph -5$|$"
+
+  # Secondary features - parameters
 
   # Complex commands
   # TODO: Check git local repo.  https://remarkablemark.org/blog/2020/06/05/check-git-repository/
-  - triggers: 
-    - ":git-code-d,"
-    - ":git-code."
-    - ":code."
+  - triggers: [":git-code-d,", "#git,", "#code,"]
     label: "open git diff files to Visual Studio Code"
     replace: code $(git diff --name-only)
-  - triggers: [":git-code-c,", ":git-code.", ":code."]
+  - triggers: [":git-code-c,", "#git,", "#code,"]
     label: "open git files in a commit to Visual Studio Code"
     replace: code $(git diff --no-commit-id --name-only -r HEAD~$|$)
-  - triggers: [":git-root,", ":cd."]
+  - triggers: [":git-root,", "#git,"]
     label: "cd to top level of git repository directory"
     replace: cd $(git rev-parse --show-toplevel)
-
+  - triggers: [":git-unstage,", "#git,"]
+    label: "move git staged files to unstaged"
+    replace: "git reset HEAD -- ."
   # Add later
   - trigger: ":g-a-P,"
     replace: git add --patch
-  - trigger: ":g-ac-ANe,"
-    replace: git add -A && git commit --amend --no-edit
