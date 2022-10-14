@@ -4,6 +4,28 @@ matches:
   - triggers: [":aws-v,", "#aws,"]
     label: "AWS CLI version"
     replace: "aws --version $|$"
+  ## aws cloudformation
+  - triggers: [":aws-cf,","#aws-cf,","#aws,"]
+    label: "AWS CLI - cloudformation"
+    replace: "aws cloudformation $|$"
+  - triggers: [":aws-cf-cs,","#aws-cf,","#aws,"]
+    label: "AWS CLI - cloudformation"
+    replace: "aws cloudformation create-stack --stack-name   --template-body file://  --paramaters ParameterKey= ,Parameter-Value= "
+  - triggers: [":aws-cf-ds,","#aws-cf,","#aws,"]
+    label: "AWS CLI - cloudformation"
+    replace: "aws cloudformation describe-stacks $|$"
+  - triggers: [":aws-cf-ec,","#aws-cf,","#aws,"]
+    label: "AWS CLI - cloudformation"
+    replace: "aws cloudformation estimate-cost $|$"
+  #- triggers: [":awsp-p,","#aws-cf,","#aws,"]
+  #  label: "AWS CLI - cloudformation"
+  #  replace: "--paramaters ParameterKey=$|$,Parameter-Value="
+  #- triggers: [":awspv-p,","#aws-cf,","#aws,"]
+  #  label: "AWS CLI - cloudformation"
+  #  replace: "ParameterKey=$|$,Parameter-Value="
+  - triggers: [":aws-cf-vt,","#aws-cf,","#aws,"]
+    label: "AWS CLI - cloudformation"
+    replace: "aws cloudformation validate-template --template-body file://$|$"
   ## aws configure
   - triggers: [":aws-cfg-g,","#aws-cfg,","#aws,"]
     label: "AWS CLI - get configuration"
@@ -20,6 +42,37 @@ matches:
   - triggers: [":aws-cfg-s,","#aws-cfg,","#aws,"]
     label: "AWS CLI - set configuration"
     replace: "aws configure set$|$"
+  ## aws ec2 key pair
+  ## https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-keypairs.html
+  - triggers: [":aws-ec2kp-c,","#aws-ec2kp,","#aws,"]
+    label: "AWS CLI - ec2 create key pair and output to file"
+    replace: "aws ec2 create-key-pair --key-name $|$ --key-type rsa --key-format pem --query 'KeyMaterial' --output text > key.pem"
+  - triggers: [":aws-ec2kp-d,","#aws-ec2kp,","#aws,"]
+    label: "AWS CLI - ec2 delete key pair"
+    replace: "aws ec2 delete-key-pair --key-name $|$ # Destructive"
+  - triggers: [":aws-ec2kp-i,","#aws-ec2kp,","#aws,"]
+    label: "AWS CLI - ec2 import key pairs"
+    replace: "aws ec2 import-key-pair --key-name $|$ --public-key-material fileb://"
+  - triggers: [":aws-ec2kp-l,","#aws-ec2kp,","#aws,"]
+    label: "AWS CLI - ec2 list keys"
+    replace: "aws ec2 describe-key-pairs $|$"
+  ## aws s3
+  ## https://docs.aws.amazon.com/cli/latest/userguide/cli-services-s3-commands.html
+  ## https://awscli.amazonaws.com/v2/documentation/api/latest/topic/s3-config.html
+  ## https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3api/index.html#cli-aws-s3api
+  - triggers: [":aws-s3-cb,","#aws-s3,","#aws,"]
+    label: "AWS CLI - s3 create bucket"
+    replace: "aws s3api create-bucket --bucket $|$"
+  - triggers: [":aws-s3-db,","#aws-s3,","#aws,"]
+    label: "AWS CLI - s3 delete bucket"
+    replace: "aws s3 rb s3://$|$ --force # Destructive"
+    # replace: "aws s3api delete-bucket --bucket $|$"
+  - triggers: [":aws-s3-lb,","#aws-s3,","#aws,"]
+    label: "AWS CLI - s3 list buckets"
+    replace: "aws s3api list-buckets$|$"
+  - triggers: [":aws-s3-cp,","#aws-s3,","#aws,"]
+    label: "AWS CLI - s3 copy files"
+    replace: "aws s3 cp . s3://$|$ --recursive --exclude <exclude> --include <include>"
   ## aws sts
   - triggers: [":aws-sts,","#aws-sts,","#aws,"]
     label: "AWS CLI - sts"

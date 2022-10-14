@@ -68,35 +68,6 @@ matches:
   - trigger: ":jwt"
     replace: 'pbpaste | jq -R ''split(".") | .[0],.[1] | @base64d | fromjson'''
 
-  #
-  #
-  #       __          _______
-  #      /\ \        / / ____|
-  #     /  \ \  /\  / / (___
-  #    / /\ \ \/  \/ / \___ \
-  #   / ____ \  /\  /  ____) |
-  #  /_/    \_\/  \/  |_____/
-  #
-  #
-  #
-  # AWS
-  - trigger: ":aws-cf,"
-    replace: "aws cloudformation "
-  - trigger: ":aws-cf-ds,"
-    replace: "aws cloudformation describe-stacks "
-  - trigger: ":aws-cf-ec,"
-    replace: "aws cloudformation estimate-cost "
-  - trigger: ":aws-cf-cs,"
-    replace: "aws cloudformation create-stack --stack-name   --template-body file://  --paramaters ParameterKey= ,Parameter-Value= "
-  - trigger: ":awsp-p,"
-    replace: "--paramaters ParameterKey=$|$,Parameter-Value="
-  - trigger: ":awspv-p,"
-    replace: "ParameterKey=$|$,Parameter-Value="
-  - trigger: ":aws-cf-vt,"
-    replace: "aws cloudformation validate-template --template-body file://$|$"
-
-  # aws estimate cost, create stack, pv, pk,
-
   ###########
   #         #
   #  Docker #
