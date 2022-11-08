@@ -180,9 +180,45 @@ matches:
     replace: "| xargs -I {} gsed -i -e 's/$|$/g' {}"
 
   # mongosh
-  - triggers: [":mongosh-e,", "#mongosh,"]
+  - triggers: [":mongosh-e,", "#mongosh,", "#complex,"]
     label: "Start mongosh with eval"
     replace: mongosh --quiet --norc --eval "db.version()$|$"
+
+  # sed
+  - triggers: [":sed-dw,", "#sed,", "#complex,"]
+    label: "sed - Duplicate words"
+    replace: "sed 's/\\(.*\\)/\\1$|$/\\1/'"
+
+  # complex commands
+  - triggers: [":kill-port,", "#complex,"]
+    label: "kill process attached to port 3000 (Mac)"
+    replace: "lsof -t -i tcp:3000$|$ | xargs kill"
+
+  - triggers: [":cat-file,", "#complex,"]
+    label: "Snippet to generate cat file"
+    replace:  |-
+      cat <<EOF > file$|$
+      EOF
+
+  - triggers: [":buf-echo,", "#complex,"]
+    label: "Echo words from buffer"
+    replace:  |-
+      pbpaste | while read OLD NEW; do\
+        $|$echo "$OLD : $NEW" ;\
+      done
+
+  - triggers: [":buf-rg,", "#complex,"]
+    label: "Replace words from column buffer"
+    replace:  |-
+      pbpaste | while read OLD NEW; do \
+        echo "export _OLD=$OLD && export _NEW=$NEW && \
+        rg \${_OLD} --hidden -l . \
+        | xargs -I {} sh -c 'gsed -i -e \"s/\${_OLD}/\${_NEW}/g\" {}'" \
+      ; done
+
+  - triggers: [":one-liner,", "#complex,"]
+    label: "Compact by stripping duplicate space and linefeed"
+    replace: awk '{ printf "%s", $0 }' | awk '$1=$1'
 
   # TO DELETE below.
   - trigger: rrgs
@@ -204,3 +240,21 @@ matches:
         type: shell
         params:
           cmd: echo $ESPANSO_MYTIME | rev
+
+  - trigger: ":file"
+    replace: "{{form1.file}}"
+    vars:
+      - name: files
+        type: shell
+        params:
+          cmd: "find ~/Documents -maxdepth 1"
+      - name: form1
+        type: form
+        params:
+          layout: |
+            Select file:
+            [[file]]
+          fields:
+            file:
+              type: list
+              values: "{{files}}"
