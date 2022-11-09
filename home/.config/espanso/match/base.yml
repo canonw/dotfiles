@@ -33,29 +33,62 @@ matches:
         params:
           format: "%Y-%m-%dT%H:%M:%S%z"
 
-  - trigger: ":uuid,"
-    replace: "{{myuuid}}"
+  ##################
+  # uuid generator #
+  ##################
+  - triggers: [";uuid,", "#uuid,"]
+    label: "Generate random uuid"
+    replace: "{{output}}"
     vars:
-      - name: myuuid
-        type: shell
+      - name: output
+        type: script
         params:
-          cmd: "uuidgen | tr 'A-Z' 'a-z'"
+          args:
+            - python3
+            - -c
+            - "import uuid; print(str(uuid.uuid4()))"
 
-  - trigger: ":uuid0,"
-    replace: "{{myuuid}}"
-    vars:
-      - name: myuuid
-        type: shell
-        params:
-          cmd: "uuidgen | sed s/[a-zA-Z0-9]/0/g"
+  # - trigger: ":uuid,"
+  #   replace: "{{myuuid}}"
+  #   vars:
+  #     - name: myuuid
+  #       type: shell
+  #       params:
+  #         cmd: "uuidgen | tr 'A-Z' 'a-z'"
 
-  - trigger: ":uuid1,"
-    replace: "{{myuuid}}"
+  # TODO: Add triggers if available #
+  - regex: ";uuid(?P<character>[a-fA-F0-9]{1}),"
+    label: "Generate uuid value; replace first part using single character"
+    replace: "{{output}}"
     vars:
-      - name: myuuid
-        type: shell
+      - name: output
+        type: script
         params:
-          cmd: "uuidgen | sed s/[a-zA-Z0-9]/1/g"
+          args:
+            - python3
+            - -c
+            - "import re; import uuid; tmp = str(uuid.uuid4()); print(re.sub(r\"[0-9A-Fa-f]\", \"{{character}}\".lower(), tmp[0:8]) + tmp[8:])" 
+
+  # TODO: Add triggers if available #
+  - regex: ";uuidr(?P<character>[a-fA-F0-9]{1}),"
+    label: "Generate uuid value; replace last part using single character"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: script
+        params:
+          args:
+            - python3
+            - -c
+            - "import re; import uuid; tmp = str(uuid.uuid4()); print(tmp[0:23] + re.sub(r\"[0-9A-Fa-f]\", \"{{character}}\".lower(), tmp[23:]))" 
+
+  # - trigger: ":uuid0,"
+  #   replace: "{{myuuid}}"
+  #   vars:
+  #     - name: myuuid
+  #       type: shell
+  #       params:
+  #         cmd: "uuidgen | sed s/[a-zA-Z0-9]/0/g"
 
   - trigger: ":shell"
     replace: "{{output}}"
