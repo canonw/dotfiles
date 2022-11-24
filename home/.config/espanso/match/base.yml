@@ -182,6 +182,42 @@ matches:
       - name: clipboard
         type: clipboard
 
+  ###################################
+  # boxes                           #
+  # https://boxes.thomasjensen.com/ #
+  ###################################
+  - triggers: [":boxes,", "#boxes,"]
+    label: "Boxes around text"
+    replace: "boxes -d shell -p h1l1"
+
+  # - triggers: [":boxesP", "#boxes,"]
+  #   label: "boxes around text as copy & paste"
+  #   replace: "pbpaste | boxes -d shell -p h1l1"
+
+  # Note: Shell performance is bad in Mac  
+  - triggers: [";boxes,", "#boxes,"]
+    label: "boxes around text as replacement"
+    replace: "{{output}}"
+    vars:
+      - name: clipboard
+        type: clipboard
+      - name: output
+        type: shell
+        params:
+          cmd: "{{clipboard}} | boxes -d shell -p h1l1"
+
+  - triggers: [":boxes-r,", "#boxes,"]
+    label: "Remove box around text"
+    replace: "boxes -r"
+
+  - triggers: [":boxes-c,", "#boxes,"]
+    label: "Box with C, Java or C# comment"
+    replace: "boxes -d c-cmt -i text"
+
+  - triggers: [":boxes-h,", "#boxes,"]
+    label: "Box with HTML comment"
+    replace: "boxes -d html -i text"
+
   #
   #
   #                   _
@@ -220,7 +256,7 @@ matches:
   # sed
   - triggers: [":sed-dw,", "#sed,", "#complex,"]
     label: "sed - Duplicate words"
-    replace: "sed 's/\\(.*\\)/\\1$|$/\\1/'"
+    replace: "gsed -r 's|(.*)|\\1\\1|'"
 
   # complex commands
   - triggers: [":kill-port,", "#complex,"]
