@@ -33,9 +33,110 @@ matches:
         params:
           format: "%Y-%m-%dT%H:%M:%S%z"
 
-  ##################
-  # uuid generator #
-  ##################
+  #####################
+  # Random value     #
+  # pip install Faker #
+  #####################
+  - triggers: [";r-date,", ";r-d,", "#r-,"]
+    label: "Generate random date in YYYY-DD-MM format"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: script
+        params:
+          args:
+            - python3
+            - -c
+            - "from faker import Faker; fake = Faker(); print(fake.date())"
+
+  - triggers: [";r-ip4,", "#r-,"]
+    label: "Generate random ip v4 address"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: script
+        params:
+          args:
+            - python3
+            - -c
+            - "from faker import Faker; from faker.providers import internet; fake = Faker(); fake.add_provider(internet); print(fake.ipv4_private())"
+
+  - triggers: [";r-name,", ";r-n,", "#r-,"]
+    label: "Generate random name"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: script
+        params:
+          args:
+            - python3
+            - -c
+            - "from faker import Faker; fake = Faker(); print(fake.name())"
+
+  - triggers: [";r-number,", ";r-i,", "#r-,"]
+    label: "Generate random number"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: script
+        params:
+          args:
+            - python3
+            - -c
+            - "from faker import Faker; fake = Faker(); print(fake.random_int())"
+
+  - triggers: [";r-sentence,", "#r-,"]
+    label: "Generate random sentence"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: script
+        params:
+          args:
+            - python3
+            - -c
+            - "from faker import Faker; fake = Faker(); print(fake.sentence())"
+
+  - triggers: [";r-ssn,", "#r-,"]
+    label: "Generate random SSN"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: script
+        params:
+          args:
+            - python3
+            - -c
+            - "from faker import Faker; fake = Faker(); print(fake.ssn())"
+
+  - triggers: [";r-uri,", "#r-,"]
+    label: "Generate random URI"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: script
+        params:
+          args:
+            - python3
+            - -c
+            - "from faker import Faker; fake = Faker(); print(fake.uri())"
+
+  - triggers: [";r-word,", ";r-w,", "#r-,"]
+    label: "Generate random word"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: script
+        params:
+          args:
+            - python3
+            - -c
+            - "from faker import Faker; fake = Faker(); print(fake.word())"
+
+  ####################
+  # uuid generator   #
+  # pip install uuid #
+  ####################
   - triggers: [";uuid,", "#uuid,"]
     label: "Generate random uuid"
     replace: "{{output}}"
