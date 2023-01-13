@@ -202,6 +202,23 @@ matches:
   - trigger: ":jwt"
     replace: 'pbpaste | jq -R ''split(".") | .[0],.[1] | @base64d | fromjson'''
 
+  ## YAML and JSON conversion
+  - trigger: ":y2j,"
+    label: "yaml to json"
+    replace: 'pbpaste | yq -C -o=json -'
+
+  - trigger: ":y2j-c,"
+    label: "yaml to json; copy result to clipboard; display result"
+    replace: 'pbpaste | yq -o=json - | pbcopy  | pbpaste | jq'
+
+  - trigger: ":j2y,"
+    label: "json to yaml"
+    replace: 'pbpaste | yq -C -P -'
+
+  - trigger: ":j2y-c,"
+    label: "json to yaml; copy result to clipboard; display result"
+    replace: 'pbpaste | yq -P - | pbcopy | pbpaste | yq -C'
+
   ###########
   #         #
   #  Docker #
