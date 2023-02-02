@@ -1,7 +1,9 @@
+export PATH=$PATH:$HOME/.local/bin
+
 # Docker based command line
-yq() {
-  docker run --rm -i -v "${PWD}":/workdir mikefarah/yq "$@"
-}
+#yq() {
+#  docker run --rm -i -v "${PWD}":/workdir mikefarah/yq "$@"
+#}
 
 aws2() {
   docker run --rm -it -v ${PWD}/.aws:/root/.aws amazon/aws-cli "$@"
