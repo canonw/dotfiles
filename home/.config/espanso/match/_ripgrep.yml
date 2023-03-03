@@ -23,7 +23,7 @@ matches:
     replace: -g '!.git' --hidden $|$
   - triggers: [";rg-fxt,", ";rg,"]
     label: "ripgrep switch to ignore test files"
-    replace: -g '!*test*' $|$
+    replace: "-g '!*test*' $|$"
   - triggers: [";rg-nx,", ";rg,"]
     label: "ripgrep switch to exclude line number"
     replace: -N $|$
