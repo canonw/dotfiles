@@ -1,37 +1,74 @@
 # ripgrep commands
+# Output line CONTEXT
+# Search case
+#
+# convention
+# rg-d? combo display (display file only, with line above and below match, 
+# rg-s? word search
+#
 matches:
-  # Primary features - command
-  - triggers: [":rg-si,", "#rg,"]
-    label: "ripgrep search as case insensitive "
-    replace: rg --sort path -i $|$
-  - triggers: [":rg-sw,", "#rg,"]
-    label: "ripgrep search as word"
-    replace: rg --sort path -w $|$
-  - triggers: [":rg-sl,", "#rg,"]
-    label: "ripgrep search as literal string"
-    replace: rg --sort path -F "$|$"
-  - triggers: [":rg-f,", "#rg,"]
+  # default
+  - triggers: [":rg,", "#rg,"]
+    label: "ripgrep search"
+    replace: rg --sort path $|$
+
+  # Frequently used combination
+  - triggers: [":rg-dH,", "#rg-d,", "#rg,"]
+    label: "ripgrep display without heading"
+    replace: rg --sort path --column --no-heading $|$
+  - triggers: [":rg-dc,", "#rg-d,",  "#rg,"]
+    label: "ripgrep display 3 lines before and after each match"
+    replace: rg --sort path -C 3 $|$
+  - triggers: [":rg-df,", "#rg-d,", "#rg,"]
     label: "ripgrep display file name only"
     replace: rg --sort path --files-with-matches $|$
+  - triggers: [":rg-fT,", "#rg,"]
+    label: "ripgrep search without test"
+    replace: rg --sort path -g '!*test*' -g '!*spec*' $|$
 
-  # Secondary features - parameters
+  # Frequently used combination - case search
+  - triggers: [":rg-si,", "#rg,"]
+    label: "ripgrep search as case insensitive "
+    replace: rg --sort path --ignore-case $|$
+  - triggers: [":rg-sw,", "#rg,"]
+    label: "ripgrep search as word"
+    replace: rg --sort path --word-regexp $|$
+  - triggers: [":rg-sl,", "#rg,"]
+    label: "ripgrep search as literal string"
+    replace: rg --sort path --fixed-strings "$|$"
+
+  # Secondary features - case search
+  - triggers: [";rg-si,", "#rg,"]
+    label: "ripgrep switch to search as case insensitive "
+    replace: --ignore-case $|$
+  - triggers: [";rg-sw,", "#rg,"]
+    label: "ripgrep switch to search as word"
+    replace: --word-regexp $|$
+  - triggers: [";rg-sl,", "#rg,"]
+    label: "ripgrep switch to search as literal string"
+    replace: --fixed-strings "$|$"
+
+  # TODO: Secondary features - parameters
   - triggers: [";rg-f,", ";rg,"]
     label: "ripgrep switch to display file names only"
-    replace: --files-with-matches
+    replace: --files-with-matches $|$
+  - triggers: [";rg-F,", ";rg,"]
+    label: "ripgrep switch to exclude file names without match"
+    replace: --files-without-match $|$
   - triggers: [";rg-fih,", ";rg,"]
     label: "ripgrep switch to include hidden files, but exclude git directory"
     replace: -g '!.git' --hidden $|$
-  - triggers: [";rg-fxt,", ";rg,"]
+  - triggers: [";rg-fT,", ";rg,"]
     label: "ripgrep switch to ignore test files"
-    replace: "-g '!*test*' $|$"
+    replace: "-g '!*test*' -g '!*spec*' $|$"
   - triggers: [";rg-nx,", ";rg,"]
     label: "ripgrep switch to exclude line number"
     replace: -N $|$
   - triggers: [";rg-c,", ";rg,"]
-    label: "ripgrep switch to display 3 lines of content  before and after each match"
+    label: "ripgrep switch to display 3 lines of content before and after each match"
     replace: -C 3$|$
   - triggers: [";rg-cb,", ";rg,"]
-    label: "ripgrep switch to display 3 line of content  before each match"
+    label: "ripgrep switch to display 3 line of content before each match"
     replace: -B 3$|$
   - triggers: [";rg-ca,", ";rg,"]
     label: "ripgrep switch to display 3 line of content after each match"
