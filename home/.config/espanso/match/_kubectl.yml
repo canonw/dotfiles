@@ -1,0 +1,55 @@
+# Docker command https://kubernetes.io/docs/reference/kubectl
+matches:
+  # Primary commands
+  ## k-v - version command
+  - triggers: [":k-v,", "#k,"]
+    label: "kubctl version"
+    replace: "kubectl version --output=yaml | yq"
+  - triggers: [":k-v-j,", "#k,"]
+    label: "kubctl version in json format"
+    replace: "kubectl version --output=json | jq"
+    
+  ## k-a - apply command
+  - triggers: [":k-a,", "#k-a,", "#k,"]
+    label: "kubctl apply "
+    replace: "kubectl apply $|$"
+  - triggers: [":k-a.f,", "#k-a,", "#k,"]
+    label: "kubctl apply file"
+    replace: "kubectl apply --filename $|$"
+  - triggers: [":k-aH,", "#k-a,", "#k,"]
+    label: "kubctl help get on apply"
+    replace: "kubectl apply -h$|$"
+
+  ## k-del - delete command
+  - triggers: [":k-del,", "#k-del,", "#k,"]
+    label: "kubctl delete"
+    replace: "kubectl delete $|$"
+  - triggers: [":k-del.f,", "#k-del,", "#k,"]
+    label: "kubctl delete resources specified in file"
+    replace: "kubectl delete --filename $|$"
+
+  ## k-d - describe command
+  - triggers: [":k-d,", "#k-d,", "#k,"]
+    label: "kubctl describe"
+    replace: "kubectl describe $|$"
+
+  ## k.p - Pods object related
+  - triggers: [":k.pG,", "#k.p,", "#k,"]
+    label: "kubctl get pods"
+    replace: "kubectl get pods$|$"
+  - triggers: [":k.pD,", "#k.p,",  "#k,"]
+    label: "kubctl delete pod $|$"
+    replace: "kubectl delete $|$"
+  - triggers: [":k.pR,", "#k.p,",  "#k,"]
+    label: "kubctl run pods"
+    replace: "kubectl run $|$ --image=nginx:alpine"
+
+  ## k.n - Nodes object related
+  - triggers: [":k.nG,", "#k.n,", "#k,"]
+    label: "kubctl get nodes"
+    replace: "kubectl get nodes$|$"
+
+  ## k.ds - DaemonSet object related
+  - triggers: [":k.dsD,", "#k.ds,", "#k,"]
+    label: "kubctl describe daemonset"
+    replace: "kubectl describe daemonset $|$"

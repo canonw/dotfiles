@@ -1,6 +1,7 @@
 imports:
   - "./_aws.yml"
   - "./_docker.yml"
+  - "./_kubectl.yml"
   - "./_ripgrep.yml"
 
 matches:
