@@ -3,86 +3,140 @@
 matches:
   # Primary commands
   ## g-v - version command
-  - triggers: [":g-v,", "#git,"]
+  - triggers: [":gV,", ":g-v,", "#g,"]
     label: "git version"
     replace: git --version
 
-  ## g-l - git log command
-  - triggers: [":g-l,", "#g-l,", "#git,"]
+  ## g-a git add command
+  - triggers: [":gA,", ":g-a,", "#g-a,", "#g,"]
+    label: "git add command"
+    replace: "git add .$|$"
+  - triggers: [":g-aH,", "#g-a,", "#g,"]
+    label: "git add help command"
+    replace: "git add -h$|$"
+  - triggers: [":g-aI,", "#g-a,", "#g,"]
+    label: "git add interactive command"
+    replace: "git add -i$|$"
+
+  ## g-c git commit command
+  - triggers: [":g-c,", "#g-c,", "#g,"]
+    label: "git commit command"
+    replace: "git commit -m '$|$'"
+  - triggers: [":g-cA,", "#g-c,", "#g,"]
+    label: "git commit amends staged commit without editing"
+    replace: "git commit --amend$|$ --no-edit"
+  - triggers: [":g-cH,", "#g-c,", "#g,"]
+    label: "git commit help command"
+    replace: "git commit -h$|$"
+
+  ## g-cp - git cherry-pick command
+  - triggers: [":g-cp,", "#g-cp,", "#g,"]
+    label: "git cherry-pick command"
+    replace: "git cherry-pick $|$"
+  - triggers: [":g-cpH,", "#g-cp,", "#g,"]
+    label: "git cherry-pick help command"
+    replace: "git cherry-pick -h$|$"
+  - triggers: [":g-cpN,", "#g-cp,", "#g,"]
+    label: "git cherry-pick without automatic commit command"
+    replace: "git cherry-pick --no-commit $|$"
+
+  ## git difftool
+  - triggers: [":g-dt,", "#g-dt,", "#g,"]
+    label: "git difftool command directory diff"
+    replace: git difftool --dir-diff HEAD~1$|$..HEAD &
+  - triggers: [":g-dtH,", "#g-dt,", "#g,"]
+    label: "git difftool help command"
+    replace: "git difftool -h$|$"
+  - triggers: [":g-dt-f,", "#g-dt,", "#g,"]
+    label: "git diff file name only"
+    replace: git difftool --name-only HEAD~1$|$..HEAD &
+
+    ## g-l - git log command
+  - triggers: [":gL,", ":g-l,", "#g-l,", "#g,"]
     label: "git - commit log abbreviated"
     replace: "git log --abbrev-commit --oneline --show-linear-break -5$|$"
-  - triggers: [":g-lT,", "#g-l,", "#git,"]
+  - triggers: [":g-lT,", "#g-l,", "#g,"]
     label: "git - commit log as tree"
     replace: "git log --abbrev-commit --oneline --graph -5$|$"
 
   ## g-rs - git reset command
-  - triggers: [":g-rs-s,", "#g-rs,", "#git,"]
+  - triggers: [":g-rsS,", ":g-rs-s,", "#g-rs,", "#g,"]
     label: "git reset soft"
-    replace: git reset --soft HEAD~$|$
-  - triggers: [":g-rs-h,", "#g-rs", "#git,"]
-    label: "git reset hard"
-    replace: git reset --hard HEAD~$|$
+    replace: git reset --soft HEAD$|$
+  - triggers: [":g-rs-h,", "#g-rs", "#g,"]
+    label: "git reset hard command"
+    replace: git reset --hard HEAD$|$
+  - triggers: [":g-rsH,", "#g-rs", "#g,"]
+    label: "git reset help command"
+    replace: git reset --help $|$
+
+  ## g-s - git status command
+  - triggers: [":g-s,", ":gS,", "#g-s,", "#g,"]
+    label: "git status command"
+    replace: "git status $|$"
+  - triggers: [":g-sH,", "#g-s,", "#g,"]
+    label: "git status help command"
+    replace: "git status -h$|$"
 
   ## g.fc - git files (committed)
-  - triggers: [":g.fcL,", "#g.fc,", "#git,"]
+  - triggers: [":g.fcL,", "#g.fc,", "#g,"]
     label: "git files (committed) list"
     replace: git diff-tree --no-commit-id --name-only -r HEAD$|$
-  - triggers: [":g.fc-code,", "#g.fc,", "#git,", "#code,"]
+  - triggers: [":g.fc-code,", "#g.fc,", "#g,", "#code,"]
     label: "open git files (committed) in Visual Studio Code"
     replace: code $(git diff --no-commit-id --name-only -r HEAD$|$)
 
   ## g.fs - git files (staged)
-  - triggers: [":g.fsL,", "#g.fs,", "#git,"]
+  - triggers: [":g.fsL,", "#g.fs,", "#g,"]
     label: "git files (staged) list"
     replace: git diff --name-only --cached HEAD$|$
-  - triggers: [":g.fsR,", "#g.fs,", "#git,"]
+  - triggers: [":g.fs-l,", "#g.fs,", "#g,"]
+    label: "git files (staged) list first file in staged"
+    replace: "git diff --name-only --cached HEAD | sed -n '1$|$p'"
+  - triggers: [":g.fsU,", "#g.fs,", "#g,"]
     label: "git files (staged) remove from staged to unstaged"
     replace: "git reset HEAD -- .$|$"
-  - triggers: [":g.fs-code,", "#g.fs,", "#git,", "#code,"]
+  - triggers: [":g.fs-u,", "#g.fs,", "#g,"]
+    label: "git files (staged) remove first file from staged to unstaged"
+    replace: "git reset HEAD -- $(git diff --name-only --cached HEAD | sed -n '1$|$p')"
+  - triggers: [":g.fs-code,", "#g.fs,", "#g,", "#code,"]
     label: "open git files (staged) in Visual Studio Code"
     replace: code $(git diff --no-commit-id --name-only -r HEAD$|$)
 
+  ## g.fu - git files (untracked)
+  - triggers: [":g.fuL,", "#g.fu,", "#g,"]
+    label: "git files (untracked) list"
+    replace:  git diff --name-only HEAD$|$
+  - triggers: [":g.fu-l,", "#g.fu,", "#g,"]
+    label: "git files (untracked) list first file"
+    replace: "git diff --name-only HEAD | sed -n '1$|$p'"
+
   # git-extras commands
-  - triggers: [":g-b-rv,", "#g-b,", "#git,"]
+  - triggers: [":g-b-rv,", "#g-b,", "#g,"]
     label: "git extras to list branches sorted by their last commit date"
     replace: git brv
-  - triggers: [":g-pr,", "#g-pr,", "#git,"]
+  - triggers: [":g-pr,", "#g-pr,", "#g,"]
     label: "git extras to check out a pull request locally"
     replace: git pr
 
   ## Clean up below
   ## git branch
-  - triggers: [":g-b-l,", "#git,"]
+  - triggers: [":g-b-l,", "#g,"]
     label: "git branch list local"
     replace: git branch --list $|$
-  ## git commit
-  - triggers: [":g-ca,", "#git,"]
-    label: "git amends staged commit without editing"
-    replace: git commit --amend$|$ --no-edit
-  ## git difftool
-  - triggers: [":g-dd,", "#git,"]
-    label: "git diff directory"
-    replace: git difftool --dir-diff $|$ &
-  - triggers: [":g-dd-no,", "#git,"]
-    label: "git diff file name only"
-    replace: git difftool --name-only $|$ &
   ## git push
-  - triggers: [":g-ph,", "#git,"]
+  - triggers: [":g-ph,", "#g,"]
     label: "git push current branch"
     replace: git push origin -u$|$ `git branch --show-current`
   ## git rebase
-  - triggers: [":g-rb,", "#git,"]
+  - triggers: [":g-rb,", "#g,"]
     label: "git rebase interactive"
     replace: git rebase --interactive HEAD~$|$
 
   # Secondary features - parameters
 
   # Complex commands
-  # TODO: Check git local repo.  https://remarkablemark.org/blog/2020/06/05/check-g-repository/
-  - triggers: [":g-code-d,", "#git,", "#code,"]
-    label: "open git diff files to Visual Studio Code"
-    replace: code $(git diff --name-only)
-  - triggers: [":g-root,", "#git,"]
+  - triggers: [":g-root,", "#g,"]
     label: "cd to top level of git repository directory"
     replace: cd $(git rev-parse --show-toplevel)
   # Add later
