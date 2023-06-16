@@ -1,0 +1,34 @@
+# fly command
+matches:
+  # Primary commands
+  - triggers: [":flyV,", ":fly-v,", "#fly,"]
+    label: "fly version"
+    replace: fly --version
+  - triggers: [":flyH,", ":fly-h,", "#fly,"]
+    label: "fly help"
+    replace: fly -h
+
+  # fly-l fly login command
+  - triggers: [":fly-l,", "#fly,"]
+    label: "fly login"
+    replace: fly login --target $FLY_TARGET$|$
+
+  # fly-p fly pipeline command
+  - triggers: [":fly-p,", "#fly,"]
+    label: "fly pipeline"
+    replace: fly pipeline --target $FLY_TARGET$|$
+
+  # fly-s fly status command
+  - triggers: [":fly-s,", "#fly,"]
+    label: "fly status"
+    replace: fly status --target $FLY_TARGET$|$
+
+  # fly-t fly targets command
+  - triggers: [":fly-t,", "#fly,"]
+    label: "fly targets"
+    replace: fly targets
+
+  # fly-ui fly userinfo command
+  - triggers: [":fly-ui,", "#fly,"]
+    label: "fly userinfo"
+    replace: fly userinfo --target $FLY_TARGET$|$
