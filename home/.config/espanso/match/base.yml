@@ -204,6 +204,11 @@ matches:
   - trigger: ":jwt"
     replace: 'pbpaste | jq -R ''split(".") | .[0],.[1] | @base64d | fromjson'''
 
+  ## yamllint
+  - trigger: ":yamllint,"
+    label: "yamllint default"
+    replace: "yamllint -f parsable -d '{extends: default, rules: {line-length: {max: 255}}}' $|$"
+
   ## YAML and JSON conversion
   - trigger: ":y2j,"
     label: "yaml to json"
@@ -347,7 +352,10 @@ matches:
   # sed
   - triggers: [":sed-dw,", "#sed,", "#complex,"]
     label: "sed - Duplicate words"
-    replace: "gsed -r 's|(.*)|\\1\\1|'"
+    replace: "sed -r 's|(.*)|\\1\\1|'"
+  - triggers: [":sed-num,", "#sed,", "#complex,"]
+    label: "sed - Number only words"
+    replace: "sed -e 's/[^[:digit:]]/$|$/g'"
 
   # complex commands
   - triggers: [":kill-port,", "#complex,"]
