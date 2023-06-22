@@ -1,3 +1,4 @@
+---
 # git commands
 # git-extras https://www.mankier.com/1/git-extras
 matches:
@@ -7,7 +8,12 @@ matches:
     label: "git version"
     replace: git --version
 
-  ## g-a git add command
+  ## g-h - help command
+  - triggers: [":gH,", ":g-h,", "#g,"]
+    label: "git help"
+    replace: git --help
+
+  ## g-a - git add command
   - triggers: [":gA,", ":g-a,", "#g-a,", "#g,"]
     label: "git add command"
     replace: "git add .$|$"
@@ -18,7 +24,18 @@ matches:
     label: "git add interactive command"
     replace: "git add -i$|$"
 
-  ## g-c git commit command
+  ## g-b - git branch command
+  # script friendly compared to 'git branch --list'
+  - triggers: [":g-b-l,", "#g-d,", "#g,"]
+    label: "git branch list local branches"
+    replace: git for-each-ref --format='%(refname:short)' refs/heads/
+    # prefer display name only
+    # replace: git branch --list
+  - triggers: [":g-b-r,", "#g-d,", "#g,"]
+    label: "git branch list remote branches"
+    replace: git branch --remotes
+
+  ## g-c - git commit command
   - triggers: [":g-c,", "#g-c,", "#g,"]
     label: "git commit command"
     replace: "git commit -m '$|$'"
@@ -28,6 +45,14 @@ matches:
   - triggers: [":g-cH,", "#g-c,", "#g,"]
     label: "git commit help command"
     replace: "git commit -h$|$"
+
+  ## g-cl - git clone command
+  - triggers: [":g-cl,", "#g-cl,", "#g,"]
+    label: "git clone command"
+    replace: "git clone $|$"
+  - triggers: [":g-clH,", ":g-cl-h,", "#g-cl,", "#g,"]
+    label: "git clone command"
+    replace: "git clone --help$|$"
 
   ## g-cp - git cherry-pick command
   - triggers: [":g-cp,", "#g-cp,", "#g,"]
@@ -40,7 +65,7 @@ matches:
     label: "git cherry-pick without automatic commit command"
     replace: "git cherry-pick --no-commit $|$"
 
-  ## git difftool
+  ## g-dt - git difftool
   - triggers: [":g-dt,", "#g-dt,", "#g,"]
     label: "git difftool command directory diff"
     replace: git difftool --dir-diff HEAD~1$|$..HEAD &
@@ -51,7 +76,7 @@ matches:
     label: "git diff file name only"
     replace: git difftool --name-only HEAD~1$|$..HEAD &
 
-    ## g-l - git log command
+  ## g-l - git log command
   - triggers: [":gL,", ":g-l,", "#g-l,", "#g,"]
     label: "git - commit log abbreviated"
     replace: "git log --abbrev-commit --oneline --show-linear-break -5$|$"
@@ -106,7 +131,7 @@ matches:
   ## g.fu - git files (untracked)
   - triggers: [":g.fuL,", "#g.fu,", "#g,"]
     label: "git files (untracked) list"
-    replace:  git diff --name-only HEAD$|$
+    replace: git diff --name-only HEAD$|$
   - triggers: [":g.fu-l,", "#g.fu,", "#g,"]
     label: "git files (untracked) list first file"
     replace: "git diff --name-only HEAD | sed -n '1$|$p'"
@@ -120,10 +145,6 @@ matches:
     replace: git pr
 
   ## Clean up below
-  ## git branch
-  - triggers: [":g-b-l,", "#g,"]
-    label: "git branch list local"
-    replace: git branch --list $|$
   ## git push
   - triggers: [":g-ph,", "#g,"]
     label: "git push current branch"
