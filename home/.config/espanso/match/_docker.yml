@@ -1,12 +1,16 @@
 # Docker command https://docs.docker.com/engine/reference/commandline
 matches:
   # Primary features - command
-  - triggers: [":dk-v,", "#dk,"]
+  - triggers: [":dkV,", ":dk-v", "#dk,"]
     label: "Docker version"
     replace: docker --version $|$
+  - triggers: [":dkH,", "#dk,"]
+    label: "Docker help"
+    replace: docker --help $|$
+  
   ## docker attach commands
   - triggers: [":dk-a,", "#dk,"]
-    label: "Docker container attach running instant"
+    label: "Docker container attach running instance"
     replace: "docker attach $|$  # Exit by C-p C-q "
   ## docker build commands
   - triggers: [":dk-b,", "#dk,", "#dk-b,"]
@@ -54,17 +58,47 @@ matches:
     label: "Docker - start and attach to container"
     replace: docker container start -ai $|$ # Exit by C-p C-q
   ## docker container stop commands
-  - triggers: [":dk-c-sp,", "#dk,", "#dk-c,"]
-    label: "Docker - start containers"
-    replace: "docker container stop $|$"
+  - triggers: [":dk-c-sp", "#dk,", "#dk-c,"]
+    label: "Docker - stop containers"
+    replace: "docker container stop $|$"  ## docker container stop commands
   ## docker container stats commands
-  - triggers: [":dk-c-sp,", "#dk,", "#dk-c,"]
+  - triggers: [":dk-c-stats,", "#dk,", "#dk-c,"]
     label: "Docker - display live containers statistics"
     replace: "docker container stats $|$"
   ## docker container unpause commands
   - triggers: [":dk-c-u,", "#dk,", "#dk-c,"]
     label: "Docker - unpause container processes"
     replace: "docker container unpause $|$"
+
+  ##
+  ## docker compose commands
+  - triggers: [":dkcH,", ":dkc-h,", "#dkc,", "#dk,"]
+    label: "Docker compose  help"
+    replace: "docker compose --help"
+  - triggers: [":dkc,", "#dkc,", "#dk,"]
+    label: "Docker compose"
+    replace: "docker compose $|$"
+  ## docker compose up
+  - triggers: [":dkc-u,", "#dkc-u,", "#dkc,", "#dk,"]
+    label: "Docker compose create and start containers"
+    replace: "docker compose --project-name <DC_NAME>$|$ up"
+  - triggers: [":dkc-uX,", "#dkc-u,", "#dkc,", "#dk,"]
+    label: "Docker compose up extended version"
+    replace: "docker compose --env-file .env --file docker-compose.yml --project-name <DC_NAME>$|$ up --remove-orphans --wait"
+  ## docker compose down
+  - triggers: [":dkc-d,", "#dkc-d,", "#dkc,", "#dk,"]
+    label: "Docker compose stop and remove containers and network"
+    replace: "docker compose --project-name <DC_NAME>$|$ down --remove-orphans"
+  ## docker compose listing
+  - triggers: [":dkc-lP,", ":dkc-l,", "#dkc-l,", "#dkc,", "#dk,"]
+    label: "Docker list compose projects"
+    replace: "docker compose ls"
+  - triggers: [":dkc-lC,", "#dkc-l,", "#dkc,", "#dk,"]
+    label: "Docker list containers"
+    replace: "docker compose ps"
+  - triggers: [":dkc-lI,", "#dkc-l,", "#dkc,", "#dk,"]
+    label: "Docker list images"
+    replace: "docker compose images"
 
   ##
   ## docker exec commands
