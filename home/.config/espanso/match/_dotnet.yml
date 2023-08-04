@@ -1,0 +1,147 @@
+# dotnet command
+matches:
+  # Primary commands
+  - triggers: [";dn,", ";dn?"]
+    label: "dotnet command"
+    replace: dotnet
+  - triggers: [";dnV,", ";dn;v,", ";dn?"]
+    label: "dotnet PROMPT version"
+    replace: dotnet --version
+  - triggers: [";dnH,", ";dn;h,", ";dn?"]
+    label: "dotnet PROMPT help"
+    replace: dotnet --help
+  - triggers: [";dnI,", ";dn;i,", ";dn?"]
+    label: "dotnet PROMPT info"
+    replace: dotnet --info
+
+  # dotnet add
+  - triggers: [";dn;a,", ";dn;a?", ";dn?"]
+    label: "dotnet add"
+    replace: dotnet add $|$
+  - triggers: [";dn;aH,", ";dn;a?", ";dn?"]
+    label: "dotnet add PROMPT help"
+    replace: dotnet add --help
+  - triggers: [";dn;a;p,", ";dn;a?", ";dn?"]
+    label: "dotnet add package"
+    replace: dotnet add package
+  - triggers: [";dn;a;p;v,", ";dn;a?", ";dn?"]
+    label: "dotnet add package of a version"
+    replace: dotnet add package <PACKAGE>$|$ --version <VERSION>
+  - triggers: [";dn;a;r,", ";dn;a?", ";dn?"]
+    label: "dotnet add reference"
+    replace: dotnet add reference
+
+  # dotnet build
+  - triggers: [";dn;b,", ";dn;b?", ";dn?"]
+    label: "dotnet build"
+    replace: dotnet build $|$
+  - triggers: [";dn;bH,", ";dn;b?", ";dn?"]
+    label: "dotnet build PROMPT help"
+    replace: dotnet build --help
+
+  # dotnet list
+  - triggers: [";dn;l,", ";dn;l?", ";dn?"]
+    label: "dotnet list"
+    replace: dotnet list $|$
+  - triggers: [";dn;lH,", ";dn;l?", ";dn?"]
+    label: "dotnet list PROMPT help"
+    replace: dotnet list --help
+  - triggers: [";dn;l;p,", ";dn;l;p?", ";dn?"]
+    label: "dotnet list package"
+    replace: dotnet list package$|$
+  - triggers: [";dn;l;pH,", ";dn;l;p?", ";dn?"]
+    label: "dotnet list package PROMPT help"
+    replace: dotnet list package --help
+
+  # dotnet new
+  - triggers: [";dn;n,", ";dn;n?", ";dn?"]
+    label: "dotnet new"
+    replace: dotnet new --project $|$
+  - triggers: [";dn;nH,", ";dn;n?", ";dn?"]
+    label: "dotnet new PROMPT help"
+    replace: dotnet new --help
+  - triggers: [";dn;n;m,", ";dn;n;m?", ";dn?"]
+    label: "dotnet new tool-manifest"
+    replace: dotnet new tool-manifest$|$
+
+  # dotnet run
+  - triggers: [";dn;r,", ";dn;r?", ";dn?"]
+    label: "dotnet run"
+    replace: dotnet run --project $|$
+  - triggers: [";dn;rH,", ";dn;r?", ";dn?"]
+    label: "dotnet run PROMPT help"
+    replace: dotnet run --help
+
+  # dotnet reportgenerator
+  - triggers: [";dn;rg,", ";dn;rg?", ";dn?"]
+    label: "reportgenerator"
+    replace: reportgenerator $|$"-reports:./**/coverage.opencover.xml" -targetdir:"./OpenCover" "-reporttypes:Html;HtmlSummary"
+  - triggers: [";dn;rgH,", ";dn;rg?", ";dn?"]
+    label: "reportgenerator PROMPT help"
+    replace: 'reportgenerator --help'
+
+  # dotnet restore
+  - triggers: [";dn;rs,", ";dn;rs?", ";dn?"]
+    label: "dotnet restore"
+    replace: dotnet restore
+  - triggers: [";dn;rsH,", ";dn;rs?", ";dn?"]
+    label: "dotnet restore PROMPT help"
+    replace: dotnet restore --help
+
+  # dotnet test
+  - triggers: [";dn;t,", ";dn;t?", ";dn?"]
+    label: "dotnet test"
+    replace: dotnet test $|$
+  - triggers: [";dn;tH,", ";dn;t?", ";dn?"]
+    label: "dotnet test PROMPT help"
+    replace: dotnet test --help
+    # coverage
+  - triggers: [";dn;t.cM,", ";dn;t.c?", ";dn;t?", ";dn?"]
+    label: "dotnet test coverage with coverlet.msbuild in cobertura format"
+    replace: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura 
+  - triggers: [";dn;t.cM.l,", ";dn;t.c?", ";dn;t?", ";dn?"]
+    label: "dotnet test coverage with coverlet.msbuild in lcov format"
+    replace: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=coverage/lcov.info
+  - triggers: [";dn;t.cC,", ";dn;t.c?", ";dn;t?", ";dn?"]
+    label: "dotnet test coverage with coverlet.collector in cobertura format"
+    replace: dotnet test --collect:"XPlat Code Coverage;Format=lcov,cobertura,opencover"
+
+  # dotnet tool
+  - triggers: [";dn;tl,", ";dn;tl?", ";dn?"]
+    label: "dotnet tool"
+    replace: dotnet tool $|$
+  - triggers: [";dn;tlH,", ";dn;tl?", ";dn?"]
+    label: "dotnet tool PROMPT help"
+    replace: dotnet tool --help
+  - triggers: [";dn;tl;l,", ";dn;tl?", ";dn?"]
+    label: "dotnet tool list"
+    replace: dotnet tool list $|$
+  - triggers: [";dn;tl;lH,", ";dn;tl?", ";dn?"]
+    label: "dotnet tool list PROMPT help"
+    replace: dotnet tool list --help
+  - triggers: [";dn;tl;lG,", ";dn;tl?", ";dn?"]
+    label: "dotnet tool list current user tool"
+    replace: dotnet tool list --global$|$
+  - triggers: [";dn;tl;lL,", ";dn;tl?", ";dn?"]
+    label: "dotnet tool list local tool manifest"
+    replace: dotnet tool list --local$|$
+
+  # dotnet watch
+  - triggers: [";dn;w,", ";dn;w?", ";dn?"]
+    label: "dotnet watch"
+    replace: dotnet watch $|$
+  - triggers: [";dn;wH,", ";dn;w?", ";dn?"]
+    label: "dotnet watch PROMPT help"
+    replace: dotnet watch --help
+  - triggers: [";dn;w;b,", ";dn;w?", ";dn?"]
+    label: "dotnet watch build"
+    replace: dotnet watch build $|$--project
+  - triggers: [";dn;w;r,", ";dn;w?", ";dn?"]
+    label: "dotnet watch run"
+    replace: dotnet watch run $|$--project
+  - triggers: [";dn;w;t,", ";dn;w;t?", ";dn;w?", ";dn?"]
+    label: "dotnet watch test"
+    replace: dotnet watch test $|$--project
+  - triggers: [";dn;w;tX,", ";dn;w;t?", ";dn;w?", ";dn?"]
+    label: "dotnet watch test coverage with report generation"
+    replace: dotnet watch --project$|$ test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura && dotnet reportgenerator -reports:./**/coverage.cobertura.xml -targetdir:"./OpenCover" -reporttypes:Html && open OpenCover/index.htm

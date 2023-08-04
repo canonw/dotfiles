@@ -1,5 +1,6 @@
 imports:
   - "./_aws.yml"
+  - "./_dotnet.yml"
   - "./_docker.yml"
   - "./_fly.yml"
   - "./_kubectl.yml"
@@ -225,23 +226,6 @@ matches:
   - trigger: ":j2y-c,"
     label: "json to yaml; copy result to clipboard; display result"
     replace: 'pbpaste | yq -P - | pbcopy | pbpaste | yq -C'
-
-  - trigger: ":dn-rg,"
-    replace: 'reportgenerator "-reports:coverage/lcov.info" "-targetdir:coverage/reports" "-reporttypes:Html;HtmlSummary" $|$'
-  - trigger: ":dn-t,"
-    replace: "dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=..coverage/lcov.info $|$"
-  - trigger: ":dn-wr,"
-    replace: dotnet watch run --project $|$
-
-  # - trigger: ":dn-wt,"
-  #   replace: "dotnet watch test /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=../coverage/lcov.info --project $|$"
-  - trigger: ":dn-wt,"
-    replace: |
-      find . -name '*.sln' -maxdepth 1 -print -quit | xargs -I {} \
-      dotnet watch test /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=../coverage/lcov.info \
-      --project {} \
-  - trigger: ":dn-wb,"
-    replace: dotnet watch build --project $|$
 
   # https://docs.microsoft.com/en-us/ef/core/cli/dotnet
   # EF list migration
