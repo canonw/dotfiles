@@ -3,139 +3,212 @@
 # git-extras https://www.mankier.com/1/git-extras
 matches:
   # Primary commands
-  ## g-v - version command
-  - triggers: [":gV,", ":g-v,", "#g,"]
-    label: "git version"
+  - triggers: [";g,", ";g?"]
+    label: "git command"
+    replace: git
+  - triggers: [";gV,", ";g;v,", ";g?"]
+    label: "git PROMPT version"
     replace: git --version
-
-  ## g-h - help command
-  - triggers: [":gH,", ":g-h,", "#g,"]
-    label: "git help"
+  - triggers: [";gH,", ";g;h,", ";g?"]
+    label: "git PROMPT help"
     replace: git --help
 
-  ## g-a - git add command
-  - triggers: [":gA,", ":g-a,", "#g-a,", "#g,"]
-    label: "git add command"
-    replace: "git add .$|$"
-  - triggers: [":g-aH,", "#g-a,", "#g,"]
-    label: "git add help command"
-    replace: "git add -h$|$"
-  - triggers: [":g-aI,", "#g-a,", "#g,"]
-    label: "git add interactive command"
-    replace: "git add -i$|$"
+  # git add
+  - triggers: [';gA,', ';g;a,', ';g;a?', ';g?']
+    label: git add
+    replace: 'git add .$|$'
+  - triggers: [';g;aH,', ';g;a?', ';g?']
+    label: git add PROMPT help
+    replace: 'git add -h$|$'
+  - triggers: [';g;aI,', ';g;a?', ';g?']
+    label: git add interactive
+    replace: 'git add -i$|$'
 
-  ## g-b - git branch command
-  # script friendly compared to 'git branch --list'
-  - triggers: [":g-b-l,", "#g-d,", "#g,"]
+  # git branch
+  - triggers: [";g;b,", ";g;b?", ";g?"]
+    label: "git branch"
+    replace: git branch $|$
+  - triggers: [";g;bH,", ";g;b?", ";g?"]
+    label: "git branch PROMPT help"
+    replace: git branch --help
+  - triggers: [";g;b;l,", ";g;b;l?", ";g;b?", ";g?"]
     label: "git branch list local branches"
+    replace: "git branch --list"
+    # script friendly compared to 'git branch --list'
+  - triggers: [";g;b;l.n,", ";g;b;l?", ";g;b?", ";g?"]
+    label: "git branch list local branches with name only"
     replace: git for-each-ref --format='%(refname:short)' refs/heads/
-    # prefer display name only
-    # replace: git branch --list
-  - triggers: [":g-b-r,", "#g-d,", "#g,"]
+  - triggers: [";g;b;r,", ";g;b;r?", ";g;b?", ";g?"]
     label: "git branch list remote branches"
     replace: git branch --remotes
 
-  ## g-c - git commit command
-  - triggers: [":g-c,", "#g-c,", "#g,"]
-    label: "git commit command"
+  # git commit
+  - triggers: [";g;c,", ";g;c?", ";g?"]
+    label: "git commit"
     replace: "git commit -m '$|$'"
-  - triggers: [":g-cA,", "#g-c,", "#g,"]
+  - triggers: [";g;cH,", ";g;c?", ";g?"]
+    label: "git commit PROMPT help"
+    replace: git commit --help
+  - triggers: [";g;c;a,", ";g;c?", ";g?"]
     label: "git commit amends staged commit without editing"
     replace: "git commit --amend$|$ --no-edit"
-  - triggers: [":g-cH,", "#g-c,", "#g,"]
-    label: "git commit help command"
-    replace: "git commit -h$|$"
 
-  ## g-cl - git clone command
-  - triggers: [":g-cl,", "#g-cl,", "#g,"]
-    label: "git clone command"
+  # git clone
+  - triggers: [";g;cl,", ";g;cl?", ";g?"]
+    label: "git clone"
     replace: "git clone $|$"
-  - triggers: [":g-clH,", ":g-cl-h,", "#g-cl,", "#g,"]
-    label: "git clone command"
+  - triggers: [";g;clH,", ";g;cl?", ";g?"]
+    label: "git clone PROMPT help"
     replace: "git clone --help$|$"
 
-  ## g-cp - git cherry-pick command
-  - triggers: [":g-cp,", "#g-cp,", "#g,"]
-    label: "git cherry-pick command"
+  # git cherry-pick
+  - triggers: [";g;cp,", ";g;cp?", ";g?"]
+    label: "git cherry-pick"
     replace: "git cherry-pick $|$"
-  - triggers: [":g-cpH,", "#g-cp,", "#g,"]
-    label: "git cherry-pick help command"
+  - triggers: [";g;cpH,", ";g;cp?", ";g?"]
+    label: "git cherry-pick PROMPT help"
     replace: "git cherry-pick -h$|$"
-  - triggers: [":g-cpN,", "#g-cp,", "#g,"]
-    label: "git cherry-pick without automatic commit command"
+  - triggers: [";g;cp;a,", ";g;cp?", ";g?"]
+    label: "git cherry-pick abort"
+    replace: "git cherry-pick --abort $|$"
+  - triggers: [";g;cp;c,", ";g;cp?", ";g?"]
+    label: "git cherry-pick continue"
+    replace: "git cherry-pick --continue $|$"
+  - triggers: [";g;cp;n,", ";g;cp?", ";g?"]
+    label: "git cherry-pick without automatic commit"
     replace: "git cherry-pick --no-commit $|$"
 
-  ## g-dt - git difftool
-  - triggers: [":g-dt,", "#g-dt,", "#g,"]
-    label: "git difftool command directory diff"
-    replace: git difftool --dir-diff HEAD~1$|$..HEAD &
-  - triggers: [":g-dtH,", "#g-dt,", "#g,"]
-    label: "git difftool help command"
+  # git difftool
+  - triggers: [";g;dt,", ";g;dt?", ";g?"]
+    label: "git difftool"
+    replace: git difftool
+  - triggers: [";g;dtH,", ";g;dt?", ";g?"]
+    label: "git difftool PROMPT help"
     replace: "git difftool -h$|$"
-  - triggers: [":g-dt-f,", "#g-dt,", "#g,"]
+  - triggers: [";g;dt;d,", ";g;dt?", ";g?"]
+    label: "git difftool directory diff"
+    replace: git difftool --dir-diff HEAD~1$|$..HEAD &
+  - triggers: [";g;dt;f,", ";g;dt?", ";g?"]
     label: "git diff file name only"
     replace: git difftool --name-only HEAD~1$|$..HEAD &
 
-  ## g-l - git log command
-  - triggers: [":gL,", ":g-l,", "#g-l,", "#g,"]
-    label: "git - commit log abbreviated"
+  # git log
+  - triggers: [";g;l,", ";g;l?", ";g?"]
+    label: "git log abbreviated"
     replace: "git log --abbrev-commit --oneline --show-linear-break -5$|$"
-  - triggers: [":g-lT,", "#g-l,", "#g,"]
+  - triggers: [";g;lH,", ";g;dt?", ";g?"]
+    label: "git log PROMPT help"
+    replace: "git log -h$|$"
+  - triggers: [":g;l;t,", ";g;l?", ";g?"]
     label: "git - commit log as tree"
     replace: "git log --abbrev-commit --oneline --graph -5$|$"
 
-  ## g-rs - git reset command
-  - triggers: [":g-rsS,", ":g-rs-s,", "#g-rs,", "#g,"]
+  # git mergetool
+  - triggers: [';g;mt,', ';g;mt?', ';g?']
+    label: git mergetool
+    replace: 'git mergetool .$|$'
+  - triggers: [';g;mtH,', ';g;mt?', ';g?']
+    label: git mergetool PROMPT help
+    replace: 'git mergetool -h$|$'
+
+  # git push
+  - triggers: [";g;ph,", ";g;ph?", ";g?"]
+    label: "git push"
+    replace: git push origin -u$|$ `git branch --show-current`
+  - triggers: [";g;phH,", ";g;ph?", ";g?"]
+    label: "git push PROMPT help"
+    replace: git push --help
+
+  # git rebase
+  - triggers: [";g;rb,", ";g;rb?", ";g?"]
+    label: "git rebase"
+    replace: git rebase
+  - triggers: [";g;rbH,", ";g;rb?", ";g?"]
+    label: "git rebase PROMPT help"
+    replace: git rebase --help
+  - triggers: [";g;rb;a,", ";g;rb?", ";g?"]
+    label: "git rebase abort"
+    replace: git rebase --abort
+  - triggers: [";g;rb;c,", ";g;rb?", ";g?"]
+    label: "git rebase continue"
+    replace: git rebase --continue
+  - triggers: [";g;rb;i,", ";g;rb?", ";g?"]
+    label: "git rebase interactive"
+    replace: git rebase --interactive HEAD~$|$
+
+  # git reset
+  - triggers: [";g;rs,", ";g;rs?", ";g?"]
+    label: "git reset"
+    replace: git reset $|$
+  - triggers: [";g;rsH,", ";g;rs?", ";g?"]
+    label: "git reset PROMPT help"
+    replace: git reset --help $|$
+  - triggers: [";g;rs;s,", ";g;rs?", ";g?"]
     label: "git reset soft"
     replace: git reset --soft HEAD$|$
-  - triggers: [":g-rs-h,", "#g-rs", "#g,"]
-    label: "git reset hard command"
+  - triggers: [";g;rs;h,", ";g;rs?", ";g?"]
+    label: "git reset hard"
     replace: git reset --hard HEAD$|$
-  - triggers: [":g-rsH,", "#g-rs", "#g,"]
-    label: "git reset help command"
-    replace: git reset --help $|$
 
-  ## g-s - git status command
-  - triggers: [":g-s,", ":gS,", "#g-s,", "#g,"]
-    label: "git status command"
+  # git status
+  - triggers: [";g;s,", ";g;s?", ";g?"]
+    label: "git status"
     replace: "git status $|$"
-  - triggers: [":g-sH,", "#g-s,", "#g,"]
-    label: "git status help command"
+  - triggers: [";g;sH,", ";g;s?", ";g?"]
+    label: "git status PROMPT help"
     replace: "git status -h$|$"
 
+  # git switch
+  - triggers: [";g;sw,", ";g;sw?", ";g?"]
+    label: "git switch"
+    replace: git switch $|$
+  - triggers: [";g;swH,", ";g;sw?", ";g?"]
+    label: "git switch PROMPT help"
+    replace: git switch --help
+  - triggers: [";g;sw;f,", ";g;sw?", ";g?"]
+    label: "git switch force create"
+    replace: git switch --force-create $|$
+
+  # Complex commands
+  ## g.rt - root
+  - triggers: [";g.rt,", ";g.?", ";g?"]
+    label: "cd to top level of git repository directory"
+    replace: cd $(git rev-parse --show-toplevel)
+
   ## g.fc - git files (committed)
-  - triggers: [":g.fcL,", "#g.fc,", "#g,"]
+  - triggers: [";g.fc;l,", ";g.fc?", ";g?"]
     label: "git files (committed) list"
-    replace: git diff-tree --no-commit-id --name-only -r HEAD$|$
-  - triggers: [":g.fc-code,", "#g.fc,", "#g,", "#code,"]
+    replace: git diff-tree --no-commit-id --name-only -r HEAD~$|$
+  - triggers: [";g.fc;code,", ";g.fc?", ";g?", ";code?"]
     label: "open git files (committed) in Visual Studio Code"
-    replace: code $(git diff --no-commit-id --name-only -r HEAD$|$)
+    replace: code $(git diff --no-commit-id --name-only -r HEAD~$|$)
 
   ## g.fs - git files (staged)
-  - triggers: [":g.fsL,", "#g.fs,", "#g,"]
+  - triggers: [";g.fsL,", ";g.fs?", ";g?"]
     label: "git files (staged) list"
     replace: git diff --name-only --cached HEAD$|$
-  - triggers: [":g.fs-l,", "#g.fs,", "#g,"]
+  - triggers: [";g.fs-l,", ";g.fs?", ";g?"]
     label: "git files (staged) list first file in staged"
     replace: "git diff --name-only --cached HEAD | sed -n '1$|$p'"
-  - triggers: [":g.fsU,", "#g.fs,", "#g,"]
+  - triggers: [";g.fsU,", ";g.fs?", ";g?"]
     label: "git files (staged) remove from staged to unstaged"
     replace: "git reset HEAD -- .$|$"
-  - triggers: [":g.fs-u,", "#g.fs,", "#g,"]
+  - triggers: [";g.fs;u,", ";g.fs?", ";g?"]
     label: "git files (staged) remove first file from staged to unstaged"
     replace: "git reset HEAD -- $(git diff --name-only --cached HEAD | sed -n '1$|$p')"
-  - triggers: [":g.fs-code,", "#g.fs,", "#g,", "#code,"]
+  - triggers: [";g.fs;code,", ";g.fs?", ";g?", "#code,"]
     label: "open git files (staged) in Visual Studio Code"
     replace: code $(git diff --no-commit-id --name-only -r HEAD$|$)
 
   ## g.fu - git files (untracked)
-  - triggers: [":g.fuL,", "#g.fu,", "#g,"]
+  - triggers: [";g.fuL,", ";g.fu?", ";g?"]
     label: "git files (untracked) list"
     replace: git diff --name-only HEAD$|$
-  - triggers: [":g.fu-l,", "#g.fu,", "#g,"]
+  - triggers: [";g.fu;l,", ";g.fu?", ";g?"]
     label: "git files (untracked) list first file"
     replace: "git diff --name-only HEAD | sed -n '1$|$p'"
 
+  ## TODO: Fix below
   # git-extras commands
   - triggers: [":g-b-rv,", "#g-b,", "#g,"]
     label: "git extras to list branches sorted by their last commit date"
@@ -144,22 +217,6 @@ matches:
     label: "git extras to check out a pull request locally"
     replace: git pr
 
-  ## Clean up below
-  ## git push
-  - triggers: [":g-ph,", "#g,"]
-    label: "git push current branch"
-    replace: git push origin -u$|$ `git branch --show-current`
-  ## git rebase
-  - triggers: [":g-rb,", "#g,"]
-    label: "git rebase interactive"
-    replace: git rebase --interactive HEAD~$|$
-
-  # Secondary features - parameters
-
-  # Complex commands
-  - triggers: [":g-root,", "#g,"]
-    label: "cd to top level of git repository directory"
-    replace: cd $(git rev-parse --show-toplevel)
   # Add later
   - trigger: ":g-a-P,"
     replace: git add --patch
