@@ -44,6 +44,7 @@
 	versiontag = v
 [diff]
 	tool = bc3
+	external = difft
 [merge]
 	tool = bc3
 [mergetool "bc3"]
