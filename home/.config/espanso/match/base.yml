@@ -205,6 +205,17 @@ matches:
   - trigger: ":jwt"
     replace: 'pbpaste | jq -R ''split(".") | .[0],.[1] | @base64d | fromjson'''
 
+  - triggers: [":word-*,", "#word,"]
+    label: "replace non space character with asterisk"
+    replace: sed -e 's/[^[:space:]]/\*$|$/g'
+  - triggers: [":Pword-*,", "#word,"]
+    label: "pbpaste first; replace non space character in clipboard with asterisk"
+    replace: pbpaste | sed -e 's/[^[:space:]]/\*$|$/g' | pbcopy
+
+  - triggers: [":es-k,"]
+    label: "replace espanso shortcut key convention"
+    replace: pbpaste | gsed -E 's/":([a-z|-]+),"/";\1,"/g' | gsed -E 's/"#([a-z|-]+),"/";\1?"/g' | gsed -E 's/([a-z].)-/\1;/g' | pbcopy
+
   ## yamllint
   - trigger: ":yamllint,"
     label: "yamllint default"
@@ -272,8 +283,7 @@ matches:
 
   # - triggers: [":boxesP", "#boxes,"]
   #   label: "boxes around text as copy & paste"
-  #   replace: "pbpaste | boxes -d shell -p h1l1"
-
+  #   replace: "pbpaste | boxes -d shell -p
   # Note: Shell performance is bad in Mac  
   - triggers: [";boxes,", "#boxes,"]
     label: "boxes around text as replacement"
