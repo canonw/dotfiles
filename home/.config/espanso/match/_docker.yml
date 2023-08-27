@@ -1,13 +1,16 @@
 # Docker command https://docs.docker.com/engine/reference/commandline
 matches:
-  # Primary features - command
-  - triggers: [":dkV,", ":dk-v", "#dk,"]
-    label: "Docker version"
-    replace: docker --version $|$
-  - triggers: [":dkH,", "#dk,"]
-    label: "Docker help"
-    replace: docker --help $|$
-  
+  # Primary commands
+  - triggers: [";dk,", ";dk?"]
+    label: "docker command"
+    replace: docker
+  - triggers: [";dkV,", ";dk;v,", ";dk?"]
+    label: "docker PROMPT version"
+    replace: docker --version
+  - triggers: [";dkH,", ";dk;h,", ";dk?"]
+    label: "docker PROMPT help"
+    replace: docker --help
+
   ## docker attach commands
   - triggers: [":dk-a,", "#dk,"]
     label: "Docker container attach running instance"
