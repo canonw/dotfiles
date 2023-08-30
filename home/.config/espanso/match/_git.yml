@@ -103,10 +103,24 @@ matches:
     label: "git - commit log as tree"
     replace: "git log --abbrev-commit --oneline --graph -5$|$"
 
+  # git merge
+  - triggers: [';g;mg,', ';g;mg?', ';g?']
+    label: git merge
+    replace: 'git merge $|$'
+  - triggers: [';g;mgH,', ';g;mg?', ';g?']
+    label: git merge PROMPT help
+    replace: 'git merge -h$|$'
+  - triggers: [';g;mg;c,', ';g;mg?', ';g?']
+    label: git merge continue
+    replace: 'git merge --continue$|$'
+  - triggers: [';g;mg;a,', ';g;mg?', ';g?']
+    label: git merge abort
+    replace: 'git merge --abort$|$'
+
   # git mergetool
   - triggers: [';g;mt,', ';g;mt?', ';g?']
     label: git mergetool
-    replace: 'git mergetool .$|$'
+    replace: 'git mergetool $|$'
   - triggers: [';g;mtH,', ';g;mt?', ';g?']
     label: git mergetool PROMPT help
     replace: 'git mergetool -h$|$'
