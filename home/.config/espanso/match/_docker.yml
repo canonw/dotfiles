@@ -4,7 +4,7 @@ matches:
   - triggers: [";dk,", ";dk?"]
     label: "docker command"
     replace: docker
-  - triggers: [";dkV,", ";dk;v,", ";dk?"]
+  - triggers: [";dkV,", ";dk?"]
     label: "docker PROMPT version"
     replace: docker --version
   - triggers: [";dkH,", ";dk;h,", ";dk?"]
@@ -12,153 +12,169 @@ matches:
     replace: docker --help
 
   ## docker attach commands
-  - triggers: [":dk-a,", "#dk,"]
-    label: "Docker container attach running instance"
+  - triggers: [";dk;a,", ";dk;a?", ";dk?"]
+    label: "Docker container attach to a running instance"
     replace: "docker attach $|$  # Exit by C-p C-q "
+  - triggers: [";dk;aH,", ";dk;a?", ";dk?"]
+    label: "Docker container attach PROMPT help"
+    replace: "docker attach --help"
+
   ## docker build commands
-  - triggers: [":dk-b,", "#dk,", "#dk-b,"]
+  - triggers: [";dk;b,", ";dk,b?", ";dk?"]
+    label: "Docker build"
+    replace: docker build $|$
+  - triggers: [";dk;bH,", ";dk,b?", ";dk?"]
+    label: "Docker build PROMPT help"
+    replace: docker build --help
+  - triggers: [";dk;b;f,", ";dk,b?", ";dk?"]
     label: "Docker build Dockerfile file"
     replace: docker build -f Dockerfile$|$
-  - triggers: [":dk-b-t,", "#dk,", "#dk-b,"]
+  - triggers: [";dk;b;ft,", ";dk,b?", ";dk?"]
     label: "Docker build Dockerfile file with tag"
     replace: docker build -f Dockerfile -t $|$
+
   ## docker container commands
-  - triggers: [":dk-c,", "#dk,", "#dk-c,"]
+  - triggers: [";dk;c,", ";dk?", ";dk;c?"]
     label: "Docker container"
     replace: "docker container $|$"
   ## docker container attach commands
-  - triggers: [":dk-c-a,", "#dk,", "#dk-c,"]
+  - triggers: [";dk;c;a,", ";dk?", ";dk;c?"]
     label: "Docker - attach to a running container"
     replace: "docker container attach $|$"
   ## docker container cp commands
-  - triggers: [":dk-c-cp,", "#dk,", "#dk-c,"]
+  - triggers: [";dk;c;cp,", ";dk?", ";dk;c?"]
     label: "Docker - copy files between container and host"
     replace: "docker container cp $|$"
   ## docker container pause commands
-  - triggers: [":dk-c-p,", "#dk,", "#dk-c,"]
+  - triggers: [";dk;c;p,", ";dk?", ";dk;c?"]
     label: "Docker - pause container processes"
     replace: "docker container pause $|$"
   ## docker container rename commands
-  - triggers: [":dk-c-rn,", "#dk,", "#dk-c,"]
+  - triggers: [";dk;c;rn,", ";dk?", ";dk;c?"]
     label: "Docker - rename a container"
     replace: "docker container rename $|$"
   ## docker container restart commands
-  - triggers: [":dk-c-rs,", "#dk,", "#dk-c,"]
+  - triggers: [";dk;c;rs,", ";dk?", ";dk;c?"]
     label: "Docker - restart containers"
     replace: "docker container restart $|$"
   ## docker container rm commands
-  - triggers: [":dk-c-rm,", "#dk,", "#dk-c,"]
+  - triggers: [";dk;c;rm,", ";dk?", ";dk;c?"]
     label: "Docker - remove containers"
     replace: "docker container rm $|$"
-  - triggers: [":dk-c-rm-f,", "#dk,", "#dk-c,"]
+  - triggers: [";dk;c;rm-f,", ";dk?", ";dk;c?"]
     label: "Docker - forced removal of running containers"
     replace: "docker container rm --force --volumes $|$ #Destructive"
   ## docker container start commands
-  - triggers: [":dk-c-s,", "#dk,", "#dk-c,"]
+  - triggers: [";dk;c;s,", ";dk?", ";dk;c?"]
     label: "Docker - start containers"
     replace: "docker container start $|$"
-  - triggers: [":dk-c-s-a,", "#dk,", "#dk-c,"]
+  - triggers: [";dk;c;s;a,", ";dk?", ";dk;c?"]
     label: "Docker - start and attach to container"
     replace: docker container start -ai $|$ # Exit by C-p C-q
   ## docker container stop commands
-  - triggers: [":dk-c-sp", "#dk,", "#dk-c,"]
+  - triggers: [";dk;c;sp,", ";dk?", ";dk;c?"]
     label: "Docker - stop containers"
     replace: "docker container stop $|$"  ## docker container stop commands
   ## docker container stats commands
-  - triggers: [":dk-c-stats,", "#dk,", "#dk-c,"]
+  - triggers: [";dk;c;stats,", ";dk?", ";dk;c?"]
     label: "Docker - display live containers statistics"
     replace: "docker container stats $|$"
   ## docker container unpause commands
-  - triggers: [":dk-c-u,", "#dk,", "#dk-c,"]
+  - triggers: [";dk;c;u,", ";dk?", ";dk;c?"]
     label: "Docker - unpause container processes"
     replace: "docker container unpause $|$"
 
-  ##
   ## docker compose commands
-  - triggers: [":dkcH,", ":dkc-h,", "#dkc,", "#dk,"]
+  - triggers: [";dkcH,", ";dkc?"]
     label: "Docker compose  help"
     replace: "docker compose --help"
-  - triggers: [":dkc,", "#dkc,", "#dk,"]
+  - triggers: [";dkc,", ";dkc?"]
     label: "Docker compose"
     replace: "docker compose $|$"
   ## docker compose up
-  - triggers: [":dkc-u,", "#dkc-u,", "#dkc,", "#dk,"]
+  - triggers: [";dkc;u,", ";dkc;u?", ";dkc?"]
     label: "Docker compose create and start containers"
     replace: "docker compose --project-name <DC_NAME>$|$ up"
-  - triggers: [":dkc-uX,", "#dkc-u,", "#dkc,", "#dk,"]
+  - triggers: [";dkc;uX,", ";dkc;u?", ";dkc?"]
     label: "Docker compose up extended version"
     replace: "docker compose --env-file .env --file docker-compose.yml --project-name <DC_NAME>$|$ up --remove-orphans --wait"
   ## docker compose down
-  - triggers: [":dkc-d,", "#dkc-d,", "#dkc,", "#dk,"]
+  - triggers: [";dkc;d,", ";dkc;d?", ";dkc?"]
     label: "Docker compose stop and remove containers and network"
     replace: "docker compose --project-name <DC_NAME>$|$ down --remove-orphans"
   ## docker compose listing
-  - triggers: [":dkc-lP,", ":dkc-l,", "#dkc-l,", "#dkc,", "#dk,"]
+  - triggers: [";dkc;lP,", ";dkc;l,", ";dkc;l?", ";dkc?"]
     label: "Docker list compose projects"
     replace: "docker compose ls"
-  - triggers: [":dkc-lC,", "#dkc-l,", "#dkc,", "#dk,"]
+  - triggers: [";dkc;lC,", ";dkc;l?", ";dkc?"]
     label: "Docker list containers"
     replace: "docker compose ps"
-  - triggers: [":dkc-lI,", "#dkc-l,", "#dkc,", "#dk,"]
+  - triggers: [";dkc;lI,", ";dkc;l?", ";dkc?"]
     label: "Docker list images"
     replace: "docker compose images"
 
-  ##
-  ## docker exec commands
-  - triggers: [":dk-e-i,", "#dk,", "#dk-ps,"]
+  ## docker exec command
+  - triggers: [";dk;e,", ";dk?", ";dk;e?"]
+    label: "docker exec command"
+    replace: docker exec
+  - triggers: [";dk;eH,", ";dk?", ";dk;e?"]
+    label: "docker exec PROMPT help"
+    replace: docker exec --help
+  - triggers: [";dk;e;i,", ";dk?", ";dk;e?"]
     label: "Docker exec running container, allocate pseudo-TTY"
     replace: "docker exec -it"
-  - triggers: [":dk-e-d,", "#dk,", "#dk-ps,"]
+  - triggers: [";dk;e;d,", ";dk?", ";dk;e?"]
     label: "Docker exec running container, detached"
     replace: "docker exec -d"
+
+  ## TODO:
   ## docker history commands
-  - triggers: [":dk-h,", "#dk,"]
+  - triggers: [";dk;h,", ";dk?"]
     label: "Docker show the history of an image "
     replace: "docker history $|$"
   ## docker image commands
-  - triggers: [":dk-i,", "#dk,", "#dk-i,"]
+  - triggers: [";dk;i,", ";dk?", ";dk;i?"]
     label: "Docker image"
     replace: "docker image "
-  - triggers: [":dk-i-l,", "#dk,", "#dk-i,"]
+  - triggers: [";dk;i;l,", ";dk?", ";dk;i?"]
     label: "Docker - list images"
     replace: "docker image ls"
-  - triggers: [":dk-i-b", "#dk,", "#dk-i,"]
+  - triggers: [";dk;i;b", ";dk?", ";dk;i?"]
     label: "Docker - build an image from a DockerFile at current directory and add tag"
     replace: "docker image build --tag $|$ ."
-  - triggers: [":dk-i-i,", "#dk,", "#dk-i,"]
+  - triggers: [";dk;i;i,", ";dk?", ";dk;i?"]
     label: "Docker - display image detailed information"
     replace: "docker image inspect $|$"
-  - triggers: [":dk-i-t,", "#dk,", "#dk-i,"]
+  - triggers: [";dk;i;t,", ";dk?", ";dk;i?"]
     label: "Docker - tag an image"
     replace: docker image tag $|$
   ## docker info commands
-  - triggers: [":dk-info,", "#dk,"]
+  - triggers: [";dk;info,", ";dk?"]
     label: "Docker image info"
     replace: docker info
   ## docker logs commands
-  - triggers: [":dk-l,", "#dk,"]
+  - triggers: [";dk;l,", ";dk?"]
     replace: "docker logs $|$"
   ## docker ps commands
-  - triggers: [":dk-ps,", "#dk,", "#dk-ps,"]
+  - triggers: [";dk;ps,", ";dk?", ";dk;ps?"]
     label: "Docker -- show all containers"
     replace: docker ps -a $|$
   ## docker run commands
-  - triggers: [":dk-r,", "#dk,", "#dk-r,"]
+  - triggers: [";dk;r,", ";dk?", ";dk;r?"]
     label: "Docker run container, allocate pseudo-TTY"
     replace: docker run $|$
-  - triggers: [":dk-r-it,", "#dk,", "#dk-r,"]
+  - triggers: [";dk;r;it,", ";dk?", ";dk;r?"]
     label: "Docker run container, allocate pseudo-TTY"
     replace: docker run -it $|$
-  - triggers: [":dk-r-itr,", "#dk,", "#dk-r,"]
+  - triggers: [";dk;r;itr,", ";dk?", ";dk;r?"]
     label: "Docker run container allocate pseudo-TTY, dispose"
     replace: docker run --rm -it $|$
-  - triggers: [":dk-r-d,", "#dk,", "#dk-r,"]
+  - triggers: [";dk;r;d,", ";dk?", ";dk;r?"]
     label: "Docker run container, detach"
     replace: docker run -d $|$
-  - triggers: [":dk-r-dn,", "#dk,", "#dk-r,"]
+  - triggers: [";dk;r;dn,", ";dk?", ";dk;r?"]
     label: "Docker run container, named, detach"
     replace: docker run --name $|$ -d
-
 
   # Secondary features - parameters
 
