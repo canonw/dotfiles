@@ -96,9 +96,12 @@ matches:
   - triggers: [";g;l,", ";g;l?", ";g?"]
     label: "git log abbreviated"
     replace: "git log --abbrev-commit --oneline --show-linear-break -5$|$"
-  - triggers: [";g;lH,", ";g;dt?", ";g?"]
+  - triggers: [";g;lH,", ";g;l?", ";g?"]
     label: "git log PROMPT help"
     replace: "git log -h$|$"
+  - triggers: [":g;l;f,", ";g;l?", ";g?"]
+    label: "git log display files"
+    replace: " git log --name-status --oneline -5$|$"
   - triggers: [":g;l;t,", ";g;l?", ";g?"]
     label: "git - commit log as tree"
     replace: "git log --abbrev-commit --oneline --graph -5$|$"
@@ -164,6 +167,14 @@ matches:
     label: "git reset hard"
     replace: git reset --hard HEAD$|$
 
+  # git stash
+  - triggers: [";g;st,", ";g;st?", ";g?"]
+    label: "git stash"
+    replace: git stash -m '$|$' --keep-index
+  - triggers: [";g;stH,", ";g;st?", ";g?"]
+    label: "git stash PROMPT help"
+    replace: git stash --help
+
   # git status
   - triggers: [";g;s,", ";g;s?", ";g?"]
     label: "git status"
@@ -182,6 +193,20 @@ matches:
   - triggers: [";g;sw;f,", ";g;sw?", ";g?"]
     label: "git switch force create"
     replace: git switch --force-create $|$
+
+  # git update-index
+  - triggers: [";g;ui,", ";g;ui?", ";g?"]
+    label: "git update-index"
+    replace: git update-index $|$
+  - triggers: [";g;uiH,", ";g;ui?", ";g?"]
+    label: "git update-index PROMPT help"
+    replace: git update-index --help $|$
+  - triggers: [";g;ui;nswt,", ";g;ui?", ";g?"]
+    label: "git update-index no skip worktree"
+    replace: git update-index --no-skip-worktree $|$
+  - triggers: [";g;ui;swt,", ";g;ui?", ";g?"]
+    label: "git update-index skip worktree"
+    replace: git update-index --skip-worktree $|$
 
   # Complex commands
   ## g.rt - root
