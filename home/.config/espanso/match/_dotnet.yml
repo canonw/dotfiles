@@ -135,13 +135,13 @@ matches:
     replace: dotnet watch --help
   - triggers: [";dn;w;b,", ";dn;w?", ";dn?"]
     label: "dotnet watch build"
-    replace: dotnet watch build $|$--project
+    replace: dotnet watch --project$|$ build
   - triggers: [";dn;w;r,", ";dn;w?", ";dn?"]
     label: "dotnet watch run"
-    replace: dotnet watch run $|$--project
+    replace: dotnet watch --project$|$ run
   - triggers: [";dn;w;t,", ";dn;w;t?", ";dn;w?", ";dn?"]
     label: "dotnet watch test"
-    replace: dotnet watch test $|$--project
+    replace: dotnet watch --project$|$ test
   - triggers: [";dn;w;tX,", ";dn;w;t?", ";dn;w?", ";dn?"]
     label: "dotnet watch test coverage with report generation"
     replace: dotnet watch --project$|$ test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura && dotnet reportgenerator -reports:./**/coverage.cobertura.xml -targetdir:"./OpenCover" -reporttypes:Html && open OpenCover/index.htm

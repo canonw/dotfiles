@@ -88,6 +88,9 @@ matches:
   - triggers: [";g;dt;d,", ";g;dt?", ";g?"]
     label: "git difftool directory diff"
     replace: git difftool --dir-diff HEAD~1$|$..HEAD &
+  - triggers: [";g;dt;d^,", ";g;dt?", ";g?"]
+    label: "git difftool directory diff"
+    replace: git difftool --dir-diff $|$^ &
   - triggers: [";g;dt;f,", ";g;dt?", ";g?"]
     label: "git diff file name only"
     replace: git difftool --name-only HEAD~1$|$..HEAD &
@@ -151,7 +154,7 @@ matches:
     replace: git rebase --continue
   - triggers: [";g;rb;i,", ";g;rb?", ";g?"]
     label: "git rebase interactive"
-    replace: git rebase --interactive HEAD~$|$
+    replace: git rebase --interactive --autosquash HEAD~$|$
 
   # git reset
   - triggers: [";g;rs,", ";g;rs?", ";g?"]
