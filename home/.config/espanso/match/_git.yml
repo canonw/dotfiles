@@ -170,6 +170,14 @@ matches:
     label: "git reset hard"
     replace: git reset --hard HEAD$|$
 
+  # git restore
+  - triggers: [";g;rt,", ";g;rt?", ";g?"]
+    label: "git restore"
+    replace: git restore
+  - triggers: [";g;rtH,", ";g;rt?", ";g?"]
+    label: "git restore PROMPT help"
+    replace: git restore --help
+
   # git stash
   - triggers: [";g;st,", ";g;st?", ";g?"]
     label: "git stash"
