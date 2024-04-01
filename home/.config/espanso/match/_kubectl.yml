@@ -1,55 +1,59 @@
-# Docker command https://kubernetes.io/docs/reference/kubectl
+---
+# kubectl command https://kubernetes.io/docs/reference/kubectl/
 matches:
   # Primary commands
-  ## k-v - version command
-  - triggers: [":k-v,", "#k,"]
-    label: "kubctl version"
-    replace: "kubectl version --output=yaml | yq"
-  - triggers: [":k-v-j,", "#k,"]
+  - triggers: [";k,", ";k?"]
+    label: "kubectl command"
+    replace: kubectl
+  - triggers: [";kV,", ";k?"]
+    label: "kubectl PROMPT version"
+    replace: kubectl version
+  - triggers: [";kV;j,", ";k?"]
     label: "kubctl version in json format"
     replace: "kubectl version --output=json | jq"
-    
-  ## k-a - apply command
-  - triggers: [":k-a,", "#k-a,", "#k,"]
+  - triggers: [";kH,", ";k;h,", ";k?"]
+    label: "kubectl PROMPT help"
+    replace: kubectl help
+
+  # Apply command
+  - triggers: [";k;a,", ";k;a?"]
     label: "kubctl apply "
     replace: "kubectl apply $|$"
-  - triggers: [":k-a.f,", "#k-a,", "#k,"]
+  - triggers: [";k;a;f,", ";k;a?"]
     label: "kubctl apply file"
     replace: "kubectl apply --filename $|$"
-  - triggers: [":k-aH,", "#k-a,", "#k,"]
+  - triggers: [";k;aH,", ";k;a?"]
     label: "kubctl help get on apply"
     replace: "kubectl apply -h$|$"
 
-  ## k-del - delete command
-  - triggers: [":k-del,", "#k-del,", "#k,"]
-    label: "kubctl delete"
-    replace: "kubectl delete $|$"
-  - triggers: [":k-del.f,", "#k-del,", "#k,"]
+  # Delete command
+  - triggers: [";k;d;f,", ";k;d?" ]
     label: "kubctl delete resources specified in file"
     replace: "kubectl delete --filename $|$"
+  - triggers: [";k;d;p,", ";k;d?"]
+    label: "kubectl delete pods"
+    replace: "kubectl delete pods $|$"
 
-  ## k-d - describe command
-  - triggers: [":k-d,", "#k-d,", "#k,"]
-    label: "kubctl describe"
-    replace: "kubectl describe $|$"
+  # Describe commands
+  - triggers: [";k;ds;n,", ";k;ds?"]
+    label: "kubectl describe nodes"
+    replace: "kubectl describe nodes $|$"
+  - triggers: [";k;ds;p,", ";k;ds?"]
+    label: "kubectl describe pods"
+    replace: "kubectl describe pods $|$"
 
-  ## k.p - Pods object related
-  - triggers: [":k.pG,", "#k.p,", "#k,"]
-    label: "kubctl get pods"
-    replace: "kubectl get pods$|$"
-  - triggers: [":k.pD,", "#k.p,",  "#k,"]
-    label: "kubctl delete pod $|$"
-    replace: "kubectl delete $|$"
-  - triggers: [":k.pR,", "#k.p,",  "#k,"]
-    label: "kubctl run pods"
+  # Get commands
+  - triggers: [";k;g;n,", ";k;g?"]
+    label: "kubectl get nodes"
+    replace: kubectl get nodes
+  - triggers: [";k;g;ns,", ";k;g?"]
+    label: "kubectl get namespace"
+    replace: kubectl get ns
+  - triggers: [";k;g;p,", ";k;g?"]
+    label: "kubectl get pods"
+    replace: "kubectl get pods $|$"
+
+  # Run commands
+  - triggers: [";k;r;p,", ";k;r?"]
+    label: "kubectl get pods"
     replace: "kubectl run $|$ --image=nginx:alpine"
-
-  ## k.n - Nodes object related
-  - triggers: [":k.nG,", "#k.n,", "#k,"]
-    label: "kubctl get nodes"
-    replace: "kubectl get nodes$|$"
-
-  ## k.ds - DaemonSet object related
-  - triggers: [":k.dsD,", "#k.ds,", "#k,"]
-    label: "kubctl describe daemonset"
-    replace: "kubectl describe daemonset $|$"
