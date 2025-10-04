@@ -1,3 +1,12 @@
+# Personal dotfile
+
+# Reference
+
+https://github.com/natelandau/dotfiles
+https://github.com/shunk031/dotfiles/
+
+---
+TODO: Delete below
 # Personal dotfiles
 
 [homeschick](https://github.com/andsens/homeshick) managed dot files.
