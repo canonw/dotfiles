@@ -1,0 +1,19 @@
+# chemzoi shared ignore patterns for target so
+
+{{ if ne .chezmoi.os "linux" -}}
+**/linux/**
+linux*
+{{ end -}}
+
+{{ if ne .chezmoi.os "darwin" -}}
+**/darwin/**
+**/macos/**
+darwin*
+macos*
+Library/**
+{{ end -}}
+
+{{ if ne .chezmoi.os "windows" -}}
+**/windows/**
+windows*
+{{ end -}}

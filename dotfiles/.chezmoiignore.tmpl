@@ -1,0 +1,25 @@
+# -*-mode:gitignore-*- vim:ft=gitignore
+
+# ~/.local/share/chezmoi/dotfiles/.chezmoiignore.tmpl
+# =============================================================================
+# Used to interpret as a set of patterns to ignore.
+#
+# See https://www.chezmoi.io/reference/special-files/chezmoiignore/
+#
+{{ template "chezmoiignore.d/common.tmpl" . }}
+{{ if eq .chezmoi.os "linux" -}}
+{{   if eq .chezmoi.osRelease.id "ubuntu" -}}
+{{     template "chezmoiignore.d/linux/ubuntu/common" . }}
+{{     if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+{{       template "chezmoiignore.d/linux/ubuntu/wsl" . }}
+{{     else -}}
+{{       fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{     end -}}
+{{   else -}}
+{{     fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{   end -}}
+{{ else if eq .chezmoi.os "darwin" -}}
+{{   template "chezmoiignore.d/darwin" . }}
+{{ else if eq .chezmoi.os "windows" -}}
+{{   template "chezmoiignore.d/windows" . }}
+{{ end -}}
