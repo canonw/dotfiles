@@ -1,0 +1,232 @@
+#-*- mode: sh;-*-
+# curl https://gist.githubusercontent.com/canonw/d2b8f0a0c10d9a71be3f53f69d3c94b9/raw -o "$HOME/.kwbash_aliases"
+
+case "$OSTYPE" in
+    linux*)   # "Linux / WSL" ;;
+	THISOS="linux"
+	if [ -f /etc/redhat-release ] ; then
+	    THISDIST=$(cat /etc/redhat-release |sed s/\ release.*// | awk '{print $1;}' | tr '[:upper:]' '[:lower:]')
+	    # PSUEDONAME=`cat /etc/redhat-release | sed s/.*\(// | sed s/\)//`
+	    THISOSREV=$(cat /etc/redhat-release | sed s/.*release\ // | sed s/\ .*//)
+	elif [ -f /etc/SuSE-release ] ; then
+	    # PSUEDONAME=`cat /etc/SuSE-release | tr "\n" ' '| sed s/VERSION.*//`
+	    THISOSREVREV=$(cat /etc/SuSE-release | tr "\n" ' ' | sed s/.*=\ //)
+	elif [ -f /etc/mandrake-release ] ; then
+	    # PSUEDONAME=`cat /etc/mandrake-release | sed s/.*\(// | sed s/\)//`
+	    THISOSREV=$(cat /etc/mandrake-release | sed s/.*release\ // | sed s/\ .*//)
+	elif [ -f /etc/debian_version ] ; then
+	    THISDIST=$(cat /etc/lsb-release | grep '^DISTRIB_ID' | awk -F=  '{ print $2 }' | tr '[:upper:]' '[:lower:]')
+	    # PSUEDONAME=`cat /etc/lsb-release | grep '^DISTRIB_CODENAME' | awk -F=  '{ print $2 }'`
+	    THISOSREV=$(cat /etc/lsb-release | grep '^DISTRIB_RELEASE' | awk -F=  '{ print $2 }')
+	fi
+	;;
+    darwin*)  # "Mac OS"
+	THISOS="macos"
+	;;
+    win*)     # "Windows"
+	THISOS="windows"
+	;;
+    msys*)    # "MSYS / MinGW / Git Bash"
+	THISOS="msys"
+	;;
+    cygwin*)  # "Cygwin"
+	THISOS="cygwin"
+	;;
+    bsd*)     # "BSD"
+	THISOS="bsd"
+	;;
+    solaris*) # "Solaris"
+	THISOS="solaris"
+	;;
+    *)
+	# "unknown: $OSTYPE" ;;
+	THISOS="unknown"
+	;;
+esac
+
+# echo $THISOS $THISDIST $THISOSREV
+
+if [ $UID -ne 0 ]; then
+    case "$THISDIST" in
+        [fedora|ubuntu|centos]*)
+	    alias shutdown-p='sudo shutdown -P 0'
+	    alias shutdown-r='sudo shutdown -r 0'
+	    ;;
+        *)
+	    ;;
+    esac
+
+    case "$THISDIST" in
+        fedora*)
+	    alias update-y='sudo dnf update --refresh -y && sudo dnf autoremove -y'
+	    ;;
+	ubuntu*)
+	    alias update-y='sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get autoremove -y'
+	    ;;
+	centos*)
+	    alias update-y='sudo yum update -y && sudo yum autoremove -y'
+	    ;;
+        *)
+	    ;;
+    esac
+fi
+
+
+## curl aliases
+
+# CurL turns oN PROXY
+alias clnproxy="export http_proxy='$MIT_PROXY';export https_proxy='$MIT_PROXY'"
+# CurL turns oFf PROXY
+alias clfproxy="export http_proxy='';export https_proxy=''"
+# Curl to enable insecure https sniffing.
+alias curlk="curl -k "
+# Get web server headers #
+alias header='curl -I'
+# Find out if remote server supports gzip / mod_deflate or not #
+alias headerc='curl -I --compress'
+
+## Traverse directory
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../..'
+alias .dhd='cd ~/.homesick/repos/dotfiles'
+alias .docg='cd ~/Documents/git'
+alias .doc='cd ~/Documents'
+alias .espanso='.dhd && cd home/.config/espanso/'
+
+## Copy and paste
+case "$THISOS" in
+    linux*)
+        if [[ $(command -v xclip) ]] ; then
+        # if [ `type -t git` = 'file' ] ; then
+            alias pbcopy='xclip -selection clipboard'
+            alias pbpaste='xclip -selection clipboard -o'
+        fi
+        ;;
+    *)
+	;;
+esac
+
+## Directory listing
+case "$THISOS" in
+    macos*)
+    ;;
+    linux*)
+        alias ls='ls --color=auto'
+        ;;
+    *)
+	;;
+esac
+alias ll='ls -la'
+alias l.='ls -d .* --color=auto'
+
+
+## Silverserach ag
+# less(1)
+#   -M (-M or --LONG-PROMPT) Prompt very verbosely
+#   -I (-I or --IGNORE-CASE) Searches with '/' ignore case
+#   -R (-R or --RAW-CONTROL-CHARS) For handling ANSI colors
+#   -F (-F or --quit-if-one-screen) Auto exit if <1 screen
+#   -X (-X or --no-init) Disable termcap init & deinit
+alias ag='ag --smart-case --pager="less -MIRFX"'
+
+## grep
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+
+## emacs
+case "$THISOS" in
+    linux*)
+        alias em='emacs'
+        alias en='emacs -nw'
+        alias e='emacsclient -n'
+        alias et='emacsclient -t'
+        alias ed='emacs --daemon'
+        ;;
+    macos*)
+        alias emacs="open -a Emacs"
+	;;
+    *)
+	;;
+esac
+emacsc() { (emacsclient $@ &) }
+
+
+## git
+if [ `type -t git` = 'file' ] ; then
+    alias git-rf="find . -name ".git" -type d -maxdepth 2 | sed 's/\/.git//' | xargs -P10 -i -- echo echo '$(tput setaf 3)Fetching  {}...$(tput setaf 7)' \; git -C {} fetch \; | sh"
+    alias git-rp="find . -name ".git" -type d -maxdepth 2 | sed 's/\/.git//' | xargs -P10 -i -- echo echo '$(tput setaf 3)Pulling  {}...$(tput setaf 7)' \; git -C {} pull \; | sh"
+    alias git-rs="find . -name ".git" -type d -maxdepth 2 | sed 's/\/.git//' | xargs -P10 -i -- echo echo '$(tput setaf 3)Status checking {}...$(tput setaf 7)' \; git -C {} status -s \; | sh"
+fi
+
+## open directory to GUI
+case "$THISOS" in
+    macos*)
+        alias open-d="open"
+	;;
+    linux*)
+        alias open-d="xdg-open"
+	;;
+    *)
+	;;
+esac
+
+
+# Get week number
+alias week='date +%V'
+
+
+## IP addresses
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+
+alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
+
+
+## Java
+function jar_manifest {
+  # about "extracts the specified JAR file's MANIFEST file and prints it to stdout"
+  # group 'java'
+  # param '1: JAR file to extract the MANIFEST from'
+  # example 'jar_manifest lib/foo.jar'
+
+  unzip -c $1 META-INF/MANIFEST.MF
+}
+
+
+## Homebrew
+if [ $THISOS == "macos" ] && [ $(command -v brew) ]
+then
+    alias bw-up='brew update && brew upgrade --cleanup'
+    alias bw-out='brew outdated'
+    alias bw-in='brew install'
+    alias bw-rm='brew uninstall'
+    alias bw-cl='brew cleanup'
+    alias bw-ls='brew list'
+    alias bw-sr='brew search'
+    alias bw-inf='brew info'
+    alias bw-dr='brew doctor'
+    alias bw-ed='brew edit'
+fi
+
+## ansible-playbook
+if [[ $(command -v ansible-playbook) ]] ; then
+    alias apk='ansible-playbook playbook.yml'
+fi
+
+## mvn
+if [[ $(command -v mvn) ]] ; then
+    alias mci='mvn clean install'
+    alias mi='mvn install'
+    alias mrprep='mvn release:prepare'
+    alias mrperf='mvn release:perform'
+    alias mrrb='mvn release:rollback'
+    alias mdep='mvn dependency:tree'
+    alias mpom='mvn help:effective-pom'
+    alias mcisk='mci -Dmaven.test.skip=true'
+fi

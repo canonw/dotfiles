@@ -1,0 +1,2 @@
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+{{ template "assets.d/dot_bash_aliases/common.sh.tmpl" . -}}
