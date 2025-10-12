@@ -1,0 +1,5 @@
+{{/* .bashrc script to include in any machine */ -}}
+{{ if eq .chezmoi.os "linux" -}}
+{{ else if eq .chezmoi.os "darwin" -}}
+{{ else if eq .chezmoi.os "windows" -}}
+{{ end -}}

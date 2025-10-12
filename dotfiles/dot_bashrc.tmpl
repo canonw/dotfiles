@@ -1,0 +1,17 @@
+# -*-mode:bash-*- vim:ft=bash
+
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+# Executed by bash for non-login shells.
+#
+# See https://www.gnu.org/software/bash/manual/html_node/index.html
+
+# shellcheck shell=bash
+# shellcheck source=/dev/null
+
+{{ if eq .chezmoi.os "linux" -}}
+{{ else if eq .chezmoi.os "darwin" -}}
+{{ else if eq .chezmoi.os "windows" -}}
+{{ else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
