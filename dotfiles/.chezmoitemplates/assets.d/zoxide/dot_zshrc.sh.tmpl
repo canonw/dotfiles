@@ -1,0 +1,13 @@
+{{/* .zshrc script block */ -}}
+{{/* {{ template "assets.d/zoxide/dot_zshrc.sh.tmpl" . }} */ -}}
+{{ template "assets.d/zoxide/header.sh.tmpl" . }}
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init zsh)"
+
+  cd() {
+    # Always print contents of directory when entering
+    __zoxide_z "$@" || return 1
+    # Invoke alias ll for listing
+    ll
+  }
+fi

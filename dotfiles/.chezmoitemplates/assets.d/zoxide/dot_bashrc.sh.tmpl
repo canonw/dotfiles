@@ -1,0 +1,13 @@
+{{/* .bashrc script block */ -}}
+{{/* {{ template "assets.d/zoxide/dot_bashrc.sh.tmpl" . }} */ -}}
+{{ template "assets.d/zoxide/header.sh.tmpl" . }}
+if [[ "$(command -v zoxide)" ]]; then
+  test -f "$(command -v zoxide)" && eval "$(zoxide init bash)"
+
+  cd() {
+    # Always print contents of directory when entering
+    __zoxide_z "$@" || return 1
+    # Invoke alias ll for listing
+    ll
+  }
+fi
