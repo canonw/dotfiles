@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# -*-mode:bash-*- vim:ft=bash
+
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+# Install packages using Volta
+
+{{ template "shared_script_utils.bash" . }}
+
+{{ if eq .chezmoi.os "darwin" -}}
+{{ end -}}
+
+{{ if eq .chezmoi.os "linux" -}}
+packages=(
+    {{- range $package := .packages.volta.common.packages }}
+    "{{ $package }}"
+    {{ end -}}
+    )
+
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+function install_volta_packages() {
+    for package in "${packages[@]}"; do
+        "$VOLTA_HOME/bin/volta" install "${package}"
+        # "$VOLTA_HOME/bin/volta" install --verbose "${package}"
+    done
+}
+
+function uninstall_volta_packages() {
+    "$VOLTA_HOME/bin/volta" uninstall "${PACKAGES[@]}"
+}
+
+function main() {
+    header "Installing packages with volta"
+    install_volta_packages
+    success "Volta packages installed"
+}
+
+if [ ${#BASH_SOURCE[@]} = 1 ]; then
+    main
+fi
+
+{{ end -}}
+
+_safeExit_

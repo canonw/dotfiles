@@ -1,0 +1,23 @@
+{{/* .zshrc script block */ -}}
+{{/* {{ template "assets.d/volta/dot_zshrc.sh.tmpl" . }} */ -}}
+{{ template "assets.d/volta/header.sh.tmpl" . }}
+{{ if eq .chezmoi.os "linux" -}}
+{{-  if eq .chezmoi.osRelease.id "ubuntu" -}}
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+test -f "$(command -v volta)" && eval "$(volta completions zsh)"
+{{-  else -}}
+# TODO: Update setup non-ubuntu volta
+{{-  end -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+
+{{- /* Setup handled by homebrew */ -}}
+
+{{ template "assets.d/volta/aliases.sh.tmpl" . }}
+
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup windows volta
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

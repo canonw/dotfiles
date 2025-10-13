@@ -1,0 +1,15 @@
+{{/* Header script block */ -}}
+{{/* {{ template "assets.d/volta/header.sh.tmpl" . }} */ -}}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
+#               ____
+#  _   ______  / / /_____ _
+# | | / / __ \/ / __/ __ `/
+# | |/ / /_/ / / /_/ /_/ /
+# |___/\____/_/\__/\__,_/
+#
+#
+# volta
+# https://volta.sh/
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

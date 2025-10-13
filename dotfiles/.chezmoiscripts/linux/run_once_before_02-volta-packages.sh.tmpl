@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# -*-mode:bash-*- vim:ft=bash
+
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+# Install Volta
+
+{{ template "shared_script_utils.bash" . }}
+
+{{ if eq .chezmoi.os "darwin" -}}
+{{- /* Handle by Homebrew */ -}}
+{{ end -}}
+
+{{ if eq .chezmoi.os "linux" -}}
+readonly VOLTA_ROOT_DIR="${HOME}/.volta/"
+
+function install_volta() {
+    # Include --skip-setup to exclude build-in setup profile
+    curl https://get.volta.sh | bash -s -- --skip-setup
+}
+
+function uninstall_volta() {
+    rm -fr "${VOLTA_ROOT_DIR}"
+}
+
+function main() {
+    header "Installing Volta"
+    install_volta
+    success "Volta installed"
+}
+
+if [ ${#BASH_SOURCE[@]} = 1 ]; then
+    main
+fi
+
+{{ end -}}
+
+_safeExit_
