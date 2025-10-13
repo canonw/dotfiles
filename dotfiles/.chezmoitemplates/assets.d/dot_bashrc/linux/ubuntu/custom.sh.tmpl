@@ -1,0 +1,18 @@
+# Locations containing files *.bash to be sourced to shell environment
+configFileLocations=(
+    "${HOME}/.dotfile_source"
+)
+
+for configFileLocation in "${configFileLocations[@]}"; do
+    if [ -d "${configFileLocation}" ]; then
+        while read -r configFile; do
+            # shellcheck disable=SC1090
+            source "${configFile}"
+        done < <(find "${configFileLocation}" \
+            -maxdepth 2 \
+            -type f \
+            -name '*.bash' \
+            -o -name '*.sh' \
+            | sort)
+    fi
+done

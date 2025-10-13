@@ -1,5 +1,14 @@
-{{/* .bashrc script to include in any machine */ -}}
+{{/* obsolete */ -}}
+{{/* .bash_profile script to include in any machine */ -}}
 {{ if eq .chezmoi.os "linux" -}}
+{{   if eq .chezmoi.osRelease.id "ubuntu" -}}
+{{     $includeFile := (printf "../assets/.bashrc/%s/default.sh" .chezmoi.osRelease.id) -}}
+{{     if stat (joinPath .chezmoi.sourceDir $includeFile) -}}
+{{       include $includeFile -}}
+{{     end -}}
+{{     if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+{{     end -}}
+{{   end -}}
 {{ else if eq .chezmoi.os "darwin" -}}
 {{ else if eq .chezmoi.os "windows" -}}
 {{ end -}}
