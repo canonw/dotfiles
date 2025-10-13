@@ -1,0 +1,4 @@
+[".local/share/navi/cheats"]
+    type          = "git-repo"
+    url           = "git@github.com:canonw/cheats.git"
+    refreshPeriod = "168h"

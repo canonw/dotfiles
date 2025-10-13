@@ -1,0 +1,22 @@
+{{/* .zshrc script block */ -}}
+{{/* {{ template "assets.d/navi/dot_zshrc.sh.tmpl" . }} */ -}}
+{{ template "assets.d/navi/header.sh.tmpl" . }}
+{{ if eq .chezmoi.os "linux" -}}
+
+test -f "$(command -v navi)" && eval "$(navi widget zsh)"
+
+# Change to .navi configuration directory
+alias .navi='cd ~/.local/share/navi'
+
+{{- else if eq .chezmoi.os "darwin" -}}
+
+test -f "$(command -v navi)" && eval "$(navi widget zsh)"
+
+# Change to .navi configuration directory
+alias .navi='cd ~/.local/share/navi'
+
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

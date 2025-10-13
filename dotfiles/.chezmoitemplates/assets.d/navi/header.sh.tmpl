@@ -1,0 +1,15 @@
+{{/* Header script block */ -}}
+{{/* {{ template "assets.d/navi/header.sh.tmpl" . }} */ -}}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
+#                       _
+#    ____  ____ __   __(_)
+#   / __ \/ __ `/ | / / /
+#  / / / / /_/ /| |/ / /
+# /_/ /_/\__,_/ |___/_/
+#
+#
+# navi
+# https://github.com/denisidoro/navi
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
