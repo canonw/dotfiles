@@ -1,0 +1,17 @@
+{{/* .zshrc script block */ -}}
+{{/* {{ template "assets.d/chezmoi/dot_zshrc.sh.tmpl" . }} */ -}}
+{{ template "assets.d/chezmoi/header.sh.tmpl" . }}
+{{ if eq .chezmoi.os "linux" -}}
+
+alias chezmoi='snap run chezmoi'
+{{   template "assets.d/chezmoi/aliases.sh.tmpl" . }}
+
+{{- else if eq .chezmoi.os "darwin" -}}
+
+{{   template "assets.d/chezmoi/aliases.sh.tmpl" . }}
+
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup
+{{ else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

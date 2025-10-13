@@ -1,0 +1,15 @@
+{{/* shell alias script block */ -}}
+{{/* {{ template "assets.d/chezmoi/aliases.sh.tmpl" . }} */ -}}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin")) -}}
+
+# Change to chezmoi data directory
+alias .chezmoi='cd ~/.local/share/chezmoi'
+
+# Change to chezmoi configuration directory
+alias .chezmoi.config='cd ~/.config/chezmoi'
+
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup
+{{ else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
