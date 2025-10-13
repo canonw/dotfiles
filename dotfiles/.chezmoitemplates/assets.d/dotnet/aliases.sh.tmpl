@@ -1,0 +1,34 @@
+{{/* shell alias script block */ -}}
+{{/* {{ template "assets.d/dotnet/aliases.sh.tmpl" . }} */ -}}
+{{ if eq .chezmoi.os "linux" -}}
+{{-  if eq .chezmoi.osRelease.id "ubuntu" -}}
+{{/* Ubuntu */ -}}
+# Change to nuget configuration directory
+alias .nuget='cd ~/.nuget'
+
+alias .dotnet_tools='cd ~/.dotnet/tools'
+{{-    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+{{/*   WSL */ -}}
+{{-    else -}}
+{{/*   non-WSL */ -}}
+{{-    end -}}
+{{-  else -}}
+{{/* non-Ubuntu */ -}}
+{{-  end -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{/* Darwin */ -}}
+
+# Change to nuget configuration directory
+alias .nuget='cd ~/.nuget'
+
+alias .dotnet_tools='cd ~/.dotnet/tools'
+{{- else if eq .chezmoi.os "windows" -}}
+# Change to nuget configuration directory
+alias .nuget='cd $USERPROFILE/.nuget'
+
+alias .nuget.config='cd $APPDATA/Nuget'
+
+alias .dotnet_tools='cd $USERPROFILE/.dotnet/tools'
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

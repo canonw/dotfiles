@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# -*-mode:bash-*- vim:ft=bash
+
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+# Install dotnet global tools
+
+{{ template "shared_script_utils.bash" . }}
+
+{{ if eq .chezmoi.os "darwin" -}}
+{{ end -}}
+
+{{ if eq .chezmoi.os "linux" -}}
+packages=(
+    {{- range $package := .packages.dotnet_tools.common.packages }}
+    "{{ $package }}"
+    {{ end -}}
+    )
+
+function install_dotnet_tools() {
+    for package in "${packages[@]}"; do
+        dotnet tool install ${package} --global
+    done
+}
+
+function uninstall_dotnet_tools() {
+    for package in "${packages[@]}"; do
+        dotnet tool uninstall ${package} --global
+    done
+}
+
+function main() {
+    header "Installing dotnet global tools"
+    install_dotnet_tools
+    success "dotnet tools installed"
+}
+
+if [ ${#BASH_SOURCE[@]} = 1 ]; then
+    main
+fi
+
+{{ end -}}
+
+_safeExit_

@@ -1,0 +1,14 @@
+{{/* Header script block */ -}}
+{{/* {{ template "assets.d/dotnet/header.sh.tmpl" . }} */ -}}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
+#        __      __             __
+#   ____/ /___  / /_____  ___  / /_
+#  / __  / __ \/ __/ __ \/ _ \/ __/
+# / /_/ / /_/ / /_/ / / /  __/ /_
+# \__,_/\____/\__/_/ /_/\___/\__/
+#
+#
+# dotnet
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

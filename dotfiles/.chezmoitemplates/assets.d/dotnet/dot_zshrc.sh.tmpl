@@ -1,0 +1,30 @@
+{{/* .zshrc script block */ -}}
+{{/* {{ template "assets.d/dotnet/dot_zshrc.sh.tmpl" . }} */ -}}
+{{ template "assets.d/dotnet/header.sh.tmpl" . }}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin")) -}}
+export PATH="$PATH:$HOME/.dotnet/tools"
+
+_dotnet_zsh_complete()
+{
+  local completions=("$(dotnet complete "$words")")
+
+  # If the completion list is empty, just continue with filename selection
+  if [ -z "$completions" ]
+  then
+    _arguments '*::arguments: _normal'
+    return
+  fi
+
+  # This is not a variable assignment, don't remove spaces!
+  _values = "${(ps:\n:)completions}"
+}
+
+compdef _dotnet_zsh_complete dotnet
+
+{{ template "assets.d/dotnet/aliases.sh.tmpl" . }}
+
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
