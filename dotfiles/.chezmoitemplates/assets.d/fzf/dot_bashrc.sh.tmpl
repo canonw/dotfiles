@@ -1,0 +1,11 @@
+{{/* .bashrc script block */ -}}
+{{/* {{ template "assets.d/fzf/dot_bashrc.sh.tmpl" . }} */ -}}
+{{ template "assets.d/fzf/header.sh.tmpl" . }}
+{{ if eq .chezmoi.os "linux" -}}
+[ -x "$(command -v fzf)" ] && source "/usr/share/doc/fzf/examples/key-bindings.bash"
+{{ else if eq .chezmoi.os "darwin" -}}
+test -f "$(command -v fzf)" && eval "$(fzf --bash)"
+{{ else if eq .chezmoi.os "windows" -}}
+{{ else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

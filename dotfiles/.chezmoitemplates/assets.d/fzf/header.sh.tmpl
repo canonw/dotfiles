@@ -1,0 +1,15 @@
+{{/* Header script block */ -}}
+{{/* {{ template "assets.d/fzf/header.sh.tmpl" . }} */ -}}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
+#     ____      ____
+#    / __/___  / __/
+#   / /_/_  / / /_
+#  / __/ / /_/ __/
+# /_/   /___/_/
+#
+#
+# fzf
+# https://junegunn.github.io/fzf/
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

@@ -1,0 +1,17 @@
+{{/* .zshrc script block */ -}}
+{{/* {{ template "assets.d/fzf/dot_zshrc.sh.tmpl" . }} */ -}}
+{{ template "assets.d/fzf/header.sh.tmpl" . }}
+{{ if eq .chezmoi.os "linux" -}}
+
+[ -x "$(command -v fzf)" ] && source "/usr/share/doc/fzf/examples/completion.zsh"
+[ -x "$(command -v fzf)" ] && source "/usr/share/doc/fzf/examples/key-bindings.zsh"
+
+{{- else if eq .chezmoi.os "darwin" -}}
+
+test -f "$(command -v fzf)" && source <(fzf --zsh)
+
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
