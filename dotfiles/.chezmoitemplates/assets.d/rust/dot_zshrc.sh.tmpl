@@ -1,0 +1,20 @@
+{{/* .zshrc script block */ -}}
+{{/* {{ template "assets.d/rust/dot_zshrc.sh.tmpl" . }} */ -}}
+{{ template "assets.d/rust/header.sh.tmpl" . }}
+{{ if eq .chezmoi.os "linux" -}}
+{{-  if eq .chezmoi.osRelease.id "ubuntu" -}}
+
+PATH=$PATH:$HOME/.cargo/bin
+
+{{ template "assets.d/rust/aliases.sh.tmpl" . }}
+
+{{-  else -}}
+# TODO: Update setup non-ubuntu rust
+{{-  end -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+# TODO: Update setup darwin rust
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup windows rust
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

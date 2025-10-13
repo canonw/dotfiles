@@ -1,0 +1,11 @@
+{{/* shell alias script block */ -}}
+{{/* {{ template "assets.d/rust/aliases.sh.tmpl" . }} */ -}}
+{{ if eq .chezmoi.os "linux" -}}
+{{-  if eq .chezmoi.osRelease.id "ubuntu" -}}
+{{-  else -}}
+{{-  end -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{- else if eq .chezmoi.os "windows" -}}
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

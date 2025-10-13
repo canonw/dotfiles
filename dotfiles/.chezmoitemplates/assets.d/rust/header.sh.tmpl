@@ -1,0 +1,14 @@
+{{/* Header script block */ -}}
+{{/* {{ template "assets.d/rust/header.sh.tmpl" . }} */ -}}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
+#                     __
+#    _______  _______/ /_
+#   / ___/ / / / ___/ __/
+#  / /  / /_/ (__  ) /_
+# /_/   \__,_/____/\__/
+#
+#
+# rust
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
