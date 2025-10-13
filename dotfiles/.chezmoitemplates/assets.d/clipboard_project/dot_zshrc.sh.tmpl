@@ -1,0 +1,17 @@
+{{/* .zshrc script block */ -}}
+{{/* {{ template "assets.d/clipboard_project/dot_zshrc.sh.tmpl" . }} */ -}}
+{{ template "assets.d/clipboard_project/header.sh.tmpl" . }}
+{{ if eq .chezmoi.os "linux" -}}
+
+alias cb='snap run clipboard'
+export CLIPBOARD_THEME=darkhighcontrast
+
+{{- else if eq .chezmoi.os "darwin" -}}
+
+export CLIPBOARD_THEME=darkhighcontrast
+
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
