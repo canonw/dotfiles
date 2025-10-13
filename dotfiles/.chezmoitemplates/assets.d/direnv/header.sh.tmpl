@@ -1,0 +1,15 @@
+{{/* Header script block */ -}}
+{{/* {{ template "assets.d/direnv/header.sh.tmpl" . }} */ -}}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
+#        ___
+#   ____/ (_)_______  ____ _   __
+#  / __  / / ___/ _ \/ __ \ | / /
+# / /_/ / / /  /  __/ / / / |/ /
+# \__,_/_/_/   \___/_/ /_/|___/
+#
+#
+# direnv
+# https://direnv.net/
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

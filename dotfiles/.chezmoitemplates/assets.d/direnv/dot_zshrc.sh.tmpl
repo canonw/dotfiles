@@ -1,0 +1,31 @@
+{{/* .zshrc script block */ -}}
+{{/* {{ template "assets.d/direnv/dot_zshrc.sh.tmpl" . }} */ -}}
+{{ template "assets.d/direnv/header.sh.tmpl" . }}
+{{ if eq .chezmoi.os "linux" -}}
+
+# Use oh-my-zsh direnv plugin
+# https://direnv.net/docs/hook.html
+
+{{-  if eq .chezmoi.osRelease.id "ubuntu" -}}
+{{-    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+{{/* Nothing to update in WSL */ -}}
+{{-    else -}}
+# TODO: Update setup
+{{-    end -}}
+
+{{ template "assets.d/direnv/aliases.sh.tmpl" . }}
+
+{{-  else -}}
+# TODO: Update setup
+{{-  end -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+
+{{- /* Setup handled by homebrew */ -}}
+
+{{ template "assets.d/direnv/aliases.sh.tmpl" . }}
+
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

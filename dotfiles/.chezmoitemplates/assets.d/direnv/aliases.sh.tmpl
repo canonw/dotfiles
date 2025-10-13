@@ -1,0 +1,14 @@
+{{/* shell alias script block */ -}}
+{{/* {{ template "assets.d/direnv/aliases.sh.tmpl" . }} */ -}}
+{{ if eq .chezmoi.os "linux" -}}
+{{-  if eq .chezmoi.osRelease.id "ubuntu" -}}
+{{-    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+{{-    else -}}{{-    end -}}
+{{-  else -}}
+{{-  end -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup windows
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
