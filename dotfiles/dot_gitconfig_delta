@@ -1,0 +1,21 @@
+# -*-mode:gitconfig-*- vim:ft=gitconfig
+
+# ~/.my_config/.gitconfig_delta
+# =============================================================================
+# git-delta configuration sourced by `~/.gitconfig`.
+#
+# See https://dandavison.github.io/delta/
+
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    line-numbers = true
+    navigate = true  # use n and N to move between diff sections
+    side-by-side = true
+
+[merge]
+    conflictStyle = zdiff3
