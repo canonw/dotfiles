@@ -1,0 +1,17 @@
+{{/* shell alias script block */ -}}
+{{/* {{ template "assets.d/lsd/aliases.sh.tmpl" . }} */ -}}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin")) -}}
+
+if [[ $(command -v lsd) ]] ; then
+    # alias ls='lsd'
+    alias ll='lsd -l'
+    alias la='lsd -a'
+    alias lla='lsd -la'
+    alias lt='lsd --tree'
+fi
+
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup
+{{ else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

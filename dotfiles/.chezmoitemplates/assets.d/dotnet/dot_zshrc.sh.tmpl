@@ -23,6 +23,7 @@ compdef _dotnet_zsh_complete dotnet
 
 {{ template "assets.d/dotnet/aliases.sh.tmpl" . }}
 
+{{- else if eq .chezmoi.os "darwin" -}}
 {{- else if eq .chezmoi.os "windows" -}}
 # TODO: Update setup
 {{- else -}}
