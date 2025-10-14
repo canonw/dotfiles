@@ -1,0 +1,16 @@
+{{/* shell alias script block */ -}}
+{{/* {{ template "assets.d/aws-cli/aliases.sh.tmpl" . }} */ -}}
+{{ if eq .chezmoi.os "linux" -}}
+# Change to aws cli configuration directory
+alias .aws='cd ~/.aws'
+
+{{- else if eq .chezmoi.os "darwin" -}}
+
+# Change to aws cli configuration directory
+alias .aws='cd ~/.aws'
+
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

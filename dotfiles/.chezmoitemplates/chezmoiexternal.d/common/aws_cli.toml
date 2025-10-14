@@ -1,0 +1,4 @@
+[".aws/cli/alias"]
+    type          = "file"
+    url           = "https://raw.githubusercontent.com/awslabs/awscli-aliases/master/alias"
+    refreshPeriod = "168h"

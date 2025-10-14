@@ -1,0 +1,18 @@
+{{/* .bashrc script block */ -}}
+{{/* {{ template "assets.d/aws-cli/dot_bashrc.sh.tmpl" . }} */ -}}
+{{ template "assets.d/aws-cli/header.sh.tmpl" . }}
+{{ if eq .chezmoi.os "linux" -}}
+
+test -f "$(command -v aws_completer)" && complete -C "$(which aws_completer)" aws
+
+{{ template "assets.d/aws-cli/aliases.sh.tmpl" . }}
+
+{{- else if eq .chezmoi.os "darwin" -}}
+
+{{ template "assets.d/aws-cli/aliases.sh.tmpl" . }}
+
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

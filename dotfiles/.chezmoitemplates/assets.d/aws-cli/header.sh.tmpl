@@ -1,0 +1,16 @@
+{{/* Header script block */ -}}
+{{/* {{ template "assets.d/aws-cli/header.sh.tmpl" . }} */ -}}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
+#                                   ___
+#   ____ __      _______      _____/ (_)
+#  / __ `/ | /| / / ___/_____/ ___/ / /
+# / /_/ /| |/ |/ (__  )_____/ /__/ / /
+# \__,_/ |__/|__/____/      \___/_/_/
+#
+#
+# aws-cli
+# https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
+# https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-completion.html
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
