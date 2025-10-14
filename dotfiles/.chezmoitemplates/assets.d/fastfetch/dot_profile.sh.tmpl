@@ -1,0 +1,10 @@
+{{/* profile script block */ -}}
+{{/* {{ template "assets.d/fastfetch/dot_profile.sh.tmpl" . }} */ -}}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin" )) -}}
+{{ template "assets.d/fastfetch/header.sh.tmpl" . }}
+test -f "$(command -v fastfetch)" && fastfetch
+{{ else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup
+{{ else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
