@@ -1,0 +1,13 @@
+# -*-mode:zsh-*- vim:ft=zsh
+
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+#
+
+{{ if eq .chezmoi.os "linux" -}}
+{{   template "assets.d/dot_zshrc/linux/build.sh.tmpl" . -}}
+{{ else if eq .chezmoi.os "darwin" -}}
+{{ else if eq .chezmoi.os "windows" -}}
+{{ else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
