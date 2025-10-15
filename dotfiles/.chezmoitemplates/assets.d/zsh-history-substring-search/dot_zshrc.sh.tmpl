@@ -1,0 +1,7 @@
+{{/* .zshrc script block */ -}}
+{{/* {{ template "assets.d/zsh-history-substring-search/dot_zshrc.sh.tmpl" . }} */ -}}
+{{ template "assets.d/zsh-history-substring-search/header.sh.tmpl" . }}
+# source $ZSH_CUSTOM/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
