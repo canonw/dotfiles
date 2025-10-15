@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# -*-mode:bash-*- vim:ft=bash
+
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+# Install apt PPA
+
+{{ template "shared_script_utils.bash" . }}
+
+{{ if eq .chezmoi.os "linux" -}}
+
+# https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu-decision
+readonly PPA_REPOSITORIES=(
+    ppa:dotnet/backports
+)
+
+function install_ppa() {
+    sudo add-apt-repository -y "${PPA_REPOSITORIES[@]}"
+    # sudo apt-get update
+}
+
+function uninstall_ppa() {
+    sudo add-apt-repository --remove "${PPA_REPOSITORIES[@]}"
+}
+
+function main() {
+    header "Installing apt ppa"
+    install_ppa
+    success "Apt ppa installed"
+}
+
+if [ ${#BASH_SOURCE[@]} = 1 ]; then
+    main
+fi
+{{ end -}}
+
+_safeExit_

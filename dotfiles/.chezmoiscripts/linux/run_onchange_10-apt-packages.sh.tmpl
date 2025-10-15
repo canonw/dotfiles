@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# -*-mode:bash-*- vim:ft=bash
+
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+# Install packages for the OS
+
+{{ template "shared_script_utils.bash" . }}
+
+{{ if eq .chezmoi.os "darwin" -}}
+{{ end -}}
+
+{{ if eq .chezmoi.os "linux" -}}
+packages=(
+    {{- range $package := .packages.apt.common.packages }}
+    "{{ $package }}"
+    {{ end -}}
+    )
+
+header "Installing packages with apt"
+for package in "${packages[@]}"; do
+    if sudo dpkg-query -l | awk {'print $2'} | grep -E "^${package}$" &>/dev/null; then
+        info "Package ${package} is already installed"
+        continue
+    fi
+    if apt-cache search --names-only '^${package}$' | grep '${package}' &>/dev/null; then
+        sudo apt-get install -y --no-upgrade ${package}
+    else
+        warning "Package ${package} is not available in apt"
+    fi
+done
+
+success "Apt packages installed"
+
+header "Installing packages with snap"
+
+function install_clipboard_project() {
+    sudo snap install "clipboard"
+    # sudo snap install "aws-cli" --classic
+}
+
+install_clipboard_project
+success "Snap packages installed"
+{{ end -}}
+
+_safeExit_

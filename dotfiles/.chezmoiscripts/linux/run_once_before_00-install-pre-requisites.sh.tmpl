@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# -*-mode:bash-*- vim:ft=bash
+
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+# Install required packages before installing other packages
+
+{{ template "shared_script_utils.bash" . -}}
+
+{{ if eq .chezmoi.os "darwin" -}}
+{{ end -}}
+{{ if eq .chezmoi.os "linux" -}}
+packages=(
+    {{- range $package := .packages.apt.prerequisites.packages }}
+    "{{ $package }}"
+    {{ end -}}
+)
+
+header "Installing pre-requisite packages with apt"
+# sudo apt-get update
+
+for package in "${packages[@]}"; do
+    if sudo dpkg-query -l | awk {'print $2'} | grep -E "^${package}$" &>/dev/null; then
+        info "Package ${package} is already installed"
+        continue
+    fi
+    if apt-cache search --names-only '^${package}$' | grep '${package}' &>/dev/null; then
+        sudo apt-get install -y --no-upgrade ${package}
+    else
+        warning "Package ${package} is not available in apt"
+    fi
+done
+
+success "Apt packages installed"
+{{ end -}}
+
+_safeExit_

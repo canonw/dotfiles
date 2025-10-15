@@ -1,5 +1,0 @@
-{{ if eq .chezmoi.os "linux" -}}
-{{   if eq .chezmoi.osRelease.id "ubuntu" -}}
-{{     include "../install/ubuntu/common/pre-requisites.sh" }}
-{{   end -}}
-{{ end -}}

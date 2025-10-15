@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# -*-mode:bash-*- vim:ft=bash
+
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+# Install required packages before installing other packages
+
+{{ template "shared_script_utils.bash" . -}}
+
+{{ if eq .chezmoi.os "darwin" -}}
+
+function is_homebrew_exists() {
+    command -v brew &>/dev/null
+}
+
+function install_homebrew() {
+    if ! is_homebrew_exists; then
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    else
+        info "Brew is already installed"
+    fi
+}
+
+function opt_out_of_analytics() {
+    info "Turn off brew analytics"
+    brew analytics off
+}
+
+function main() {
+    install_homebrew
+    opt_out_of_analytics
+
+    success "Brew installed"
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main
+fi
+{{ end -}}
+{{ if eq .chezmoi.os "linux" -}}
+{{ end -}}
+
+_safeExit_
