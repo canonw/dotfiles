@@ -5,9 +5,10 @@
 #
 
 {{ if eq .chezmoi.os "linux" -}}
-{{   template "assets.d/dot_zshrc/linux/build.sh.tmpl" . -}}
-{{ else if eq .chezmoi.os "darwin" -}}
-{{ else if eq .chezmoi.os "windows" -}}
-{{ else -}}
+{{   template "assets.d/dot_zshrc/linux/build.sh.tmpl" . }}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup
+{{- else -}}
 {{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
 {{ end -}}
