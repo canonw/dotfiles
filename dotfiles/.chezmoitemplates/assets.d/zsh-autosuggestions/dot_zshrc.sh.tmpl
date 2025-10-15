@@ -1,0 +1,7 @@
+{{/* .zshrc script block */ -}}
+{{/* {{ template "assets.d/zsh-autosuggestions/dot_zshrc.sh.tmpl" . }} */ -}}
+{{ template "assets.d/zsh-autosuggestions/header.sh.tmpl" . }}
+#source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ff00ff,bg=cyan,bold,underline"
+
+bindkey '^ ' autosuggest-accept
