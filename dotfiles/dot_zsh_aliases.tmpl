@@ -1,0 +1,10 @@
+# -*-mode:zsh-*- vim:ft=zsh
+
+# ~/.zsh_aliases
+{{ if eq .chezmoi.os "linux" -}}
+{{   template "assets.d/dot_zsh_aliases/linux/build.sh.tmpl" . -}}
+{{ else if eq .chezmoi.os "darwin" -}}
+{{ else if eq .chezmoi.os "windows" -}}
+{{ else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
