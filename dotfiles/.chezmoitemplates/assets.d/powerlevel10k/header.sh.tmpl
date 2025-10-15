@@ -1,0 +1,15 @@
+{{/* Header script block */ -}}
+{{/* {{ template "assets.d/powerlevel10k/header.sh.tmpl" . }} */ -}}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
+#                                    __               _________  __
+#     ____  ____ _      _____  _____/ /__ _   _____  / <  / __ \/ /__
+#    / __ \/ __ \ | /| / / _ \/ ___/ / _ \ | / / _ \/ // / / / / //_/
+#   / /_/ / /_/ / |/ |/ /  __/ /  / /  __/ |/ /  __/ // / /_/ / ,<
+#  / .___/\____/|__/|__/\___/_/  /_/\___/|___/\___/_//_/\____/_/|_|
+# /_/
+#
+# powerlevel10k
+# https://github.com/romkatv/powerlevel10k
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
