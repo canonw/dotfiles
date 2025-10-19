@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# -*-mode:bash-*- vim:ft=bash
+
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+# Install aws-cli
+
+{{ template "shared_script_utils.bash" . }}
+
+{{ if eq .chezmoi.os "linux" -}}
+function install_aws-cli() {
+    # https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#getting-started-install-instructions
+
+    local url="https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+
+    # create tmp directory
+    local tmp_dir
+    tmp_dir="$(mktemp -d)"
+
+    # download the package file
+    local file_path="awscliv2.zip"
+    local zip_path="${tmp_dir%/}/${file_path}"
+    curl -o "${zip_path}" "${url}"
+
+    # uznip the package file
+    cd ${tmp_dir}
+    unzip awscliv2.zip
+
+    # install the package file
+    sudo ./aws/install
+
+    # clean up the tmp directory
+    rm -rf "${tmp_dir}"
+}
+
+# function uninstall_aws-cli() {
+# }
+
+function main() {
+    header "Installing aws-cli"
+    install_aws-cli
+    success "aws-cli installed"
+}
+
+if [ ${#BASH_SOURCE[@]} = 1 ]; then
+    main
+fi
+{{ end -}}
+
+_safeExit_

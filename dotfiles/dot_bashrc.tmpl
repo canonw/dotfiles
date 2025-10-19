@@ -9,9 +9,13 @@
 # shellcheck shell=bash
 # shellcheck source=/dev/null
 {{ if eq .chezmoi.os "linux" -}}
-{{   template "assets.d/dot_bashrc/linux/build.sh.tmpl" . -}}
-{{ else if eq .chezmoi.os "darwin" -}}
-{{ else if eq .chezmoi.os "windows" -}}
-{{ else -}}
+{{   template "assets.d/dot_bashrc/linux/build.sh.tmpl" . }}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{   template "assets.d/dot_bashrc/darwin.sh.tmpl" . }}
+{{- else if eq .chezmoi.os "windows" -}}
+
+# TODO: Update setup
+
+{{- else -}}
 {{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
 {{ end -}}

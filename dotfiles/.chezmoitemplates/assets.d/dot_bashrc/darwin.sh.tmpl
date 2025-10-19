@@ -1,0 +1,34 @@
+{{ if ne .chezmoi.os "darwin" -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
+[ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
+
+{{   template "assets.d/dot_bashrc/common/bash_completion.sh.tmpl" . }}
+
+{{   template "assets.d/python/dot_bashrc.sh.tmpl" . }}
+
+{{   template "assets.d/dotnet/dot_bashrc.sh.tmpl" . }}
+{{/*  TODO: template "assets.d/rust/dot_bashrc.sh.tmpl" . */ -}}
+# TODO: Add rust
+{{- /* No additional setup for volta */}}
+{{   template "assets.d/aws-cli/dot_bashrc.sh.tmpl" . }}
+
+{{   template "assets.d/chezmoi/dot_bashrc.sh.tmpl" . }}
+
+{{   template "assets.d/clipboard_project/dot_bashrc.sh.tmpl" . }}
+
+{{   template "assets.d/direnv/dot_bashrc.sh.tmpl" . }}
+
+{{   template "assets.d/fzf/dot_bashrc.sh.tmpl" . }}
+
+{{   template "assets.d/gnupg/dot_bashrc.sh.tmpl" . }}
+
+{{   template "assets.d/kubectl/dot_bashrc.sh.tmpl" . }}
+
+{{   template "assets.d/lsd/dot_bashrc.sh.tmpl" . }}
+
+{{   template "assets.d/navi/dot_bashrc.sh.tmpl" . }}
+
+{{/* No additional setup for xclip */ -}}
+
+{{   template "assets.d/zoxide/dot_bashrc.sh.tmpl" . }}
