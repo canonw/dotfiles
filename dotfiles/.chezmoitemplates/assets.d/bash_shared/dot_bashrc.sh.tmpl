@@ -1,0 +1,12 @@
+{{/* .bashrc script block */ -}}
+{{/* {{ template "assets.d/bash_shared/dot_bashrc.sh.tmpl" . }} */ -}}
+{{ template "assets.d/bash_shared/header.sh.tmpl" . }}
+{{ if eq .chezmoi.os "linux" -}}
+# TODO: Update setup
+{{ else if eq .chezmoi.os "darwin" -}}
+# TODO: Update setup
+{{ else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup
+{{ else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

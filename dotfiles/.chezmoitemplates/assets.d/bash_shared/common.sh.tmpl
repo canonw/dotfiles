@@ -1,0 +1,19 @@
+{{/* .bashrc script block */ -}}
+{{/* {{ template "assets.d/bash_shared/common.sh.tmpl" . }} */ -}}
+{{ template "assets.d/bash_shared/header.sh.tmpl" . }}
+{{ "" }}
+{{- if eq .chezmoi.os "linux" -}}
+# TODO: Update setup
+{{- else if eq .chezmoi.os "darwin" -}}
+{{ "" }}
+if [ "$BASH" ]; then
+  if [[ -f "$HOME/.bashrc" ]]; then
+    source "$HOME/.bashrc"
+  fi
+fi
+{{ "" }}
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{- end -}}

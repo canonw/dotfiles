@@ -1,0 +1,10 @@
+{{/* Configure bash-completion */ -}}
+# shellcheck source=/dev/null
+{{ if eq .chezmoi.os "linux" -}}
+[[ -f "/etc/profile.d/bash_completion.sh" ]] && source "/etc/profile.d/bash_completion.sh"
+{{ else if eq .chezmoi.os "darwin" -}}
+[[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
+{{ else if eq .chezmoi.os "windows" -}}
+{{ else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
