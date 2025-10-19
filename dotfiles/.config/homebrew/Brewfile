@@ -1,0 +1,141 @@
+# -*-mode:ruby-*- vim:ft=ruby
+
+# ~/Brewfile
+# =============================================================================
+# Project dependencies installed using `brew bundle` or `~/dotfiles.sh`.
+#
+# See https://github.com/Homebrew/homebrew-bundle
+
+# brew bundle
+
+# Fonts
+#cask "font-jetbrains-mono"
+# Used by Visual Studio Code
+cask "font-jetbrains-mono-nerd-font"
+# cask "font-fira-code"
+# Used by Visual Studio Code and iTerm2
+cask "font-hack-nerd-font"
+# cask "font-inconsolata"
+# cask "font-source-code-pro"
+# cask "font-victor-mono"
+
+# Browsers
+cask "firefox"
+cask "google-chrome"
+
+# GNU commands
+brew "adns" #  Advanced, easy to use, asynchronous-capable DNS client library and utilities.
+brew "autoconf"
+brew "bash"
+brew "binutils"
+brew "coreutils"
+brew "diffutils"
+brew "ed"
+brew "findutils"
+brew "flex"
+brew "gawk"
+brew "gnu-indent"
+brew "gnu-sed"
+brew "gnu-tar"
+brew "gnu-which"
+brew "gpatch"
+brew "grep"
+brew "gzip"
+brew "less"
+brew "m4"
+brew "make"
+brew "nano"
+brew "screen"
+brew "watch"
+brew "wdiff"
+brew "wget"
+brew "zip"
+
+# Command line
+brew "ansible"
+brew "awscli"
+brew "bash-completion@2"
+brew "bat"  # A cat(1) clone with syntax highlighting and Git integration.
+brew "boxes"  # Draw boxes around text
+brew "clipboard"
+brew "curl"
+brew "fastfetch"  # Replace neofetch
+brew "figlet"  # Banner-like program prints strings as ASCII art
+brew "fzf"
+# brew "gopass"  # Slightly more awesome Standard Unix Password Manager for Teams
+brew "imagemagick"
+brew "jq"
+brew "kubernetes-cli"
+brew "mas"
+brew "navi"
+brew "openssl@3"
+brew "ripgrep"
+brew "shellcheck"
+# brew "sqlcmd"  # Microsoft SQL Server command-line interface
+brew "trash"
+brew "tree"
+# brew "unbound"  # Validating, recursive, caching DNS resolver
+brew "watchman"  # Watch files and take action when they change.  https://facebook.github.io/watchman/
+brew "yamllint"
+brew "yq"
+brew "zoxide" # Shell extension to navigate your filesystem faster
+
+# Docker
+# TODO: Fix this
+# brew dive  # Tool for exploring each layer in a docker image.  https://github.com/wagoodman/dive
+cask "docker-desktop"
+
+# Dotnet
+tap "isen-ng/dotnet-sdk-versions"
+cask "dotnet-sdk8"
+cask "dotnet-sdk9"
+
+# Git
+brew "git"
+brew "git-flow" # Extensions to follow Vincent Driessen's branching model
+brew "git-open"
+brew "tig" # Text-mode interface for Git
+
+# Github
+brew "gh"
+# cask "github"
+
+# gnupg
+brew "gnupg"
+brew "pinentry-mac"
+
+# GUI
+cask "espanso"
+# cask "karabiner-elements" # keyboard customizer
+cask "keepingyouawake" # Prevents your Mac from going to sleep
+# cask "lepton" # Snippet management app
+cask "rectangle"
+cask "shottr"
+# cask "tabby" # Terminal emulator, SSH and serial client
+
+# IDE
+cask "jetbrains-toolbox"
+brew "neovim"
+
+# IDE - VS Code
+cask "visual-studio-code"
+vscode "editorconfig.editorconfig"
+vscode "timonwong.shellcheck"
+vscode "davidanson.vscode-markdownlint"
+vscode "streetsidesoftware.code-spell-checker"
+
+# JavaScript
+# brew "deno"  # Secure runtime for JavaScript and TypeScript
+brew "volta" # JavaScript toolchain manager for reproducible environments
+
+# Java
+# brew "jenv"
+
+# Python
+brew "pyenv"
+brew "python@3.13"
+brew "pipx"
+
+# Ansible
+brew "ansible-lint"
+vscode "redhat.ansible"

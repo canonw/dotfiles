@@ -1,0 +1,8 @@
+{{/* .profile script block */ -}}
+{{/* {{ template "assets.d/homebrew/dot_profile.sh.tmpl" . }} */ -}}
+{{ template "assets.d/homebrew/header.sh.tmpl" . }}
+{{ if eq .chezmoi.os "darwin" -}}
+eval "$(/opt/homebrew/bin/brew shellenv)"
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

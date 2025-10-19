@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# -*-mode:bash-*- vim:ft=bash
+
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+# Install packages for the OS
+
+{{ template "shared_script_utils.bash" . }}
+
+{{ if eq .chezmoi.os "darwin" -}}
+
+function install_brew() {
+    local tmp_file
+    tmp_file="$(mktemp /tmp/brewfile-XXXXXXXXXX)"
+
+    cat << EOF > "${tmp_file}"
+{{ include (joinPath .chezmoi.sourceDir ".config" "homebrew" "Brewfile") }}
+EOF
+
+    brew bundle --file "${tmp_file}"
+
+    rm -f "${tmp_file}"
+}
+
+# function uninstall_brew() {
+#     brew bundle remove
+# }
+
+function main() {
+    header "Installing packages with brew"
+    install_brew
+    success "brew packages installed"
+}
+
+if [ ${#BASH_SOURCE[@]} = 1 ]; then
+    main
+fi
+{{ end -}}
+
+_safeExit_

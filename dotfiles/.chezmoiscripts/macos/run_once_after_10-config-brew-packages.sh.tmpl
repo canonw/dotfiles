@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# -*-mode:bash-*- vim:ft=bash
+
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+# Configure Homebrew package configuration
+
+{{ template "shared_script_utils.bash" . }}
+
+{{ if eq .chezmoi.os "darwin" -}}
+
+function install_bash() {
+
+    local line="/opt/homebrew/bin/bash"
+    local file_path="/etc/shells"
+
+    info "Configure bash shell"
+    sudo grep -qF -- "${line}" "${file_path}" || echo "${line}" | sudo tee -a "${file_path}"
+}
+
+function install_zsh() {
+
+    local line="/opt/homebrew/bin/zsh"
+    local file_path="/etc/shells"
+
+    info "Configure z shell"
+    sudo grep -qF -- "${line}" "${file_path}" || echo "${line}" | sudo tee -a "${file_path}"
+}
+
+function main() {
+    header "Configure Homebrew shell"
+    install_bash
+    install_zsh
+    success "Homebrew shell configured"
+}
+
+if [ ${#BASH_SOURCE[@]} = 1 ]; then
+    main
+fi
+{{ end -}}
+
+_safeExit_

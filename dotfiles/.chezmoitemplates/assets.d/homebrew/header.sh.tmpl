@@ -1,0 +1,14 @@
+{{/* Header script block */ -}}
+{{/* {{ template "assets.d/homebrew/header.sh.tmpl" . }} */ -}}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
+#     __                         __
+#    / /_  ____  ____ ___  ___  / /_  ________ _      __
+#   / __ \/ __ \/ __ `__ \/ _ \/ __ \/ ___/ _ \ | /| / /
+#  / / / / /_/ / / / / / /  __/ /_/ / /  /  __/ |/ |/ /
+# /_/ /_/\____/_/ /_/ /_/\___/_.___/_/   \___/|__/|__/
+#
+#
+# homebrew
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
