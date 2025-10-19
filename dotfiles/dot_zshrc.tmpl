@@ -7,6 +7,7 @@
 {{ if eq .chezmoi.os "linux" -}}
 {{   template "assets.d/dot_zshrc/linux/build.sh.tmpl" . }}
 {{- else if eq .chezmoi.os "darwin" -}}
+{{   template "assets.d/dot_zshrc/darwin.sh.tmpl" . }}
 {{- else if eq .chezmoi.os "windows" -}}
 # TODO: Update setup
 {{- else -}}
