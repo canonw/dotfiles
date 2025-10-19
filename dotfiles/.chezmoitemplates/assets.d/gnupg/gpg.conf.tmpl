@@ -1,0 +1,17 @@
+{{/* gpg.conf script block */ -}}
+{{/* {{ template "assets.d/gnupg/gpg.conf.tmpl" . }} */ -}}
+{{ if eq .chezmoi.os "linux" -}}
+
+# TODO: Update setup
+
+{{- else if eq .chezmoi.os "darwin" -}}
+
+use-agent
+
+{{- else if eq .chezmoi.os "windows" -}}
+
+# TODO: Update setup
+
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

@@ -1,0 +1,14 @@
+# -*-mode:conf-toml-*- vim:ft=toml
+
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+
+{{ if eq .chezmoi.os "linux" -}}
+# TODO: Update setup
+{{ else if eq .chezmoi.os "darwin" -}}
+{{ template "assets.d/gnupg/gpg-agent.conf.tmpl" . }}
+{{ else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup
+{{ else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
