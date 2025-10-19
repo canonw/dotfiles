@@ -1,3 +1,4 @@
+{{- /* .zprofile script block */ -}}
 # -*-mode:zsh-*- vim:ft=zsh
 
 # {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
@@ -5,9 +6,17 @@
 #
 
 {{ if eq .chezmoi.os "linux" -}}
-{{   template "assets.d/dot_zprofile/linux/build.sh.tmpl" . -}}
-{{ else if eq .chezmoi.os "darwin" -}}
-{{ else if eq .chezmoi.os "windows" -}}
-{{ else -}}
+
+{{ template "assets.d/fastfetch/dot_profile.sh.tmpl" . }}
+
+{{- else if eq .chezmoi.os "darwin" -}}
+
+{{ template "assets.d/homebrew/dot_profile.sh.tmpl" . }}
+
+{{ template "assets.d/fastfetch/dot_profile.sh.tmpl" . }}
+
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup
+{{- else -}}
 {{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
 {{ end -}}
