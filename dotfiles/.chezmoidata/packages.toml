@@ -1,0 +1,33 @@
+[packages.nodejs]
+    [packages.nodejs.common]
+        packages = [
+            "eslint",
+            # "gulp-cli",
+            # "node-sass",
+            "prettier",
+            "stylelint",
+            "typescript",
+        ]
+[packages.vscode]
+    [packages.vscode.extensions.common]
+        packages = [
+            "davidanson.vscode-markdownlint",
+            "editorconfig.editorconfig",
+            "gxl.git-graph-3",
+            "redhat.ansible",
+            "redhat.vscode-yaml",
+            "streetsidesoftware.code-spell-checker",
+            "timonwong.shellcheck",
+            # Docker
+            "ms-azuretools.vscode-containers",
+            "ms-vscode-remote.remote-containers",
+            "ms-kubernetes-tools.vscode-kubernetes-tools",
+            # GitHub CoPilot
+            #"github.copilot",
+            #"github.copilot-chat",
+            # Python
+            "ms-python.debugpy",
+            "ms-python.python",
+            "ms-python.vscode-pylance",
+            "ms-python.vscode-python-envs",
+        ]

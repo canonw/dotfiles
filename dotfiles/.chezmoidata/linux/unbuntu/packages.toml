@@ -1,0 +1,96 @@
+[packages.apt]
+    [packages.apt.prerequisites]
+        packages = [
+            "apt-transport-https",
+            "ca-certificates",
+            "curl",
+            "gnupg",
+            "lsb-release",
+            "software-properties-common",
+            "unzip",
+            "wget",
+        ]
+    [packages.apt.common]
+        packages = [
+            "bash",
+            "bash-completion",
+
+            "direnv", # https://direnv.net/
+
+            "gh",
+            "git",
+            "git-extras",
+            "git-flow",
+            "tig",
+
+            "gnupg",
+            "gnupg2",
+
+            "gopass",
+
+            "lsd", # https://github.com/lsd-rs/lsd
+
+            # "awscli", # Use snap
+            # "ansible", # Use pipx
+            "curl",
+            "unzip",
+            "boxes",
+            "libimage-exiftool-perl",
+            "fastfetch",
+            "figlet",
+            "jq",
+            "net-tools",
+            "ripgrep", # search tool like grep and the silver searcher
+            "shellcheck",
+            "tree",
+            "libxml2-utils", # Use xmllint
+            "direnv",
+            "fzf",
+            "tzdata",
+
+            "neovim",
+
+            "openssh-client",
+
+            "python3",
+            "python3-pip",
+            "pipx",
+
+            "rustc",
+            "cargo",
+
+            "zoxide",
+
+            "zsh",
+
+            "xclip",
+
+            # need ppa first
+            "dotnet-sdk-9.0",
+            "dotnet-sdk-8.0",
+        ]
+    [packages.apt.common_2check]
+        packages = [
+            "bat",                 # cat with syntax highlighting and Git integration
+            "dnsutils",
+            "fd-find",
+            "logrotate",
+            "lolcat",
+            "mc",                  # Midnight Commander
+            "nano",
+            "ncdu",                # NCurses Disk Usage
+            "needrestart",
+            "net-tools",
+            "p7zip-full",
+        ]
+    [packages.volta.common]
+        packages = [
+            "node",
+            "npm",
+            "yarn",
+        ]
+    [packages.dotnet_tools.common]
+        packages = [
+            "dotnet-outdated-tool",
+            "dotnet-reportgenerator-globaltool",
+        ]

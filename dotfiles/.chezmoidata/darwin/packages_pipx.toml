@@ -1,0 +1,5 @@
+[packages.pipx]
+    [packages.pipx.common]
+        packages = [
+            "pygments", # Syntax highlighter.  https://pygments.org/
+        ]

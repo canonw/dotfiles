@@ -1,0 +1,7 @@
+[packages.pipx]
+    [packages.pipx.common]
+        packages = [
+            "ansible-lint", # Linter for Ansible playbooks.  https://ansible-lint.readthedocs.io/
+            "csvkit", # CLI tools for converting to and working with CSV.  https://csvkit.readthedocs.io/
+            # "pygments", # Installed by others.  Syntax highlighter.  https://pygments.org/
+        ]
