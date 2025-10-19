@@ -7,7 +7,6 @@
 #
 # See https://www.chezmoi.io/reference/special-files/chezmoiexternal-format/
 #
-{{ template "chezmoiexternal.d/common.toml.tmpl" . }}
 {{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu")) -}}
 {{   template "chezmoiexternal.d/ubuntu.toml.tmpl" . }}
 {{ else if eq .chezmoi.os "darwin" -}}
