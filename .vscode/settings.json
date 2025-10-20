@@ -1,2 +1,11 @@
 {
+    "files.associations": {
+        "*.sh.tmpl": "shellscript",
+        "*.ps1.tmpl": "powershell",
+        "*.toml.tmpl": "toml",
+        ".chezmoiignore*": "ignore",
+        "**/chezmoiignore.d/**": "ignore",
+        "dot_gitignore": "ignore",
+        "dot_gitconfig*": "properties"
+    }
 }
