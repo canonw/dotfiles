@@ -1,0 +1,5 @@
+{{ if eq .chezmoi.os "darwin" -}}
+{{ (joinPath .chezmoi.sourceDir ".config" "espanso" ) }}
+{{ else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

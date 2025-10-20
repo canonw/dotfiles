@@ -1,0 +1,14 @@
+{{/* shell alias script block */ -}}
+{{/* {{ template "assets.d/espanso/aliases.sh.tmpl" . }} */ -}}
+{{ if eq .chezmoi.os "linux" -}}
+# TODO: Update setup
+{{- else if eq .chezmoi.os "darwin" -}}
+
+# Change to espanso configuration directory
+alias .espanso='cd $HOME/Library/Application\ Support/espanso'
+
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

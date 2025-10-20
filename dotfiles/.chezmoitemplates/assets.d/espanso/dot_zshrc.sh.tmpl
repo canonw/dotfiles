@@ -1,0 +1,14 @@
+{{/* .zshrc script block */ -}}
+{{/* {{ template "assets.d/espanso/dot_zshrc.sh.tmpl" . }} */ -}}
+{{ template "assets.d/espanso/header.sh.tmpl" . }}
+{{ if eq .chezmoi.os "linux" -}}
+# TODO: Update setup
+{{- else if eq .chezmoi.os "darwin" -}}
+
+{{   template "assets.d/espanso/aliases.sh.tmpl" . }}
+
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
