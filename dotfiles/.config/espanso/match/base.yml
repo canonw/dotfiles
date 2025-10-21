@@ -5,20 +5,29 @@ imports:
   - "./_fly.yml"
   - "./_kubectl.yml"
   - "./_ripgrep.yml"
+  - "./_personal.yml"
 
 matches:
   - trigger: ":espanso"
     label: 'Simple text replacement'
     replace: Hi there!
-              
+
+  - trigger: ";pp"
+    force_clipboard: true
+    replace: "{{clipboard}}"
+    vars:
+      - name: "clipboard"
+        type: "clipboard"
+
   # Dates
   - trigger: ":date"
     replace: "{{mydate}}"
+    label: Insert current date in YYYY-MM-DD format
     vars:
       - name: mydate
         type: date
         params:
-          format: "%m/%d/%Y"
+          format: "%Y-%m-%d"
 
   - trigger: ":time"
     replace: "{{time}}"
@@ -30,6 +39,7 @@ matches:
 
   - trigger: ":isodate"
     replace: "{{isodate}}"
+    label: Insert current date in ISO 8601 format
     vars:
       - name: isodate
         type: date
@@ -171,7 +181,7 @@ matches:
           args:
             - python3
             - -c
-            - "import re; import uuid; tmp = str(uuid.uuid4()); print(re.sub(r\"[0-9A-Fa-f]\", \"{{character}}\".lower(), tmp[0:8]) + tmp[8:])" 
+            - "import re; import uuid; tmp = str(uuid.uuid4()); print(re.sub(r\"[0-9A-Fa-f]\", \"{{character}}\".lower(), tmp[0:8]) + tmp[8:])"
 
   # TODO: Add triggers if available #
   - regex: ";uuidr(?P<character>[a-fA-F0-9]{1}),"
@@ -184,7 +194,7 @@ matches:
           args:
             - python3
             - -c
-            - "import re; import uuid; tmp = str(uuid.uuid4()); print(tmp[0:23] + re.sub(r\"[0-9A-Fa-f]\", \"{{character}}\".lower(), tmp[23:]))" 
+            - "import re; import uuid; tmp = str(uuid.uuid4()); print(tmp[0:23] + re.sub(r\"[0-9A-Fa-f]\", \"{{character}}\".lower(), tmp[23:]))"
 
   # - trigger: ":uuid0,"
   #   replace: "{{myuuid}}"
@@ -284,7 +294,7 @@ matches:
   # - triggers: [":boxesP", "#boxes,"]
   #   label: "boxes around text as copy & paste"
   #   replace: "pbpaste | boxes -d shell -p
-  # Note: Shell performance is bad in Mac  
+  # Note: Shell performance is bad in Mac
   - triggers: [";boxes,", "#boxes,"]
     label: "boxes around text as replacement"
     replace: "{{output}}"

@@ -1,0 +1,8 @@
+---
+matches:
+    # Repository URLS
+  - trigger: ".//gh"
+    replace: "https://github.com/canonw"
+
+  - trigger: ".//dot"
+    replace: "https://github.com/natelandau/dotfiles"
