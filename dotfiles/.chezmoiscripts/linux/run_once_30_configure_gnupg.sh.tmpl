@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+# -*-mode:bash-*- vim:ft=bash
+
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+# Configure gnupg
+
+{{ template "shared_script_utils.bash" . }}
+
+{{ if eq .chezmoi.os "darwin" -}}
+{{ end -}}
+
+{{ if eq .chezmoi.os "linux" -}}
+{{   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+
+function install_gnupg() {
+    # Prefer WSL to use Windows host GPG
+
+    local file_path="/usr/local/bin/gpg"
+    if [ -f "$file_path" ]; then
+        info "File ${file_path} is already installed"
+    else
+        sudo ln -s /mnt/c/Program\ Files\ \(x86\)/GnuPG/bin/gpg.exe $file_path
+        # sudo ln -s gpg /usr/local/bin/gpg2
+    fi
+}
+
+function uninstall_gnupg() {
+    local file_path="/usr/local/bin/gpg"
+    sudo rm $file_path
+}
+
+function main() {
+    header "Installing gnupg"
+    install_gnupg
+    success "gnupg installed"
+}
+
+if [ ${#BASH_SOURCE[@]} = 1 ]; then
+    main
+fi
+
+{{   end -}}
+# function install_powershell() {
+#     # note: has dotnet dependency
+#     # learn.microsoft.com/en-us/powershell/scripting/install/install-ubuntu
+
+#     local package_version="v7.5.3"
+#     local deb_name="powershell_7.5.3-1.deb_amd64.deb"
+
+#     local url="https://github.com/PowerShell/PowerShell/releases/download/${package_version}/${deb_name}"
+
+#     # create tmp directory
+#     local tmp_dir
+#     tmp_dir="$(mktemp -d)"
+
+#     # download the package file
+#     local deb_path="${tmp_dir%/}/${deb_name}"
+#     curl -o "${deb_path}" "${url}"
+
+#     # install the package file
+#     sudo dpkg -i "${deb_path}"
+
+#     # # resolve missing dependencies and finish the install (if necessary)
+#     # sudo apt-get install -f
+
+#     # clean up the tmp directory
+#     rm -rf "${tmp_dir}"
+# }
+
+# function uninstall_powershell() {
+#     sudo apt-get remove -y powershell
+# }
+
+# function main() {
+#     header "Installing powershell"
+#     install_powershell
+#     success "powershell installed"
+# }
+
+{{ end -}}
+
+_safeExit_
