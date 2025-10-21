@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+# Configure Visual Studio Code user settings
+
+{{ template "shared_script_utils.bash" . }}
+
+{{ if eq .chezmoi.os "darwin" -}}
+
+editor_fonts="'JetBrainsMono Nerd Font', Menlo, Monaco, 'Courier New', monospace"
+terminal_fonts="'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace"
+
+# TODO: clean up vscode setting
+json_properties=(
+  "\"editor.fontFamily\": \"$editor_fonts\""
+  "\"editor.fontLigatures\": true"
+  "\"terminal.integrated.fontFamily\": \"$terminal_fonts\""
+  "\"terminal.integrated.fontLigatures.enabled\": true"
+)
+
+function install_vscode_settings() {
+    # create tmp file
+    local tmp_file
+    tmp_file="$(mktemp)"
+
+    # define font settings
+    local json
+    printf -v joined_string '%s,' "${json_properties[@]}"
+    json=". + { $(printf "%s " "${joined_string%,}") }"
+
+    # copy settings
+    local file_path="${HOME}/Library/Application Support/Code/User/settings.json"
+
+    if [ ! -f "${file_path}" ]; then
+    #     cp "${file_path}" "${tmp_file}"
+    # else
+        # prepare new file
+        local file_dir
+        file_dir=$(dirname "${file_path}")
+        mkdir -p "${file_dir}"
+
+        touch "${file_path}" && echo "{}" > "${file_path}"
+    fi
+
+    # update settings
+    jq "${json}" "${file_path}" > "${tmp_file}" && mv "${tmp_file}" "${file_path}"
+
+    # clean up the tmp file
+    rm -f "${tmp_file}"
+}
+
+# function uninstall_vscode_settings() {
+# }
+
+function main() {
+    header "Installing vscode settings"
+    install_vscode_settings
+    success "vscode settings installed"
+}
+
+if [ ${#BASH_SOURCE[@]} = 1 ]; then
+    main
+fi
+
+{{ else if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+notice "vscode settings skipped on wsl"
+{{ else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
+
+_safeExit_

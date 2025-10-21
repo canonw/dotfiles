@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# -*-mode:bash-*- vim:ft=bash
+
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+# Install packages using npm
+
+{{ template "shared_script_utils.bash" . }}
+
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin")) -}}
+
+packages=(
+    {{- range $package := .packages.vscode.extensions.common.packages }}
+    "{{ $package }}"
+    {{ end -}}
+    )
+
+function install_vscode_extensions() {
+    local installed=$(code --list-extensions)
+    for package in "${packages[@]}"; do
+        if [[ ! "${installed}" =~ "${package}" ]] ; then
+            info "Installing ${package}"
+            code --install-extension "${package}"
+        fi
+    done
+}
+
+function uninstall_vscode_extensions() {
+    for package in "${packages[@]}"; do
+        code --uninstall-extension "${package}"
+    done
+}
+
+function main() {
+    header "Installing vscode extensions"
+    install_vscode_extensions
+    success "vscode extensions installed"
+}
+
+if [ ${#BASH_SOURCE[@]} = 1 ]; then
+    main
+fi
+
+{{ else -}}
+# TODO: Update setup
+
+{{ end -}}
+
+_safeExit_
