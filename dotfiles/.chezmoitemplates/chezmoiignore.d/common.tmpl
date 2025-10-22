@@ -1,5 +1,13 @@
 # chemzoi shared ignore patterns for target so
 
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin")) -}}
+
+# Changes found by .chezmoiexternal to ignore
+**/.oh-my-zsh/cache/**
+**/.oh-my-zsh/custom/themes/powerlevel10k/**/*.zwc
+
+{{ end -}}
+
 {{ if ne .chezmoi.os "linux" -}}
 **/linux/**
 linux*
@@ -10,10 +18,14 @@ linux*
 **/macos/**
 darwin*
 macos*
-Library/**
+**/Library/**
 {{ end -}}
 
 {{ if ne .chezmoi.os "windows" -}}
 **/windows/**
 windows*
+**/AppData/**
+**/Documents/**
+**/Documents/PowerShell/**
+**/Documents/WindowsPowerShell/**
 {{ end -}}
