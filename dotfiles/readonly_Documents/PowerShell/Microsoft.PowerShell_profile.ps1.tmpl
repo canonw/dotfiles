@@ -1,0 +1,10 @@
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+
+{{ if eq .chezmoi.os "windows" -}}
+
+{{ template "assets.d/powershell/profile.ps1.tmpl" . }}
+
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

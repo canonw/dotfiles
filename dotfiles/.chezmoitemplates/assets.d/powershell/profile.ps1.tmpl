@@ -1,0 +1,326 @@
+{{/* powershell profile script block */ -}}
+{{/* {{ template "assets.d/powershell/profile.ps1.tmpl" . }} */ -}}
+{{ if eq .chezmoi.os "windows" -}}
+
+# Shared PowerShell profile
+#  $PROFILE="$HOME\Documents\WindowsPowerShell\profile.ps1"
+
+<## Change Directory related #>
+function Set-Location-Up { Set-Location ".." }
+function Set-Location-Up2 { Set-Location "..\.." }
+function Set-Location-Up3 { Set-Location "..\..\.." }
+function Set-Location-Documents { Set-Location "$HOME\Documents" }
+function Show-Location-Documents { Invoke-Item -Path "$HOME\Documents" }
+function Set-Location-Home { Set-Location "$HOME" }
+function Show-Location-Home { Invoke-Item -Path "$HOME" }
+function Set-Location-GitRoot {
+    $ErrorActionPreference = "Stop"
+
+    try {
+        $dir = $(git rev-parse --show-toplevel 2>&1)
+        Push-Location
+        Set-Location $dir
+    }
+    catch {
+        Write-Error "$($_.Exception.Message)"
+    }
+}
+function Set-Location-Nuget { Set-Location "$HOME\.nuget" }
+function Set-Location-NugetConfig { Set-Location "$env:APPDATA\Nuget" }
+function Set-Location-PowerShell { Set-Location "$env:USERPROFILE\Documents\WindowsPowerShell" }
+
+<## Browser related #>
+<#
+.SYNOPSIS
+    Open Microsoft Edge browser
+#>
+function Invoke-MsEdge {
+    [CmdletBinding()]
+    param (
+        # Optional Url to open with
+        [string]$Url = ""
+    )
+    Start-Process microsoft-edge:$Url
+}
+
+<## File related #>
+function Set-Touch-File {
+    $fileName = $args[0]
+    if (-not(Test-Path $fileName)) {
+        New-Item -ItemType File -Name $fileName
+    }
+    else {
+        (Get-ChildItem $fileName).LastWriteTime = Get-Date
+    }
+}
+
+<## Recycle bin realted #>
+function Remove-ItemToRecycleBin {
+    Param
+    (
+        [Parameter(Mandatory = $true, HelpMessage = 'Directory path of file path for deletion.', ValueFromPipeline = $true)]
+        [String]$LiteralPath
+    )
+    
+    Write-Debug("Start removing {0} to recycle bin" -f $LiteralPath)
+
+    If ((Get-Item $LiteralPath).PSIsContainer) {
+        $ItemType = 'Directory'
+        $IsDirectory = $True
+    } else {
+        $ItemType = 'File'
+        $IsDirectory = $False
+    }
+
+    Write-Verbose("Remove {0} {1} to recycle bin" -f $ItemType, $LiteralPath)
+    If( $IsDirectory -eq $True )
+    {
+        [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteDirectory($LiteralPath,'OnlyErrorDialogs','SendToRecycleBin')
+    }
+    else
+    {
+        [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteFile($LiteralPath,'OnlyErrorDialogs','SendToRecycleBin')
+    }
+
+    Write-Debug("End removing {0} to recycle bin" -f $LiteralPath)
+    Write-Debug("WhatIfPreference: {0}.  ConfirmPreference: {1}." -f $WhatIfPreference, $ConfirmPreference)
+}
+
+function Remove-ToRecycleBin {
+    [CmdletBinding(SupportsShouldProcess = $true)]
+    Param
+    (
+        [Parameter(Mandatory = $true, HelpMessage = 'Directory path of file path for deletion.', ValueFromPipeline = $true)]
+        [String]$Path
+    )
+
+    $Items = Get-Item -Path $Path -ErrorAction SilentlyContinue
+
+    if ($null -eq $Items) {
+        Write-Error("'{0}' not found" -f $Path)
+
+        return
+    }
+
+    Add-Type -AssemblyName Microsoft.VisualBasic
+
+    $Items | ForEach-Object {
+        If ($PSCmdlet.ShouldProcess($_, "Remove to Recycle Bin"))
+        {
+            Remove-ItemToRecycleBin $_
+        }
+    }
+}
+
+<## C# related #>
+<#
+.SYNOPSIS
+    Remove bin and obj folders to recycle bin
+#>
+function Remove-ToRecycleBin-DotNet {
+    [CmdletBinding(SupportsShouldProcess = $true)]
+    Param
+    (
+        [Parameter(Mandatory = $true, HelpMessage = 'Directory path of file path for deletion.', ValueFromPipeline = $true)]
+        [String]$LiteralPath
+    )
+
+    # $Item = Get-Item -LiteralPath $LiteralPath -ErrorAction SilentlyContinue
+
+    If (-Not (Get-Item -LiteralPath $LiteralPath -ErrorAction SilentlyContinue).PSIsContainer) {
+        Write-Error("'{0}' not a directory" -f $LiteralPath)
+
+        return
+    }
+
+    # Old code left for reference
+    # $paths = Get-ChildItem -Path . -Directory -Recurse | Where-Object -FilterScript { $_.Name -in 'bin', 'obj' }
+    # $shell = New-Object -ComObject "Shell.Application"
+    # foreach($p in $paths) {
+    #     $path = $p.FullName
+    #     $item = $shell.Namespace(0).ParseName("$path")
+    #     $item.InvokeVerb("delete")
+    # }
+
+    Add-Type -AssemblyName Microsoft.VisualBasic
+
+    $Items = Get-ChildItem -Path . -Directory -Recurse | Where-Object -FilterScript { $_.Name -in 'bin', 'obj', 'TestResults' }
+    $Items | ForEach-Object {
+        If ($PSCmdlet.ShouldProcess($_, "Remove to Recycle Bin"))
+        {
+            Remove-ItemToRecycleBin $_
+        }
+    }
+}
+
+function Show-RecycleBin { Start-Process shell:RecycleBinFolder }
+
+<## Visual Studio #>
+function Invoke-VisualStudio {
+    # Note: Use this command to get devenv.exe path
+    #   & "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property productPath
+    # if(Test-Path -Path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\devenv.exe")
+    & "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\devenv.exe" $args
+}
+
+<## Code completion #>
+if (Get-Command dotnet -ErrorAction SilentlyContinue -CommandType All) {
+	# Auto completion https://learn.microsoft.com/en-us/dotnet/core/tools/enable-tab-autocomplete
+	Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
+		param($wordToComplete, $commandAst, $cursorPosition)
+			dotnet complete --position $cursorPosition "$commandAst" | ForEach-Object {
+				[System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+			}
+	}
+}
+# Winget
+Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
+    param($wordToComplete, $commandAst, $cursorPosition)
+        [Console]::InputEncoding = [Console]::OutputEncoding = $OutputEncoding = [System.Text.Utf8Encoding]::new()
+        $Local:word = $wordToComplete.Replace('"', '""')
+        $Local:ast = $commandAst.ToString().Replace('"', '""')
+        winget complete --word="$Local:word" --commandline "$Local:ast" --position $cursorPosition | ForEach-Object {
+            [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+        }
+}
+# Git
+# Required this to install
+#   Install-Module posh-git -Scope CurrentUser
+if (Get-Module -ListAvailable -Name posh-git)
+{
+    Import-Module posh-git
+}
+
+<## Utility functions #>
+<#
+.SYNOPSIS
+    Convert multi line string into a single string
+.NOTES
+    Taken from https://powershellfaqs.com/convert-multiline-string-to-single-line-in-powershell/
+#>
+function Convert-MultilineToSingleLine {
+    param (
+        [Parameter(ValueFromPipeline=$true)]
+        [string]$MultilineString,
+        [Parameter(ValueFromPipeline=$false)]
+        [string]$Separator = " "
+    )
+
+    # Replace newline characters with the specified separator
+    return $MultilineString -replace "`r`n", $Separator
+}
+
+<#
+.SYNOPSIS
+    Convert clipboard string into a single string
+.NOTES
+#>
+function Convert-ClipboardToSingleLine {
+    param (
+        [string]$Separator = " "
+    )
+    $b = Get-Clipboard | Out-String
+    Convert-MultilineToSingleLine -MultilineString $b -separator $Separator
+}
+
+<## base64 #>
+<#
+.SYNOPSIS
+    Convert input to base64 string value
+#>
+function Convert-ToBase64 {
+    param (
+        [Parameter(ValueFromPipeline=$true)]
+        [string]
+        $InputString
+    )
+
+    # Convert string to byte array
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes($inputString)
+
+    # Convert byte array to Base64 string
+    $base64String = [System.Convert]::ToBase64String($bytes)
+
+    return $base64String
+}
+
+<## Clipboard related #>
+<#
+.SYNOPSIS
+    Display clipboard content to formatted JSON
+#>
+function Convert-ClipboardTo-Json { Get-Clipboard | ConvertFrom-Json | ConvertTo-Json }
+
+function Set-Clipboard-Pwd { Get-Location | Select-Object Path -ExpandProperty Path | Set-Clipboard }
+
+<## Define my frequently used aliases #>
+# Clipboard related
+Set-Alias -Name pbpaste -Value Get-Clipboard -Description "Paste content to Windows clipboard"
+Set-Alias -Name pbcopy -Value Set-Clipboard -Description "Copy content from Windows clipboard"
+Set-Alias -Name cb.1line -Value Convert-ClipboardToSingleLine -Description "Convert clipboard content into single line sting"
+Set-Alias -Name cb.tojson -Value Convert-ClipboardTo-Json -Description "Dispaly clipboard content to formatted JSON"
+# Browser related
+Set-Alias -Name msedge -Value Invoke-MsEdge -Description "Start Microsoft Edge"
+# Rcycle Bin
+Set-Alias -Name .trash.ex -Value Show-RecycleBin -Description "Open recycle bin in explorer"
+# Jump to directory in command line or in explorer
+Set-Alias .. Set-Location-Up -Description "Change to parent directory"
+Set-Alias ... Set-Location-Up2 -Description "Change to directory 2 level up"
+Set-Alias .... Set-Location-Up3 -Description "Change to directory 3 level up"
+Set-Alias .doc Set-Location-Documents -Description "Change to Document directory"
+Set-Alias .doc.ex Show-Location-Documents -Description "Open Document directory in explorer"
+Set-Alias .home Set-Location-Home -Description "Change to home directory"
+Set-Alias .home.ex Show-Location-Home -Description "Open home directory in explorer"
+Set-Alias .groot Set-Location-GitRoot -Description "Change to git repository root directory"
+Set-Alias .nuget Set-Location-Nuget -Description "Change to nuget root directory"
+Set-Alias .nuget.config Set-Location-NugetConfig -Description "Change to nuget configuration directory"
+Set-Alias .profile Set-Location-PowerShell -Description "Change to PowerShell profile directory"
+# Directory related
+Set-Alias pwd.cb Set-Clipboard-Pwd -Description "Copy current directory to clipboard"
+# File related
+Set-Alias -Name touch -Value Set-Touch-File -Description "Add a new file or update modified file datetime"
+Set-Alias -Name trash -Value Remove-ToRecycleBin -Description "Remove files or directories to recycle bin"
+Set-Alias -Name trash.dotnet -Value Remove-ToRecycleBin-DotNet -Description "Remove Dotnet build artifacts to recycle bin"
+# Program related
+# Set-Alias -Name which -Value (Get-Command ).Path -Description "Find application full path"
+# function which([string]$cmd) {gcm -ErrorAction "SilentlyContinue" $cmd | ft Definition}
+
+# Visual Studio
+Set-Alias -Name devenv -Value Invoke-VisualStudio -Description "Start Visual Studio"
+
+<# Invoke other profiles #>
+if (Test-Path -Path "$env:USERPROFILE\Documents\WindowsPowerShell\WorkProfile.ps1" )
+{
+    . "$env:USERPROFILE\Documents\WindowsPowerShell\WorkProfile.ps1"
+}
+
+
+oh-my-posh --init --shell pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/v$(oh-my-posh --version)/themes/marcduiker.omp.json | Invoke-Expression
+
+if (Get-Module -ListAvailable -Name "gsudoModule") {
+  Import-Module "gsudoModule"
+}
+
+Set-Alias -Name k -Value kubectl
+kubectl completion powershell | Out-String | Invoke-Expression
+Register-ArgumentCompleter -CommandName k -ScriptBlock $__kubectlCompleterBlock
+
+# Import the Chocolatey Profile that contains the necessary code to enable
+# tab-completions to function for `choco`.
+# Be aware that if you are missing these lines from your profile, tab completion
+# for `choco` will not function.
+# See https://ch0.co/tab-completion for details.
+$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+if (Test-Path($ChocolateyProfile)) {
+    Import-Module "$ChocolateyProfile"
+}
+
+<# zoxide #>
+if (Get-Command "zoxide" -ErrorAction SilentlyContinue) {
+    # Must call last; else cd not bind to zoxide
+    Invoke-Expression (& { (zoxide init powershell | Out-String) })
+}
+
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
