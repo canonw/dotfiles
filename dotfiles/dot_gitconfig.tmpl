@@ -20,8 +20,8 @@
     whitespace = fix
 
 [commit]
-    # Specify template file for new commit messages.
-    template = ~/.gitmessage
+    # # Specify template file for new commit messages.
+    # template = ~/.gitmessage
 
 [core]
     # Disable line endings output conversion.
@@ -30,18 +30,25 @@
     # Specify excluded file pattern from commit
     excludesfile = ~/.gitignore
 
-    # Make `git rebase` safer on macOS.
-    # See http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/
-    trustctime = false
+    # # Make `git rebase` safer on macOS.
+    # # See http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/
+    # trustctime = false
 
     # Speed up commands involving untracked files such as `git status`.
     # See https://git-scm.com/docs/git-update-index#_untracked_cache
     untrackedCache = true
 
 [diff]
+    # Disable the prompt before each invocation of the diff tool.
+    prompt = false
+
     # List submodules commits in the range.
     submodule = log
-
+{{ if eq .chezmoi.os "windows" }}
+    # Specify diff tool to use.
+	tool = bc
+{{ else -}}
+{{- end }}
 [difftool "sourcetree"]
     # Specify the command to invoke Sourcetree.
     {{ if eq .chezmoi.os "darwin" -}}
@@ -85,7 +92,11 @@
 [merge]
     # Include summaries of merged commits in newly created merge commit messages.
     log = true
-
+{{ if eq .chezmoi.os "windows" }}
+    # Specify merge tool to use.
+	tool = bc
+{{ else -}}
+{{- end }}
 [mergetool]
     # Avoid saving an `.orig` backup file after a merge.
     keepBackup = false
@@ -129,3 +140,22 @@
 
     # Include extra configuration (if any).
     path = .gitconfig_local
+
+{{ if eq .chezmoi.os "windows" -}}
+[difftool "bc"]
+    # Specify the command to invoke Beyond Compare.
+	path = c:/Program Files/Beyond Compare 4/bcomp.exe
+
+[mergetool "bc"]
+    # Specify the command to invoke Beyond Compare.
+    cmd = "\"C:\\Program Files\\Beyond Compare 4\\Bcomp.exe\" \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\""
+{{ else if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) -}}
+[difftool "bc"]
+        path = /mnt/c/Program Files/Beyond Compare 4/BComp.exe
+        cmd = \"/mnt/c/Program Files/Beyond Compare 4/BComp.exe\" \"$(wslpath -aw $LOCAL)\" \"$(wslpath -aw $REMOTE)\"
+
+[mergetool "bc"]
+        path = /mnt/c/Program Files/Beyond Compare 4/BComp.exe
+        cmd = \"/mnt/c/Program Files/Beyond Compare 4/BComp.exe\" \"$(wslpath -aw $LOCAL)\" \"$(wslpath -aw $REMOTE)\" \"$(wslpath -aw $BASE)\" \"$(wslpath -aw $MERGED)\"
+{{ else -}}
+{{- end -}}
