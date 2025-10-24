@@ -4,9 +4,9 @@
 # =============================================================================
 # Configure Visual Studio Code user settings
 
-{{ template "shared_script_utils.bash" . }}
-
 {{ if eq .chezmoi.os "darwin" -}}
+
+{{ template "shared_script_utils.bash" . }}
 
 editor_fonts="'JetBrainsMono Nerd Font', Menlo, Monaco, 'Courier New', monospace"
 terminal_fonts="'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace"
@@ -63,10 +63,8 @@ if [ ${#BASH_SOURCE[@]} = 1 ]; then
     main
 fi
 
-{{ else if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
-notice "vscode settings skipped on wsl"
-{{ else -}}
-{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
-{{ end -}}
-
 _safeExit_
+
+{{ else if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+# notice "vscode settings skipped on wsl"
+{{ end -}}

@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# -*-mode:bash-*- vim:ft=bash
+
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+# Install packages using pipx
+
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin")) -}}
+
+{{ template "shared_script_utils.bash" . }}
+
+packages=(
+    {{- range $package := .packages.pipx.common.packages }}
+    "{{ $package }}"
+    {{ end -}}
+    )
+
+function install_pipx_packages() {
+    for package in "${packages[@]}"; do
+
+        if pipx list | grep -q "package ${package}"; then
+            info "Package ${package} is already installed"
+            continue
+        elif $(which "${package}"); then
+            info "Package ${package} is already installed by others."
+            continue
+        else
+            info "Installing ${package}"
+            pipx install "${package}"
+            info "Installed ${package}"
+        fi
+    done
+}
+
+function uninstall_pipx_packages() {
+    for package in "${packages[@]}"; do
+        pipx uninstall "${package}"
+    done
+}
+
+function main() {
+    header "Installing packages with pipx"
+    install_pipx_packages
+    success "pipx packages installed"
+}
+
+if [ ${#BASH_SOURCE[@]} = 1 ]; then
+    main
+fi
+
+_safeExit_
+
+{{ end -}}

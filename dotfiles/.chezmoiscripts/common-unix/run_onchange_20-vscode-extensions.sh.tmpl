@@ -5,9 +5,9 @@
 # =============================================================================
 # Install packages using npm
 
-{{ template "shared_script_utils.bash" . }}
-
 {{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin")) -}}
+
+{{ template "shared_script_utils.bash" . }}
 
 packages=(
     {{- range $package := .packages.vscode.extensions.common.packages }}
@@ -41,9 +41,6 @@ if [ ${#BASH_SOURCE[@]} = 1 ]; then
     main
 fi
 
-{{ else -}}
-# TODO: Update setup
+_safeExit_
 
 {{ end -}}
-
-_safeExit_
