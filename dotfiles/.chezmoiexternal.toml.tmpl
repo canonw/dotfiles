@@ -11,6 +11,8 @@
 {{   template "chezmoiexternal.d/ubuntu.toml.tmpl" . }}
 {{ else if eq .chezmoi.os "darwin" -}}
 {{   template "chezmoiexternal.d/macos.toml.tmpl" . }}
+{{ else if eq .chezmoi.os "windows" -}}
+{{   template "chezmoiexternal.d/windows.toml.tmpl" . }}
 {{ else -}}
 {{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
 {{ end -}}
