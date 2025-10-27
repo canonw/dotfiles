@@ -1,0 +1,3 @@
+[include_app]
+    [include_app.ubuntu_wsl]
+        gopass = true

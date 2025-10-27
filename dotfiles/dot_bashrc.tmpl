@@ -19,3 +19,15 @@
 {{- else -}}
 {{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
 {{ end -}}
+{{- /* TODO: Replace new style */ -}}
+{{- $my_app := .include_app.default -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{- $my_app = .include_app.darwin -}}
+{{- else if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) -}}
+{{- $my_app = .include_app.ubuntu_wsl -}}
+{{- end -}}
+
+{{- if eq $my_app.gopass true }}
+{{   template "assets.d/gopass/dot_bashrc.sh.tmpl" . }}
+{{ else -}}
+{{- end -}}
