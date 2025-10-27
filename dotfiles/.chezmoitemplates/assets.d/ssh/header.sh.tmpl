@@ -1,0 +1,14 @@
+{{/* Header script block */ -}}
+{{/* {{ template "assets.d/ssh/header.sh.tmpl" . }} */ -}}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
+#               __
+#    __________/ /_
+#   / ___/ ___/ __ \
+#  (__  |__  ) / / /
+# /____/____/_/ /_/
+#
+#
+# ssh
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

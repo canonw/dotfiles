@@ -1,0 +1,34 @@
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+#
+# Create a new key with:
+# ssh-keygen -f [filename] -t ed25519 -C "[comment]"
+# ssh-keygen -f [filename] -t rsa -b 4096 -C "[comment]"
+
+{{ if eq .chezmoi.os "linux" -}}
+{{- if (and (eq .chezmoi.osRelease.id "ubuntu") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) -}}
+
+Host gh
+    User git
+    HostName github.com
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/id_github
+{{  else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{  end -}}
+{{ else if eq .chezmoi.os "darwin" -}}
+
+Host github.com
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_github
+{{ else if eq .chezmoi.os "windows" -}}
+
+Host gh
+    User git
+    HostName github.com
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/id_github
+{{  else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

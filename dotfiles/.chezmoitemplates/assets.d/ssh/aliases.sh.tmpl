@@ -1,0 +1,20 @@
+{{/* shell alias script block */ -}}
+{{/* {{ template "assets.d/ssh/aliases.sh.tmpl" . }} */ -}}
+{{ if eq .chezmoi.os "linux" -}}
+{{-  if eq .chezmoi.osRelease.id "ubuntu" -}}
+# TODO: Update setup ubuntu ssh
+{{-    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+# TODO: Update setup wsl ssh
+{{-    else -}}
+# TODO: Update setup non-wsl ssh
+{{-    end -}}
+{{-  else -}}
+# TODO: Update setup non-ubuntu ssh
+{{-  end -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+# TODO: Update setup darwin ssh
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup windows ssh
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
