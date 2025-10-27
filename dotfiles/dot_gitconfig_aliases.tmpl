@@ -4,13 +4,14 @@
 # =============================================================================
 # Aliases for Git sourced by `~/.gitconfig`.
 
+
 [alias]
     # Lists aliases in sorted order.  Colorize by pygmentize if available.
     #aliases = !git config --get-regexp ^alias\\. | sort | cut -c 7-
     aliases = "!f() { if command -v pygmentize &>/dev/null; then git config -l | grep alias | sort | cut -c 7- | pygmentize -l properties -O style=lightbulb; else git config -l | grep alias | sort | cut -c 7-; fi }; f"
 
     # Amends the currently staged files to the latest commit.
-    amend = commit --amend --reuse-message=HEAD
+    amend = "!f() { echo 'redirect to alias cm-amend' && git cm-amend ; }; f"
 
     # Lists all branches.
     br = branch
@@ -30,14 +31,29 @@
     # Commits all changes.
     cm-a = !git add -A && git commit -av
 
+    # Amends the currently staged files to the latest commit.
+    cm-amend = commit --amend --reuse-message=HEAD
+
     # Commits all changes in silent with WIP message
 	cm-wip = !git add -A && git commit -m \"wip: update from $(echo `uname -a | awk '{print $2}'`) on $(echo `date +%FT%T%Z`)\"
+
+    # Commits all .
+    cm-a = !git add -A && git commit -av
 
     # Switches to a branch, but doesn't create it.
     co = checkout
 
     # Switches to a branch, creating it if necessary.
     co-b = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+
+    # Edit files in changed and not staged.
+    ed-changed = "!f() { git diff --name-only --diff-filter=AM | xargs -I{} sh -c \"echo {} ; \"${1:-code}\" {}\" ; }; f"
+
+    # Edit files in commits.  Default to HEAD commit.
+    ed-cm = "!f() { git show --name-only --diff-filter=AM --pretty=format: \"${1:-HEAD}\" | xargs -I{} sh -c \"echo {} ; \"${2:-code}\" {}\" ; }; f"
+    
+    # Edit files in staged changes.
+    ed-staged = "!f() { git diff --name-only --cached --diff-filter=AM | xargs -I{} sh -c \"echo {} ; \"${1:-code}\" {}\" ; }; f"
 
     # Shows list of files in a conflict state.
     conflicts = !git diff --name-only --diff-filter=U
@@ -60,8 +76,8 @@
     # Discards changes to a file.
     discard = checkout --
 
-    # Use Visual Studio Code to diff files.
-	dt = difftool --no-prompt --tool=vscode
+    # Compare diff files visually.  Use Visual Studio Code as default.
+	dt = difftool --no-prompt --tool=${1:-vscode}
 
     # Removes branches that have been merged with master (delete merged).
     dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
@@ -74,6 +90,12 @@
 
     # Finds commits by source code.
     fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+
+    # Log all the commits related to a file
+    filelog = log -u
+
+    # Append staged files to latest commit
+    fixup = "!f() { git commit --fixup=$1 ; }; f"
 
     # Finds commits by commit message.
     fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
@@ -111,8 +133,8 @@
     # Stages modified files and continues rebase.
     rbc = "!f(){ git add -A && git rebase --continue; }; f"
 
-    # Rebases interactively with the given number of latest commits.
-    reb = "!r() { git rebase -i HEAD~$1; }; r"
+    # Rebases interactively with the given number of latest commits.  2 by default.
+    reb = "!r() { git rebase -i HEAD~${1:-2}; }; r"
 
     # Shows verbose output about remotes.
     remotes = remote -v
@@ -128,6 +150,11 @@
 
     # Move current directory to git repository root.
   	root = rev-parse --show-toplevel
+
+    # Squash recent commit into one commit with recent commit message.
+    # https://stackoverflow.com/a/21890252
+    # don't squash as alias.  Used by git-extra
+    rt-squash = "!f() { git reset --soft HEAD~${1:-1} && git commit --edit -m \"$(git log --format=%B --reverse HEAD..HEAD@{1})\" ; }; f"
 
     # Sets origin remote.
     set-origin = remote set-url origin
@@ -150,39 +177,32 @@
     # Lists stashes.
     stashes = stash list
 
+    # Update all submodules recursively.
+    subup = submodule update --init --recursive
+
     # # Brings in remote changes and syncs back.
     # sync = !git pull --rebase && git push
 
     # Shows verbose output about tags.
     tags = tag -l
 
-	# Create temporary branch using current commit.  Branch name uses tmp as prefix if none provided.
+	# Create temporary branch using current commit.  Branch name uses tmp as prefix by default.
 	tmp-br = "!f() { git branch "${1:-tmp}"$(date -u +'%Y-%m-%dT%H_%M_%SZ'); }; f"
 
     # Shows object type.
     type = cat-file -t
 
-    # Undos commit and leaves files (only for non-public commits).
+    # Undo commit and leaves files (only for non-public commits).
     uncommit = reset --soft HEAD^
 
-    # Undos last commit.
+    # Undo last commit.
     undo = reset --mixed HEAD~1
 
-    # Unstages a file.
+    # Unstage a file.
     unstage = reset HEAD --
 
     # Brings in remote changes.
     up = !git pull --rebase --prune $@ && git submodule update --init --recursive
 
-    # # Commits as Work in Progress.
-    # wip = commit -am "WIP"
-
     # Wipes savepoint.
     wipe = "!f() { rev=$(git rev-parse ${1-HEAD}); git add -A && git commit --allow-empty -qm '${WIPE SAVEPOINT' && git reset $rev --hard; }; f"
-
-    # TODO: Add git aliases
-	lg-1 = log --pretty=format:\"%C(yellow)%h\\\\ %C(green)%ad%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --date=short --graph --all --oneline
-	lg-f = log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --numstat
-	lg-d = log --pretty=format:\"%C(yellow)%h\\\\ %ad%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --date=short
-	lg-r = log --pretty=format:\"%C(yellow)%h\\\\ %ad%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate --date=relative
-	squash = commit --squash
