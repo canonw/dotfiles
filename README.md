@@ -1,16 +1,53 @@
-# Personal dotfile
+# dotfiles
 
-# Reference
+A single repository to manage cross-platform, cross-shell dotfiles using [chezmoi](https://github.com/twpayne/chezmoi).
+
+## Install
+
+Follow the starter based on the operating system.  The setup assumes you have full admin right to setup the machine.
+
+### Windows
+
+### macOS on ARM
+
+Package management
+
+- [Homebrew](https://brew.sh/)
+
+### Ubuntu WSL
+
+run the following command
+``` sh
+chezmoi init canonw
+```
+
+To update existing configuration, execute this command
+
+``` sh
+chezmoi apply
+```
+
+## Tools Installed and Configured
+
+| Command | macOS on ARM | Windows | Ubuntu (WSL) |
+| ------------- | ------------- | ------------- | ------------- |
+| AWS cli | | | |
+| bash | | | |
+| git | | | |
+| zsh | | | |
+
+## Reference
 
 https://github.com/natelandau/dotfiles
 https://github.com/shunk031/dotfiles/
+https://github.com/renemarc/dotfiles.git
+
+---
+More
+https://dotfiles.github.io/inspiration/
 
 ---
 TODO: Delete below
-# Personal dotfiles
-
-[homeschick](https://github.com/andsens/homeshick) managed dot files.
-
 
 If git repository locates in other path, link it.
 ```

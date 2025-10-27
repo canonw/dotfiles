@@ -1,6 +1,8 @@
 {
     "files.associations": {
+        "*.bashrc.tmpl": "shellscript",
         "*.sh.tmpl": "shellscript",
+        "*.zshrc.tmpl": "shellscript",
         "*.ps1.tmpl": "powershell",
         "*.toml.tmpl": "toml",
         ".chezmoiignore*": "ignore",
