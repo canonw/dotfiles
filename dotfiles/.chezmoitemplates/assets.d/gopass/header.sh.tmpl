@@ -1,0 +1,16 @@
+{{/* Header script block */ -}}
+{{/* {{ template "assets.d/gopass/header.sh.tmpl" . }} */ -}}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
+#
+#    ____ _____  ____  ____ ___________
+#   / __ `/ __ \/ __ \/ __ `/ ___/ ___/
+#  / /_/ / /_/ / /_/ / /_/ (__  |__  )
+#  \__, /\____/ .___/\__,_/____/____/
+# /____/     /_/
+#
+# gopass
+# https://www.gopass.pw/
+# https://github.com/gopasspw/gopass/blob/master/docs/config.md
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

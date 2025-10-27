@@ -1,0 +1,29 @@
+{{/* shell alias script block */ -}}
+{{/* {{ template "assets.d/gopass/aliases.sh.tmpl" . }} */ -}}
+{{ if eq .chezmoi.os "linux" -}}
+{{-  if eq .chezmoi.osRelease.id "ubuntu" -}}
+{{-    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+# Change to gopass data directory
+alias .gopass='cd ${GOPASS_HOMEDIR:-$HOME/.local/share/gopass}'
+
+# Change to gopass configuration directory
+alias .gopass.config='cd ~/.config/gopass'
+
+{{-    else -}}
+# TODO: Update setup non-wsl gopass
+{{-    end -}}
+{{-  else -}}
+{{-  end -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+
+# Change to gopass data directory
+alias .gopass='cd ${GOPASS_HOMEDIR:-$HOME/.local/share/gopass}'
+
+# Change to gopass configuration directory
+alias .gopass.config='cd ~/.config/gopass'
+
+{{- else if eq .chezmoi.os "windows" -}}
+# TODO: Update setup windows gopass
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}
