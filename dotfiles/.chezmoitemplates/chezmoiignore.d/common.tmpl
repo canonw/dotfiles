@@ -41,6 +41,11 @@ windows*
 {{- $my_app = .include_app.windows -}}
 {{- end -}}
 
+### curl
+{{ if eq $my_app.curl false }}
+.curlrc
+{{ end -}}
+
 ### gopass
 {{ if eq $my_app.gopass false }}
 {{ end -}}

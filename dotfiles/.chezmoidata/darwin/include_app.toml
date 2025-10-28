@@ -1,5 +1,6 @@
 [include_app]
     [include_app.darwin]
+        curl = true
         gopass = true
         lsd = true
         ssh = true
