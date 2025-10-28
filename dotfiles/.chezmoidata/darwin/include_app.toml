@@ -1,3 +1,4 @@
 [include_app]
     [include_app.darwin]
         gopass = true
+        ssh = true

@@ -31,3 +31,8 @@
 {{   template "assets.d/gopass/dot_bashrc.sh.tmpl" . }}
 {{ else -}}
 {{- end -}}
+
+{{- if eq $my_app.ssh true }}
+{{   template "assets.d/ssh/dot_bashrc.sh.tmpl" . }}
+{{ else -}}
+{{- end -}}

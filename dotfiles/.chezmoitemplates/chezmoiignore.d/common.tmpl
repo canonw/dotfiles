@@ -44,3 +44,8 @@ windows*
 ### gopass
 {{ if eq $my_app.gopass false }}
 {{ end -}}
+
+### ssh
+{{ if eq $my_app.ssh false }}
+**/.ssh/**
+{{ end -}}
