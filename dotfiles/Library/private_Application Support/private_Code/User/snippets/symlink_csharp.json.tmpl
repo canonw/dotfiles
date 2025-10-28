@@ -1,5 +1,0 @@
-{{ if eq .chezmoi.os "darwin" -}}
-{{ (joinPath .chezmoi.sourceDir ".config" "vscode" "User" "snippets" "csharp.json" ) }}
-{{ else -}}
-{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
-{{ end -}}
