@@ -45,6 +45,11 @@ windows*
 {{ if eq $my_app.gopass false }}
 {{ end -}}
 
+### lsd
+{{ if eq $my_app.lsd false }}
+**/.config/lsd/**
+{{ end -}}
+
 ### ssh
 {{ if eq $my_app.ssh false }}
 **/.ssh/**

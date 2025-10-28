@@ -1,4 +1,5 @@
 [include_app]
     [include_app.windows]
         gopass = false # TODO: Integrate to windows
+        lsd = false # TODO: Integrate to windows
         ssh = true
