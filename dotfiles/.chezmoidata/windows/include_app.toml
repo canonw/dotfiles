@@ -2,6 +2,7 @@
     [include_app.windows]
         aws_cli = true
         chezmoi = true
+        clipboard_project = false # TODO: Integrate to windows
         curl = true
         direnv = false # No windows support
         git = true

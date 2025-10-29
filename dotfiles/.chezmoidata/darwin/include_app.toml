@@ -2,6 +2,7 @@
     [include_app.darwin]
         aws_cli = true
         chezmoi = true
+        clipboard_project = true
         curl = true
         direnv = true
         git = true
