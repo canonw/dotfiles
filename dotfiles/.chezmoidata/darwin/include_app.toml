@@ -2,6 +2,7 @@
     [include_app.darwin]
         chezmoi = true
         curl = true
+        direnv = true
         git = true
         gopass = true
         lsd = true

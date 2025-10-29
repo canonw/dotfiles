@@ -27,6 +27,11 @@
 {{ else -}}
 {{- end -}}
 
+{{- if eq $my_app.direnv true }}
+{{   template "assets.d/direnv/dot_zshrc.sh.tmpl" . }}
+{{ else -}}
+{{- end -}}
+
 {{- if eq $my_app.gopass true }}
 {{   template "assets.d/gopass/dot_zshrc.sh.tmpl" . }}
 {{ else -}}

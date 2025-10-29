@@ -2,6 +2,7 @@
     [include_app.windows]
         chezmoi = true
         curl = true
+        direnv = false # No windows support
         git = true
         gopass = false # TODO: Integrate to windows
         lsd = false # TODO: Integrate to windows

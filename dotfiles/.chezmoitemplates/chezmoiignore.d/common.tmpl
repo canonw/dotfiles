@@ -51,6 +51,10 @@ windows*
 .curlrc
 {{ end -}}
 
+### direnv
+{{ if eq $my_app.direnv false }}
+{{ end -}}
+
 ### git
 {{ if eq $my_app.git false }}
 .gitconfig*

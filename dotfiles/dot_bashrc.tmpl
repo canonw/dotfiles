@@ -32,6 +32,11 @@
 {{ else -}}
 {{- end -}}
 
+{{- if eq $my_app.direnv true }}
+{{   template "assets.d/direnv/dot_bashrc.sh.tmpl" . }}
+{{ else -}}
+{{- end -}}
+
 {{- if eq $my_app.gopass true }}
 {{   template "assets.d/gopass/dot_bashrc.sh.tmpl" . }}
 {{ else -}}
