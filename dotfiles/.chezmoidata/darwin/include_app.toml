@@ -1,5 +1,6 @@
 [include_app]
     [include_app.darwin]
+        aws_cli = true
         chezmoi = true
         curl = true
         direnv = true

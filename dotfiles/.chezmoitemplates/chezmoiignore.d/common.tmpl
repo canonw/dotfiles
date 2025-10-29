@@ -42,6 +42,10 @@ windows*
 {{- $my_app = .include_app.windows -}}
 {{- end -}}
 
+### awscli
+{{ if eq $my_app.aws_cli false }}
+{{ end -}}
+
 ### chezmoi
 {{ if eq $my_app.chezmoi false }}
 {{ end -}}
