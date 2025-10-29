@@ -14,9 +14,6 @@
 {{   template "assets.d/fzf/dot_bashrc.sh.tmpl" . }}
 # TODO: Add k8s and gunpg
 {{   template "assets.d/navi/dot_bashrc.sh.tmpl" . }}
-
-{{   template "assets.d/xclip/dot_bashrc.sh.tmpl" . }}
-
 {{- end -}}
 {{ if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
 {{ end -}}

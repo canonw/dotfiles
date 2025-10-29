@@ -62,6 +62,11 @@
 {{ else -}}
 {{- end -}}
 
+{{- if eq $my_app.xclip true }}
+{{   template "assets.d/xclip/dot_bashrc.sh.tmpl" . }}
+{{ else -}}
+{{- end -}}
+
 {{- if eq $my_app.zoxide true }}
 {{   template "assets.d/zoxide/dot_bashrc.sh.tmpl" . }}
 {{ else -}}

@@ -12,4 +12,5 @@
         ripgrep = true
         ssh = true
         wget = true
+        xclip = false # Not use
         zoxide = true

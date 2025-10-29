@@ -12,4 +12,5 @@
         ripgrep = true
         ssh = true
         wget = true
+        xclip = true # Used copy and paste alias
         zoxide = true
