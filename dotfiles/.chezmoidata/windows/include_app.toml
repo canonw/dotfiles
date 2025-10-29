@@ -7,3 +7,4 @@
         mintty = true
         ripgrep = true
         ssh = true
+        wget = true

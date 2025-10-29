@@ -77,3 +77,8 @@ windows*
 {{ if eq $my_app.ssh false }}
 **/.ssh/**
 {{ end -}}
+
+### wget
+{{ if eq $my_app.wget false }}
+.wgetrc
+{{ end -}}
