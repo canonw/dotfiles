@@ -42,6 +42,11 @@
 {{ else -}}
 {{- end -}}
 
+{{- if eq $my_app.fzf true }}
+{{   template "assets.d/fzf/dot_zshrc.sh.tmpl" . }}
+{{ else -}}
+{{- end -}}
+
 {{- if eq $my_app.gopass true }}
 {{   template "assets.d/gopass/dot_zshrc.sh.tmpl" . }}
 {{ else -}}

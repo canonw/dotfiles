@@ -18,8 +18,6 @@
 {{   template "assets.d/rust/dot_zshrc.sh.tmpl" . }}
 
 {{   template "assets.d/volta/dot_zshrc.sh.tmpl" . }}
-
-{{   template "assets.d/fzf/dot_zshrc.sh.tmpl" . }}
 {{- end -}}
 {{ if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
 {{ end -}}
