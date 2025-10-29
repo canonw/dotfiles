@@ -42,6 +42,10 @@ windows*
 {{- $my_app = .include_app.windows -}}
 {{- end -}}
 
+### chezmoi
+{{ if eq $my_app.chezmoi false }}
+{{ end -}}
+
 ### curl
 {{ if eq $my_app.curl false }}
 .curlrc

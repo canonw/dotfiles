@@ -1,5 +1,6 @@
 [include_app]
     [include_app.darwin]
+        chezmoi = true
         curl = true
         git = true
         gopass = true
