@@ -23,6 +23,7 @@ macos*
 {{ end -}}
 
 {{ if ne .chezmoi.os "windows" -}}
+.minttyrc
 **/windows/**
 windows*
 **/AppData/**
@@ -53,6 +54,11 @@ windows*
 ### lsd
 {{ if eq $my_app.lsd false }}
 **/.config/lsd/**
+{{ end -}}
+
+### mintty
+{{ if eq $my_app.mintty false }}
+.minttyrc
 {{ end -}}
 
 ### ssh

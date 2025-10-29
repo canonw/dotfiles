@@ -3,4 +3,5 @@
         curl = true
         gopass = true
         lsd = true
+        mintty = false
         ssh = true
