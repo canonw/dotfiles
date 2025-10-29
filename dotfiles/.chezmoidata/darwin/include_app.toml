@@ -9,6 +9,7 @@
         gopass = true
         lsd = true
         mintty = false
+        navi = true
         ripgrep = true
         ssh = true
         wget = true

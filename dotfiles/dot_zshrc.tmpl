@@ -52,6 +52,11 @@
 {{ else -}}
 {{- end -}}
 
+{{- if eq $my_app.navi true }}
+{{   template "assets.d/navi/dot_zshrc.sh.tmpl" . }}
+{{ else -}}
+{{- end -}}
+
 {{- if eq $my_app.ssh true }}
 {{   template "assets.d/ssh/dot_zshrc.sh.tmpl" . }}
 {{ else -}}
