@@ -10,3 +10,4 @@
         ripgrep = true
         ssh = true
         wget = true
+        zoxide = true
