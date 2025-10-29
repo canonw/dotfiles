@@ -1,6 +1,7 @@
 [include_app]
     [include_app.windows]
         curl = true
+        git = true
         gopass = false # TODO: Integrate to windows
         lsd = false # TODO: Integrate to windows
         mintty = true

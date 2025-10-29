@@ -1,6 +1,7 @@
 [include_app]
     [include_app.darwin]
         curl = true
+        git = true
         gopass = true
         lsd = true
         mintty = false

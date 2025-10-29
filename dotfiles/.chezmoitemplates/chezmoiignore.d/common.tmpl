@@ -47,6 +47,13 @@ windows*
 .curlrc
 {{ end -}}
 
+### git
+{{ if eq $my_app.git false }}
+.gitconfig*
+.gitignore
+.gitmessage
+{{ end -}}
+
 ### gopass
 {{ if eq $my_app.gopass false }}
 {{ end -}}
