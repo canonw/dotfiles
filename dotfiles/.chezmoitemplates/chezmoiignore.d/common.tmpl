@@ -68,6 +68,11 @@ windows*
 .minttyrc
 {{ end -}}
 
+### ripgrep
+{{ if eq $my_app.ripgrep false }}
+.ripgreprc
+{{ end -}}
+
 ### ssh
 {{ if eq $my_app.ssh false }}
 **/.ssh/**

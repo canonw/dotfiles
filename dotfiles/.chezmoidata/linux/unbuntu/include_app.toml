@@ -5,4 +5,5 @@
         gopass = true
         lsd = true
         mintty = false
+        ripgrep = true
         ssh = true
