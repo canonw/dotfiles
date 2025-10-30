@@ -2,11 +2,15 @@
 {{/* {{ template "assets.d/kubectl/dot_zshrc.sh.tmpl" . }} */ -}}
 {{ template "assets.d/kubectl/header.sh.tmpl" . }}
 {{ if eq .chezmoi.os "linux" -}}
-# TODO: Update setup
+{{-  if (and (eq .chezmoi.osRelease.id "ubuntu") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) }}
+{{    template "assets.d/kubectl/aliases.sh.tmpl" . }}
+{{-  else -}}
+{{    fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{-  end -}}
 {{- else if eq .chezmoi.os "darwin" -}}
-# TODO: Update setup
+{{    template "assets.d/kubectl/aliases.sh.tmpl" . }}
 {{- else if eq .chezmoi.os "windows" -}}
-# TODO: Update setup
+# TODO: Update setup windows kubectl
 {{- else -}}
-{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{    fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
 {{ end -}}

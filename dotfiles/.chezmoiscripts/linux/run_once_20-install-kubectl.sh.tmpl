@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# -*-mode:bash-*- vim:ft=bash
+
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+# Install kubectl
+
+{{ template "shared_script_utils.bash" . }}
+
+{{ if eq .chezmoi.os "darwin" -}}
+{{ end -}}
+
+{{ if eq .chezmoi.os "linux" -}}
+function install_kubectl() {
+    # https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-using-native-package-management
+
+    sudo mkdir -p -m 755 /etc/apt/keyrings
+
+    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.34/deb/Release.key | sudo /bin/gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg # allow unprivileged APT programs to read this keyring
+
+    # This overwrites any existing configuration in /etc/apt/sources.list.d/kubernetes.list
+    echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.34/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+    sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list   # helps tools such as command-not-found to work correctly
+
+    sudo apt update
+    sudo apt install -y kubectl
+}
+
+function uninstall_kubectl() {
+    sudo apt-get remove -y kubectl
+}
+
+function main() {
+    if [[ ! $(command -v kubectl) ]]; then
+        header "Installing kubectl"
+        install_kubectl
+        success "kubectl installed"
+    fi
+}
+
+if [ ${#BASH_SOURCE[@]} = 1 ]; then
+    main
+fi
+{{ end -}}
+
+_safeExit_
