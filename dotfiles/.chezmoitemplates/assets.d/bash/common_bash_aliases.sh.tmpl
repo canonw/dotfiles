@@ -1,4 +1,5 @@
 {{/* {{ template "assets.d/dot_bash_aliases/common.sh.tmpl" . }} */ -}}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
 # Enhance standard commands to improve their behavior
 # -----------------------------------------------------------------------------
 
@@ -309,3 +310,4 @@ if command -v curl > /dev/null; then
 else
     alias weather='wget -qO- --compression=auto --timeout=10 "https://wttr.in/?format=%l:+(%C)+%c++%t+\[%h,+%w\]"'
 fi
+{{- end -}}

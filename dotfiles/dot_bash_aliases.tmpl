@@ -1,22 +1,16 @@
 # -*-mode:bash-*- vim:ft=bash
 
-# ~/.bash_aliases
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
 # =============================================================================
 # Shell aliases sourced by `~/.bashrc` and `~/.zshrc`.
 
 # shellcheck shell=bash
-
-{{ if eq .chezmoi.os "linux" -}}
-
-# TODO: Follow .bash_bash_profile template
-
-{{   template "assets.d/dot_bash_aliases/linux/build.sh.tmpl" . -}}
+{{  if eq .chezmoi.os "linux" -}}
+{{   template "assets.d/bash/common_bash_aliases.sh.tmpl" . }}
 {{ else if eq .chezmoi.os "darwin" -}}
-{{ template "assets.d/dot_bash_aliases/common.sh.tmpl" . }}
+{{   template "assets.d/bash/common_bash_aliases.sh.tmpl" . }}
 {{ else if eq .chezmoi.os "windows" -}}
-
-# TODO: Update setup
-
+# TODO: Update {{ .chezmoi.sourceFile | replaceAllRegex .chezmoi.homeDir "~" }}
 {{ else -}}
 {{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
 {{ end -}}
