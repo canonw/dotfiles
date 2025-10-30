@@ -27,6 +27,11 @@
 {{- $my_app = .include_app.ubuntu_wsl -}}
 {{- end -}}
 
+{{- if eq $my_app.volta true }}
+{{   template "assets.d/volta/dot_bashrc.sh.tmpl" . }}
+{{ else -}}
+{{- end -}}
+
 {{- if eq $my_app.aws_cli true }}
 {{   template "assets.d/aws-cli/dot_bashrc.sh.tmpl" . }}
 {{ else -}}

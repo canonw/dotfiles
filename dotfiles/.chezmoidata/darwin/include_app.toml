@@ -18,6 +18,7 @@
         navi = true
         ripgrep = true
         ssh = true
+        volta = true
         wget = true
         xclip = false # Not use
         zoxide = true

@@ -122,6 +122,10 @@ windows*
 **/.ssh/**
 {{ end -}}
 
+### volta
+{{ if eq $my_app.volta false }}
+{{ end -}}
+
 ### wget
 {{ if eq $my_app.wget false }}
 .wgetrc

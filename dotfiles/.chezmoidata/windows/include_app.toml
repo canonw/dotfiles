@@ -18,6 +18,7 @@
         navi = false # TODO: Integrate to windows
         ripgrep = true
         ssh = true
+        volta = false # TODO: Integrate to windows
         wget = true
         xclip = false # Not use
         zoxide = true
