@@ -1,5 +1,3 @@
 {{ if eq .chezmoi.osRelease.id "ubuntu" -}}
 {{   template "assets.d/dot_profile/linux/ubuntu/default.sh.tmpl" . }}
-
-{{   template "assets.d/fastfetch/dot_profile.sh.tmpl" . }}
 {{ end -}}

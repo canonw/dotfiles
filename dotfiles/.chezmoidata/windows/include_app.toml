@@ -7,6 +7,7 @@
         direnv = false # No windows support
         espanso = true
         git = true
+        fastfetch = false # TODO: Integrate to windows
         fzf = true
         gnupg = false # TODO: Integrate to windows
         gopass = false # TODO: Integrate to windows

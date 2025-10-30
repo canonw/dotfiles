@@ -5,15 +5,24 @@
 # =============================================================================
 #
 
-{{ if eq .chezmoi.os "linux" -}}
+{{- $my_app := .include_app.default -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{- $my_app = .include_app.darwin -}}
+{{- else if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) -}}
+{{- $my_app = .include_app.ubuntu_wsl -}}
+{{- end -}}
 
-{{ template "assets.d/fastfetch/dot_profile.sh.tmpl" . }}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin")) -}}
 
-{{- else if eq .chezmoi.os "darwin" -}}
+{{   if (eq .chezmoi.os "darwin") }}
 
-{{ template "assets.d/homebrew/dot_profile.sh.tmpl" . }}
+{{     template "assets.d/homebrew/dot_profile.sh.tmpl" . }}
+{{-   end -}}
 
-{{ template "assets.d/fastfetch/dot_profile.sh.tmpl" . }}
+{{-  if eq $my_app.fastfetch true }}
+
+{{     template "assets.d/fastfetch/dot_profile.sh.tmpl" . }}
+{{-  end -}}
 
 {{- else if eq .chezmoi.os "windows" -}}
 # TODO: Update setup

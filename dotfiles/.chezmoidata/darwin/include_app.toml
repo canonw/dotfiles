@@ -6,6 +6,7 @@
         curl = true
         direnv = true
         espanso = true
+        fastfetch = true
         fzf = true
         git = true
         gopass = true
