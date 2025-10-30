@@ -13,11 +13,10 @@
 {{- end -}}
 
 {{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin")) -}}
-
-{{   if (eq .chezmoi.os "darwin") }}
+{{-  if eq $my_app.homebrew true }}
 
 {{     template "assets.d/homebrew/dot_profile.sh.tmpl" . }}
-{{-   end -}}
+{{-  end -}}
 
 {{-  if eq $my_app.fastfetch true }}
 

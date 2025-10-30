@@ -11,6 +11,7 @@
         git = true
         gnupg = false # TODO: Integrate to linux wsl
         gopass = true
+        homebrew = false # Not use
         kubectl = true
         lsd = true
         mintty = false

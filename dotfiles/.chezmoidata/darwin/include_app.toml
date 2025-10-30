@@ -11,6 +11,7 @@
         git = true
         gopass = true
         gnupg = true
+        homebrew = true
         kubectl = true
         lsd = true
         mintty = false

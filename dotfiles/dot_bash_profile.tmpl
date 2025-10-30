@@ -13,12 +13,18 @@
 {{ if eq .chezmoi.os "linux" -}}
 {{   fail (printf "File should be removed from the client system: %s" .chezmoi.os) }}
 {{- else if eq .chezmoi.os "darwin" -}}
-{{   template "assets.d/homebrew/dot_profile.sh.tmpl" . }}
+
+{{-  if eq $my_app.homebrew true }}
+
+{{     template "assets.d/homebrew/dot_profile.sh.tmpl" . }}
+{{-  end -}}
+{{-  if eq true true }}
+
 {{   template "assets.d/bash_shared/common.sh.tmpl" . }}
+{{-  end -}}
 {{-  if eq $my_app.fastfetch true }}
 
 {{     template "assets.d/fastfetch/dot_profile.sh.tmpl" . }}
-{{-  else -}}
 {{-  end -}}
 
 {{- else if eq .chezmoi.os "windows" -}}
