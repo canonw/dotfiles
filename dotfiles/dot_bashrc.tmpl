@@ -57,6 +57,11 @@
 {{ else -}}
 {{- end -}}
 
+{{- if eq $my_app.gnupg true }}
+{{   template "assets.d/gnupg/dot_bashrc.sh.tmpl" . }}
+{{ else -}}
+{{- end -}}
+
 {{- if eq $my_app.kubectl true }}
 {{   template "assets.d/kubectl/dot_bashrc.sh.tmpl" . }}
 {{ else -}}

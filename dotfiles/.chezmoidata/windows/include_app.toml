@@ -7,6 +7,7 @@
         direnv = false # No windows support
         git = true
         fzf = true
+        gnupg = false # TODO: Integrate to windows
         gopass = false # TODO: Integrate to windows
         kubectl = false # TODO: Integrate to windows
         lsd = false # TODO: Integrate to windows

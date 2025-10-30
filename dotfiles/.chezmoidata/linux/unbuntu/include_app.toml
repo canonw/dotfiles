@@ -7,6 +7,7 @@
         direnv = true
         fzf = true
         git = true
+        gnupg = false # TODO: Integrate to linux wsl
         gopass = true
         kubectl = true
         lsd = true
