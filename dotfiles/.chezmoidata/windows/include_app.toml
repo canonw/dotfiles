@@ -16,6 +16,7 @@
         kubectl = false # TODO: Integrate to windows
         lsd = false # TODO: Integrate to windows
         mintty = true
+        nano = true
         navi = false # TODO: Integrate to windows
         python = false # TODO: Integrate to windows
         ripgrep = true

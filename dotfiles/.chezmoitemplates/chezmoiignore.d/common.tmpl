@@ -112,6 +112,11 @@ windows*
 .minttyrc
 {{ end -}}
 
+### nano
+{{ if eq $my_app.nano false }}
+.nanorc
+{{ end -}}
+
 ### navi
 {{ if eq $my_app.navi false }}
 {{ end -}}
