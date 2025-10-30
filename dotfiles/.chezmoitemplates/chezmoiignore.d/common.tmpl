@@ -131,6 +131,10 @@ windows*
 .wgetrc
 {{ end -}}
 
+### rust
+{{ if eq $my_app.rust false }}
+{{ end -}}
+
 ### xclip
 {{ if eq $my_app.xclip false }}
 {{ end -}}

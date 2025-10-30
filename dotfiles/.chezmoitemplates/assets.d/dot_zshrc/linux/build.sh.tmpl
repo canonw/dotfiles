@@ -14,8 +14,6 @@
 {{   template "assets.d/python/dot_zshrc.sh.tmpl" . }}
 
 {{   template "assets.d/dotnet/dot_zshrc.sh.tmpl" . }}
-
-{{   template "assets.d/rust/dot_zshrc.sh.tmpl" . }}
 {{- end -}}
 {{ if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
 {{ end -}}

@@ -82,6 +82,11 @@
 {{ else -}}
 {{- end -}}
 
+{{- if eq $my_app.rust true }}
+{{   template "assets.d/rust/dot_zshrc.sh.tmpl" . }}
+{{ else -}}
+{{- end -}}
+
 {{- if eq $my_app.ssh true }}
 {{   template "assets.d/ssh/dot_zshrc.sh.tmpl" . }}
 {{ else -}}

@@ -17,6 +17,7 @@
         mintty = false
         navi = true
         ripgrep = true
+        rust = true
         ssh = true
         volta = true
         wget = true

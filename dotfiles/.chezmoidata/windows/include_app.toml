@@ -17,6 +17,7 @@
         mintty = true
         navi = false # TODO: Integrate to windows
         ripgrep = true
+        rust = false # TODO: Integrate to windows
         ssh = true
         volta = false # TODO: Integrate to windows
         wget = true
