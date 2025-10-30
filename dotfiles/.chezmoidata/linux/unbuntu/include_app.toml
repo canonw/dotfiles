@@ -1,6 +1,7 @@
 [include_app]
     [include_app.ubuntu_wsl]
         aws_cli = true
+        bash = true
         chezmoi = true
         clipboard_project = true
         curl = true

@@ -1,6 +1,7 @@
 [include_app]
     [include_app.darwin]
         aws_cli = true
+        bash = true
         chezmoi = true
         clipboard_project = true
         curl = true

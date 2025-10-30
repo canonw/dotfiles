@@ -46,6 +46,12 @@ windows*
 {{ if eq $my_app.aws_cli false }}
 {{ end -}}
 
+### bash
+{{ if eq $my_app.bash false }}
+.bash*
+.profile
+{{ end -}}
+
 ### chezmoi
 {{ if eq $my_app.chezmoi false }}
 {{ end -}}
