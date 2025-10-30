@@ -10,7 +10,7 @@
 {{   template "assets.d/rust/dot_bashrc.sh.tmpl" . }}
 
 {{   template "assets.d/volta/dot_bashrc.sh.tmpl" . }}
-# TODO: Add k8s and gunpg
+# TODO: Add gunpg
 {{- end -}}
 {{ if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
 {{ end -}}

@@ -8,6 +8,7 @@
         fzf = true
         git = true
         gopass = true
+        kubectl = true
         lsd = true
         mintty = false
         navi = true

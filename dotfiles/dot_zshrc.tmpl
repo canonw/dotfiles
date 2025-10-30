@@ -52,6 +52,11 @@
 {{ else -}}
 {{- end -}}
 
+{{- if eq $my_app.kubectl true }}
+{{   template "assets.d/kubectl/dot_zshrc.sh.tmpl" . }}
+{{ else -}}
+{{- end -}}
+
 {{- if eq $my_app.lsd true }}
 {{   template "assets.d/lsd/dot_zshrc.sh.tmpl" . }}
 {{ else -}}
