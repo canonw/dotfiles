@@ -1,4 +1,4 @@
-# chemzoi shared ignore patterns for target so
+# chemzoi shared ignore patterns for target os
 
 {{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin")) -}}
 
@@ -33,131 +33,132 @@ windows*
 {{ end -}}
 
 ## Application specific ignores
-{{- $my_app := .include_app.default -}}
-{{- if eq .chezmoi.os "darwin" -}}
-{{- $my_app = .include_app.darwin -}}
-{{- else if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) -}}
-{{- $my_app = .include_app.ubuntu_wsl -}}
-{{- else if eq .chezmoi.os "windows" -}}
-{{- $my_app = .include_app.windows -}}
-{{- end -}}
 
 ### awscli
-{{ if eq $my_app.aws_cli false }}
+{{ if eq .apps.aws_cli.include false }}
 {{ end -}}
 
 ### bash
-{{ if eq $my_app.bash false }}
+{{ if eq .apps.bash.include false }}
 .bash*
 .profile
 {{ end -}}
 
 ### chezmoi
-{{ if eq $my_app.chezmoi false }}
+{{ if eq .apps.chezmoi.include false }}
 {{ end -}}
 
 ### clipboard_project
-{{ if eq $my_app.clipboard_project false }}
+{{ if eq .apps.clipboard_project.include false }}
 {{ end -}}
 
 ### curl
-{{ if eq $my_app.curl false }}
+{{ if eq .apps.curl.include false }}
 .curlrc
 {{ end -}}
 
 ### direnv
-{{ if eq $my_app.direnv false }}
+{{ if eq .apps.direnv.include false }}
 {{ end -}}
 
 ### dotnet
-{{ if eq $my_app.dotnet false }}
+{{ if eq .apps.dotnet.include false }}
 {{ end -}}
 
 ### espanso
-{{ if eq $my_app.espanso false }}
+{{ if eq .apps.espanso.include false }}
 {{ end -}}
 
 ### fastfetch
-{{ if eq $my_app.fastfetch false }}
+{{ if eq .apps.fastfetch.include false }}
 {{ end -}}
 
 ### fzf
-{{ if eq $my_app.fzf false }}
+{{ if eq .apps.fzf.include false }}
 {{ end -}}
 
 ### git
-{{ if eq $my_app.git false }}
+{{ if eq .apps.git.include false }}
 .gitconfig*
 .gitignore
 .gitmessage
 {{ end -}}
 
 ### gopass
-{{ if eq $my_app.gopass false }}
+{{ if eq .apps.gopass.include false }}
 {{ end -}}
 
 ### gnupg
-{{ if eq $my_app.gnupg false }}
+{{ if eq .apps.gnupg.include false }}
+**/.gnupg/**
 {{ end -}}
 
 ### homebrew
-{{ if eq $my_app.homebrew false }}
+{{ if eq .apps.homebrew.include false }}
 {{ end -}}
 
 ### kubectl
-{{ if eq $my_app.kubectl false }}
+{{ if eq .apps.kubectl.include false }}
 {{ end -}}
 
 ### lsd
-{{ if eq $my_app.lsd false }}
+{{ if eq .apps.lsd.include false }}
 **/.config/lsd/**
 {{ end -}}
 
 ### mintty
-{{ if eq $my_app.mintty false }}
+{{ if eq .apps.mintty.include false }}
 .minttyrc
 {{ end -}}
 
 ### nano
-{{ if eq $my_app.nano false }}
+{{ if eq .apps.nano.include false }}
 .nanorc
 {{ end -}}
 
 ### navi
-{{ if eq $my_app.navi false }}
+{{ if eq .apps.navi.include false }}
 {{ end -}}
 
 ### python
-{{ if eq $my_app.python false }}
+{{ if eq .apps.python.include false }}
 {{ end -}}
 
 ### ripgrep
-{{ if eq $my_app.ripgrep false }}
+{{ if eq .apps.ripgrep.include false }}
 .ripgreprc
 {{ end -}}
 
 ### ssh
-{{ if eq $my_app.ssh false }}
+{{ if eq .apps.ssh.include false }}
 **/.ssh/**
 {{ end -}}
 
 ### volta
-{{ if eq $my_app.volta false }}
+{{ if eq .apps.volta.include false }}
 {{ end -}}
 
 ### wget
-{{ if eq $my_app.wget false }}
+{{ if eq .apps.wget.include false }}
 .wgetrc
 {{ end -}}
 
 ### rust
-{{ if eq $my_app.rust false }}
+{{ if eq .apps.rust.include false }}
 {{ end -}}
 
 ### xclip
-{{ if eq $my_app.xclip false }}
+{{ if eq .apps.xclip.include false }}
 {{ end -}}
 
 ### zoxide
-{{ if eq $my_app.zoxide false }}
+{{ if eq .apps.zoxide.include false }}
+{{ end -}}
+
+### zsh
+{{ if eq .apps.zsh.include false }}
+/.zsh*
+/.zprofile
+# TODO: Add more conditions
+/.p10k.zsh
 {{ end -}}
