@@ -47,6 +47,11 @@
 {{ else -}}
 {{- end -}}
 
+{{- if eq $my_app.dotnet true }}
+{{   template "assets.d/dotnet/dot_zshrc.sh.tmpl" . }}
+{{ else -}}
+{{- end -}}
+
 {{- if eq $my_app.espanso true }}
 {{   template "assets.d/espanso/dot_zshrc.sh.tmpl" . }}
 {{ else -}}

@@ -5,6 +5,7 @@
         clipboard_project = false # TODO: Integrate to windows
         curl = true
         direnv = false # No windows support
+        dotnet = true
         espanso = true
         git = true
         fastfetch = false # TODO: Integrate to windows

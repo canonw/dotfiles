@@ -5,6 +5,7 @@
         clipboard_project = true
         curl = true
         direnv = true
+        dotnet = true
         espanso = false # Not use
         fastfetch = true
         fzf = true
