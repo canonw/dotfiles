@@ -5,6 +5,7 @@
         clipboard_project = true
         curl = true
         direnv = true
+        espanso = true
         fzf = true
         git = true
         gopass = true

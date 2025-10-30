@@ -5,6 +5,7 @@
         clipboard_project = true
         curl = true
         direnv = true
+        espanso = false # Not use
         fzf = true
         git = true
         gnupg = false # TODO: Integrate to linux wsl

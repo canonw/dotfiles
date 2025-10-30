@@ -5,6 +5,7 @@
         clipboard_project = false # TODO: Integrate to windows
         curl = true
         direnv = false # No windows support
+        espanso = true
         git = true
         fzf = true
         gnupg = false # TODO: Integrate to windows

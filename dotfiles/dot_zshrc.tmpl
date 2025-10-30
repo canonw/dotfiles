@@ -42,6 +42,11 @@
 {{ else -}}
 {{- end -}}
 
+{{- if eq $my_app.espanso true }}
+{{   template "assets.d/espanso/dot_zshrc.sh.tmpl" . }}
+{{ else -}}
+{{- end -}}
+
 {{- if eq $my_app.fzf true }}
 {{   template "assets.d/fzf/dot_zshrc.sh.tmpl" . }}
 {{ else -}}
