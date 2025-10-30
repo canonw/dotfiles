@@ -17,6 +17,7 @@
         lsd = false # TODO: Integrate to windows
         mintty = true
         navi = false # TODO: Integrate to windows
+        python = false # TODO: Integrate to windows
         ripgrep = true
         rust = false # TODO: Integrate to windows
         ssh = true

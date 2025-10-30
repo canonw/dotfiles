@@ -10,8 +10,6 @@
 {{   template "assets.d/zsh-history-substring-search/dot_zshrc.sh.tmpl" . }}
 
 [ -f "$HOME/.zsh_aliases" ] && source "$HOME/.zsh_aliases"
-
-{{   template "assets.d/python/dot_zshrc.sh.tmpl" . }}
 {{- end -}}
 {{ if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
 {{ end -}}

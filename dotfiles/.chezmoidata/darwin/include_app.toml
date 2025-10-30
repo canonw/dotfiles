@@ -17,6 +17,7 @@
         lsd = true
         mintty = false
         navi = true
+        python = true
         ripgrep = true
         rust = true
         ssh = true

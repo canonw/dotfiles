@@ -87,6 +87,11 @@
 {{ else -}}
 {{- end -}}
 
+{{- if eq $my_app.python true }}
+{{   template "assets.d/python/dot_zshrc.sh.tmpl" . }}
+{{ else -}}
+{{- end -}}
+
 {{- if eq $my_app.rust true }}
 {{   template "assets.d/rust/dot_zshrc.sh.tmpl" . }}
 {{ else -}}

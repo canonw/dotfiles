@@ -2,8 +2,6 @@
 {{   template "assets.d/dot_bashrc/linux/ubuntu/default.sh.tmpl" . }}
 
 {{   template "assets.d/dot_bashrc/linux/ubuntu/bash_completion.sh.tmpl" . }}
-
-{{   template "assets.d/python/dot_bashrc.sh.tmpl" . }}
 {{- end -}}
 {{ if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
 {{ end -}}
