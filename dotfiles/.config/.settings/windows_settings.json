@@ -1,0 +1,70 @@
+{
+    "apps": {
+        "aws_cli": {},
+        "bash": {
+            "include": false
+        },
+        "chezmoi": {},
+        "clipboard_project": {
+            "include": false
+        },
+        "curl": {},
+        "direnv": {
+            "include": false
+        },
+        "dotnet": {},
+        "espanso": {},
+        "fastfetch": {
+            "include": false
+        },
+        "fzf": {},
+        "git": {
+            "include": false
+        },
+        "gnupg": {
+            "include": false
+        },
+        "gopass": {
+            "include": false
+        },
+        "homebrew": {
+            "include": false
+        },
+        "kubectl": {
+            "include": false
+        },
+        "lsd": {
+            "include": false
+        },
+        "mintty": {
+            "include": true
+        },
+        "nano": {
+            "include": false
+        },
+        "navi": {
+            "include": false
+        },
+        "python": {
+            "include": false
+        },
+        "ripgrep": {},
+        "rust": {
+            "include": false
+        },
+        "ssh": {},
+        "volta": {
+            "include": false
+        },
+        "wget": {},
+        "xclip": {
+            "include": false
+        },
+        "zoxide": {
+            "include": false
+        },
+        "zsh": {
+            "include": false
+        }
+    }
+}

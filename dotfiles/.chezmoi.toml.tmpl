@@ -11,9 +11,43 @@
 #
 {{- /* This file supports Go's text/template language. */}}
 
-{{- $git_email := promptString "Git email address for the author/committer" }}
-{{- $git_user := promptString "Git username for the author/committer" }}
+{{/* os tags */}}
+{{- $is_wsl := false -}}
+{{- $os_id := .chezmoi.os -}}
+{{- if (and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id")) -}}
+{{-   $is_wsl = (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+{{-   $os_id = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- end -}}
+
+{{- $configFileNamePrefix := .chezmoi.os -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{-   if (and (hasKey .chezmoi.osRelease "id") (eq $is_wsl true)) -}}
+{{-     $configFileNamePrefix = printf "%s-%s-wsl" .chezmoi.os .chezmoi.osRelease.id -}}
+{{-   end -}}
+{{- else if eq .chezmoi.os "windows" -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{- else -}}
+{{-   fail (printf "❌ Unsupported OS for the client system: %s" .chezmoi.os) -}}
+{{- end -}}
+
+{{- $configFileName := (printf "%s_settings.json" $configFileNamePrefix) -}}
+{{- $configFile := (joinPath .chezmoi.sourceDir ".config" ".settings" $configFileName) -}}
+{{- writeToStdout (printf "✔ Reading file '%s'\n" $configFile) -}}
+{{- $config := include $configFile | fromJson -}}
+
+{{- $git_user := promptStringOnce . "git_user" "Git username for the author/committer" -}}
+{{- $git_email := promptStringOnce . "git_email" "Git email address for the author/committer" -}}
 
 [data]
     git_user = {{ $git_user | quote }}
     git_email = {{ $git_email | quote }}
+    config_file_prefix = {{ $configFileNamePrefix | quote }}
+    os_id = {{ $os_id | quote }}
+{{  range $app, $properties := $config.apps }}
+[data.apps.{{ $app }}]
+{{ $properties | toToml | indent 4 }}
+{{- /*Set optional property default value */ -}}
+{{-   if (not (hasKey $properties "include")) -}}
+{{-     printf "%s = true" "include" -}}
+{{-   end -}}
+{{- end }}
