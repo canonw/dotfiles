@@ -1,6 +1,12 @@
+{{- $app := "bash" -}}
+{{- $config := (index .apps $app) -}}
+{{- if (ne $config.include true) -}}
+{{   fail (printf "❌ Unsupported app for the client system: %s" $app) }}
+{{ end -}}
+
 # -*-mode:bash-*- vim:ft=bash
 
-# ~/.bash_logout
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
 # =============================================================================
 # Executed by bash when login shell exits.
 

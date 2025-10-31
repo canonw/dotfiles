@@ -1,3 +1,9 @@
+{{- $app := "bash" -}}
+{{- $config := (index .apps $app) -}}
+{{- if (ne $config.include true) -}}
+{{   fail (printf "❌ Unsupported app for the client system: %s" $app) }}
+{{ end -}}
+
 # -*-mode:bash-*- vim:ft=bash
 
 # {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
@@ -5,12 +11,14 @@
 # Shell aliases sourced by `~/.bashrc` and `~/.zshrc`.
 
 # shellcheck shell=bash
-{{  if eq .chezmoi.os "linux" -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{ "" }}
+{{    template "assets.d/bash/common_bash_aliases.sh.tmpl" . }}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{ "" }}
 {{   template "assets.d/bash/common_bash_aliases.sh.tmpl" . }}
-{{ else if eq .chezmoi.os "darwin" -}}
-{{   template "assets.d/bash/common_bash_aliases.sh.tmpl" . }}
-{{ else if eq .chezmoi.os "windows" -}}
+{{- else if eq .chezmoi.os "windows" -}}
 # TODO: Update {{ .chezmoi.sourceFile | replaceAllRegex .chezmoi.homeDir "~" }}
-{{ else -}}
-{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
-{{ end -}}
+{{- else -}}
+{{   fail (printf "❌ Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{- end -}}

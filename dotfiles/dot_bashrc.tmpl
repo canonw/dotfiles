@@ -1,3 +1,9 @@
+{{- $app := "bash" -}}
+{{- $config := (index .apps $app) -}}
+{{- if (ne $config.include true) -}}
+{{   fail (printf "❌ Unsupported app for the client system: %s" $app) }}
+{{ end -}}
+
 # -*-mode:bash-*- vim:ft=bash
 
 # {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
@@ -8,111 +14,123 @@
 
 # shellcheck shell=bash
 # shellcheck source=/dev/null
-{{ if eq .chezmoi.os "linux" -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{ "" }}
 {{   template "assets.d/dot_bashrc/linux/build.sh.tmpl" . }}
 {{- else if eq .chezmoi.os "darwin" -}}
+{{ "" }}
 {{   template "assets.d/dot_bashrc/darwin.sh.tmpl" . }}
 {{- else if eq .chezmoi.os "windows" -}}
-
+{{ "" }}
 # TODO: Update setup
-
 {{- else -}}
 {{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
-{{ end -}}
-{{- /* TODO: Replace new style */ -}}
-{{- $my_app := .include_app.default -}}
-{{- if eq .chezmoi.os "darwin" -}}
-{{- $my_app = .include_app.darwin -}}
-{{- else if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) -}}
-{{- $my_app = .include_app.ubuntu_wsl -}}
 {{- end -}}
 
-{{- if eq $my_app.volta true }}
+{{- if eq .apps.python.include true }}
+{{ "" }}
+{{    template "assets.d/python/dot_bashrc.sh.tmpl" . }}
+{{- else -}}
+{{- end -}}
+
+{{- if eq .apps.dotnet.include true }}
+{{ "" }}
+{{    template "assets.d/dotnet/dot_bashrc.sh.tmpl" . }}
+{{- else -}}
+{{- end -}}
+
+{{- if eq .apps.volta.include true }}
+{{ "" }}
 {{   template "assets.d/volta/dot_bashrc.sh.tmpl" . }}
-{{ else -}}
+{{- else -}}
 {{- end -}}
 
-{{- if eq $my_app.aws_cli true }}
-{{   template "assets.d/aws-cli/dot_bashrc.sh.tmpl" . }}
-{{ else -}}
+{{- if eq .apps.aws_cli.include true }}
+{{ "" }}
+{{    template "assets.d/aws-cli/dot_bashrc.sh.tmpl" . }}
+{{- else -}}
 {{- end -}}
 
-{{- if eq $my_app.chezmoi true }}
-{{   template "assets.d/chezmoi/dot_bashrc.sh.tmpl" . }}
-{{ else -}}
+{{- if eq .apps.chezmoi.include true }}
+{{ "" }}
+{{    template "assets.d/chezmoi/dot_bashrc.sh.tmpl" . }}
+{{- else -}}
 {{- end -}}
 
-{{- if eq $my_app.clipboard_project false }}
-{{   template "assets.d/clipboard_project/dot_bashrc.sh.tmpl" . }}
-{{ else -}}
+{{- if eq .apps.clipboard_project.include false }}
+{{ "" }}
+{{    template "assets.d/clipboard_project/dot_bashrc.sh.tmpl" . }}
+{{- else -}}
 {{- end -}}
 
-{{- if eq $my_app.direnv true }}
-{{   template "assets.d/direnv/dot_bashrc.sh.tmpl" . }}
-{{ else -}}
+{{- if eq .apps.direnv.include true }}
+{{ "" }}
+{{    template "assets.d/direnv/dot_bashrc.sh.tmpl" . }}
+{{- else -}}
 {{- end -}}
 
-{{- if eq $my_app.dotnet true }}
-{{   template "assets.d/dotnet/dot_bashrc.sh.tmpl" . }}
-{{ else -}}
+{{- if eq .apps.espanso.include true }}
+{{ "" }}
+{{    template "assets.d/espanso/dot_bashrc.sh.tmpl" . }}
+{{- else -}}
 {{- end -}}
 
-{{- if eq $my_app.espanso true }}
-{{   template "assets.d/espanso/dot_bashrc.sh.tmpl" . }}
-{{ else -}}
+{{- if eq .apps.fzf.include true }}
+{{ "" }}
+{{    template "assets.d/fzf/dot_bashrc.sh.tmpl" . }}
+{{- else -}}
 {{- end -}}
 
-{{- if eq $my_app.fzf true }}
-{{   template "assets.d/fzf/dot_bashrc.sh.tmpl" . }}
-{{ else -}}
+{{- if eq .apps.gopass.include true }}
+{{ "" }}
+{{    template "assets.d/gopass/dot_bashrc.sh.tmpl" . }}
+{{- else -}}
 {{- end -}}
 
-{{- if eq $my_app.gopass true }}
-{{   template "assets.d/gopass/dot_bashrc.sh.tmpl" . }}
-{{ else -}}
+{{- if eq .apps.gnupg.include true }}
+{{ "" }}
+{{    template "assets.d/gnupg/dot_bashrc.sh.tmpl" . }}
+{{- else -}}
 {{- end -}}
 
-{{- if eq $my_app.gnupg true }}
-{{   template "assets.d/gnupg/dot_bashrc.sh.tmpl" . }}
-{{ else -}}
+{{- if eq .apps.kubectl.include true }}
+{{ "" }}
+{{    template "assets.d/kubectl/dot_bashrc.sh.tmpl" . }}
+{{- else -}}
 {{- end -}}
 
-{{- if eq $my_app.kubectl true }}
-{{   template "assets.d/kubectl/dot_bashrc.sh.tmpl" . }}
-{{ else -}}
+{{- if eq .apps.lsd.include true }}
+{{ "" }}
+{{    template "assets.d/lsd/dot_bashrc.sh.tmpl" . }}
+{{- else -}}
 {{- end -}}
 
-{{- if eq $my_app.lsd true }}
-{{   template "assets.d/lsd/dot_bashrc.sh.tmpl" . }}
-{{ else -}}
+{{- if eq .apps.navi.include true }}
+{{ "" }}
+{{    template "assets.d/navi/dot_bashrc.sh.tmpl" . }}
+{{- else -}}
 {{- end -}}
 
-{{- if eq $my_app.navi true }}
-{{   template "assets.d/navi/dot_bashrc.sh.tmpl" . }}
-{{ else -}}
+{{- if eq .apps.rust.include true }}
+{{ "" }}
+{{    template "assets.d/rust/dot_bashrc.sh.tmpl" . }}
+{{- else -}}
 {{- end -}}
 
-{{- if eq $my_app.python true }}
-{{   template "assets.d/python/dot_bashrc.sh.tmpl" . }}
-{{ else -}}
+{{- if eq .apps.ssh.include true }}
+{{ "" }}
+{{    template "assets.d/ssh/dot_bashrc.sh.tmpl" . }}
+{{- else -}}
 {{- end -}}
 
-{{- if eq $my_app.rust true }}
-{{   template "assets.d/rust/dot_bashrc.sh.tmpl" . }}
-{{ else -}}
+{{- if eq .apps.xclip.include true }}
+{{ "" }}
+{{    template "assets.d/xclip/dot_bashrc.sh.tmpl" . }}
+{{- else -}}
 {{- end -}}
 
-{{- if eq $my_app.ssh true }}
-{{   template "assets.d/ssh/dot_bashrc.sh.tmpl" . }}
-{{ else -}}
-{{- end -}}
-
-{{- if eq $my_app.xclip true }}
-{{   template "assets.d/xclip/dot_bashrc.sh.tmpl" . }}
-{{ else -}}
-{{- end -}}
-
-{{- if eq $my_app.zoxide true }}
-{{   template "assets.d/zoxide/dot_bashrc.sh.tmpl" . }}
-{{ else -}}
+{{- if eq .apps.zoxide.include true }}
+{{ "" }}
+{{    template "assets.d/zoxide/dot_bashrc.sh.tmpl" . }}
+{{- else -}}
 {{- end -}}

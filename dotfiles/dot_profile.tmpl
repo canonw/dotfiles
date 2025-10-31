@@ -1,25 +1,28 @@
+{{- $app := "bash" -}}
+{{- $config := (index .apps $app) -}}
+{{- if (ne $config.include true) -}}
+{{   fail (printf "❌ Unsupported app for the client system: %s" $app) }}
+{{ end -}}
+
 # -*-mode:bash-*- vim:ft=bash
 
 # {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
 # =============================================================================
 #
 
-{{- $my_app := .include_app.default -}}
-{{- if eq .chezmoi.os "darwin" -}}
-{{- $my_app = .include_app.darwin -}}
-{{- else if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) -}}
-{{- $my_app = .include_app.ubuntu_wsl -}}
-{{- end -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{ "" }}
+{{   template "assets.d/dot_profile/linux/build.sh.tmpl" . }}
 
-{{ if eq .chezmoi.os "linux" -}}
-{{   template "assets.d/dot_profile/linux/build.sh.tmpl" . -}}
-
-{{   if eq $my_app.fastfetch true -}}
+{{-  if eq .apps.fastfetch.include true -}}
+{{ "" }}
 {{     template "assets.d/fastfetch/dot_profile.sh.tmpl" . }}
-{{   end -}}
+{{-  end -}}
 
-{{ else if eq .chezmoi.os "darwin" -}}
-{{ else if eq .chezmoi.os "windows" -}}
-{{ else -}}
-{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
-{{ end -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+{{ "" }}
+{{- else if eq .chezmoi.os "windows" -}}
+{{ "" }}
+{{- else -}}
+{{   fail (printf "❌ Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{- end -}}
