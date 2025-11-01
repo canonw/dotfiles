@@ -45,6 +45,7 @@
         "navi": {
             "include": false
         },
+        "powershell": {},
         "python": {
             "include": false
         },

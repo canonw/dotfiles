@@ -25,6 +25,9 @@
         },
         "nano": {},
         "navi": {},
+        "powershell": {
+            "include": false
+        },
         "python": {},
         "ripgrep": {},
         "rust": {},

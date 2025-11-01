@@ -120,6 +120,16 @@ windows*
 {{ if eq .apps.navi.include false }}
 {{ end -}}
 
+### powershell
+{{ if eq .apps.powershell.include false }}
+{{  if eq .chezmoi.os "darwin" -}}
+{{  else if eq .chezmoi.os "linux" -}}
+{{  else if eq .chezmoi.os "windows" -}}
+**/Documents/PowerShell/Microsoft.PowerShell_profile.ps1
+**/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1
+{{  end -}}
+{{ end -}}
+
 ### python
 {{ if eq .apps.python.include false }}
 {{ end -}}
