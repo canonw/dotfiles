@@ -1,11 +1,23 @@
+{{- $app := "zsh" -}}
+{{- $config := (index .apps $app) -}}
+{{- if (ne $config.include true) -}}
+{{   fail (printf "❌ Unsupported app for the client system: %s" $app) }}
+{{- end -}}
 # -*-mode:zsh-*- vim:ft=zsh
 
 # ~/.zsh_aliases
-{{ if eq .chezmoi.os "linux" -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{ "" }}
 {{   template "assets.d/dot_zsh_aliases/linux/build.sh.tmpl" . }}
+{{ "" }}
 {{- else if eq .chezmoi.os "darwin" -}}
+{{ "" }}
 {{   template "assets.d/dot_zsh_aliases/common.sh.tmpl" . }}
+{{ "" }}
 {{- else if eq .chezmoi.os "windows" -}}
+{{ "" }}
+TODO: Update aliases
+{{ "" }}
 {{- else -}}
 {{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
 {{ end -}}

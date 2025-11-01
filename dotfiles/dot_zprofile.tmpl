@@ -5,26 +5,24 @@
 # =============================================================================
 #
 
-{{- $my_app := .include_app.default -}}
-{{- if eq .chezmoi.os "darwin" -}}
-{{- $my_app = .include_app.darwin -}}
-{{- else if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) -}}
-{{- $my_app = .include_app.ubuntu_wsl -}}
-{{- end -}}
-
-{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin")) -}}
-{{-  if eq $my_app.homebrew true }}
-
+{{- if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin")) }}
+{{ "" }}
+{{-  if eq .apps.homebrew.include true -}}
+{{ "" }}
 {{     template "assets.d/homebrew/dot_profile.sh.tmpl" . }}
+{{ "" }}
 {{-  end -}}
 
-{{-  if eq $my_app.fastfetch true }}
-
+{{-  if eq .apps.fastfetch.include true -}}
+{{ "" }}
 {{     template "assets.d/fastfetch/dot_profile.sh.tmpl" . }}
+{{ "" }}
 {{-  end -}}
 
 {{- else if eq .chezmoi.os "windows" -}}
+{{ "" }}
 # TODO: Update setup
+{{ "" }}
 {{- else -}}
-{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{   fail (printf "❌ Unsupported OS for the client system: %s" .chezmoi.os) }}
 {{ end -}}
