@@ -8,11 +8,32 @@
 # See https://www.chezmoi.io/reference/special-files/chezmoiexternal-format/
 #
 {{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu")) -}}
-{{   template "chezmoiexternal.d/ubuntu.toml.tmpl" . }}
+
+{{ "" }}
+{{-   if eq .apps.zsh.include true }}
+{{      template "chezmoiexternal.d/common/oh-my-zsh.toml" . }}
+{{    end -}}
+{{-   if eq .apps.aws_cli.include true }}
+{{      template "chezmoiexternal.d/common/aws_cli.toml" . }}
+{{    end -}}
+{{ "" }}
+
 {{ else if eq .chezmoi.os "darwin" -}}
-{{   template "chezmoiexternal.d/macos.toml.tmpl" . }}
+{{ "" }}
+{{-   if eq .apps.zsh.include true }}
+{{      template "chezmoiexternal.d/common/oh-my-zsh.toml" . }}
+{{    end -}}
+
+{{-   if eq .apps.aws_cli.include true }}
+{{      template "chezmoiexternal.d/common/aws_cli.toml" . }}
+{{    end -}}
+
+{{-   if eq .apps.navi.include true }}
+{{      template "chezmoiexternal.d/common/navi.toml" . }}
+{{    end -}}
+{{ "" }}
 {{ else if eq .chezmoi.os "windows" -}}
-{{   template "chezmoiexternal.d/windows.toml.tmpl" . }}
+{{/* Update aws cli link */}}
 {{ else -}}
 {{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
 {{ end -}}

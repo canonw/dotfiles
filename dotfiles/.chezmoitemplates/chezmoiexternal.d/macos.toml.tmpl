@@ -1,7 +1,0 @@
-{{   template "chezmoiexternal.d/common/oh-my-zsh.toml" . }}
-
-{{ if eq .include_app.darwin.aws_cli true }}
-{{   template "chezmoiexternal.d/common/aws_cli.toml" . }}
-{{ end }}
-
-{{   template "chezmoiexternal.d/common/navi.toml" . }}

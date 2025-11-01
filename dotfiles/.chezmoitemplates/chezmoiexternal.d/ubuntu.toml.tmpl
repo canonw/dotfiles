@@ -1,5 +1,0 @@
-{{   template "chezmoiexternal.d/common/oh-my-zsh.toml" . }}
-
-{{ if eq .include_app.ubuntu_wsl.aws_cli true }}
-{{   template "chezmoiexternal.d/common/aws_cli.toml" . }}
-{{ end }}
