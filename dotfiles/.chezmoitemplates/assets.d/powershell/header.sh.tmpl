@@ -1,0 +1,15 @@
+{{/* Header script block */ -}}
+{{/* {{ template "assets.d/powershell/header.sh.tmpl" . }} */ -}}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
+#                                         __         ____
+#     ____  ____ _      _____  __________/ /_  ___  / / /
+#    / __ \/ __ \ | /| / / _ \/ ___/ ___/ __ \/ _ \/ / /
+#   / /_/ / /_/ / |/ |/ /  __/ /  (__  ) / / /  __/ / /
+#  / .___/\____/|__/|__/\___/_/  /____/_/ /_/\___/_/_/
+# /_/
+#
+# powershell
+#
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{ end -}}

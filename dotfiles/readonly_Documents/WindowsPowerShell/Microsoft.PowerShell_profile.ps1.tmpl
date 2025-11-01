@@ -1,10 +1,17 @@
+{{- $app := "powershell" -}}
+{{- $config := (index .apps $app) -}}
+{{- if (ne $config.include true) -}}
+{{   fail (printf "❌ Unsupported app for the client system: %s" $app) }}
+{{- end -}}
+
 # {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
 # =============================================================================
+#
 
 {{ if eq .chezmoi.os "windows" -}}
-
+{{ "" }}
 {{ template "assets.d/powershell/profile.ps1.tmpl" . }}
-
+{{ "" }}
 {{- else -}}
-{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{   fail (printf "❌ Unsupported OS for the client system: %s" .chezmoi.os) }}
 {{ end -}}

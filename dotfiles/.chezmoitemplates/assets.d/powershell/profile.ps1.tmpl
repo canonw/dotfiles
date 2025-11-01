@@ -27,7 +27,6 @@ function Set-Location-GitRoot {
 }
 function Set-Location-Nuget { Set-Location "$HOME\.nuget" }
 function Set-Location-NugetConfig { Set-Location "$env:APPDATA\Nuget" }
-function Set-Location-PowerShell { Set-Location "$env:USERPROFILE\Documents\WindowsPowerShell" }
 
 <## Browser related #>
 <#
@@ -261,7 +260,7 @@ Set-Alias -Name cb.1line -Value Convert-ClipboardToSingleLine -Description "Conv
 Set-Alias -Name cb.tojson -Value Convert-ClipboardTo-Json -Description "Dispaly clipboard content to formatted JSON"
 # Browser related
 Set-Alias -Name msedge -Value Invoke-MsEdge -Description "Start Microsoft Edge"
-# Rcycle Bin
+# Recycle Bin
 Set-Alias -Name .trash.ex -Value Show-RecycleBin -Description "Open recycle bin in explorer"
 # Jump to directory in command line or in explorer
 Set-Alias .. Set-Location-Up -Description "Change to parent directory"
@@ -274,7 +273,6 @@ Set-Alias .home.ex Show-Location-Home -Description "Open home directory in explo
 Set-Alias .groot Set-Location-GitRoot -Description "Change to git repository root directory"
 Set-Alias .nuget Set-Location-Nuget -Description "Change to nuget root directory"
 Set-Alias .nuget.config Set-Location-NugetConfig -Description "Change to nuget configuration directory"
-Set-Alias .profile Set-Location-PowerShell -Description "Change to PowerShell profile directory"
 # Directory related
 Set-Alias pwd.cb Set-Clipboard-Pwd -Description "Copy current directory to clipboard"
 # File related
@@ -284,7 +282,29 @@ Set-Alias -Name trash.dotnet -Value Remove-ToRecycleBin-DotNet -Description "Rem
 # Program related
 # Set-Alias -Name which -Value (Get-Command ).Path -Description "Find application full path"
 # function which([string]$cmd) {gcm -ErrorAction "SilentlyContinue" $cmd | ft Definition}
+{{ "" }}
 
+{{- if eq .apps.powershell.include true }}
+{{ template "assets.d/powershell/header.sh.tmpl" . }}
+{{ "" }}
+function Set-Location-PowerShell { Set-Location "$env:USERPROFILE/Documents/PowerShell" }
+function Set-Location-Windows-PowerShell { Set-Location "$env:USERPROFILE/Documents/WindowsPowerShell" }
+Set-Alias -Name .pwsh -Value Set-Location-PowerShell -Description "Change to PowerShell directory"
+Set-Alias -Name .wpwsh -Value Set-Location-Windows-PowerShell -Description "Change to Windows PowerShell configuration directory"
+{{ else -}}
+{{- end -}}
+
+{{- if eq .apps.chezmoi.include true }}
+{{ template "assets.d/chezmoi/header.sh.tmpl" . }}
+{{ "" }}
+function Set-Location-Chezmoi { Set-Location "$env:USERPROFILE/.local/share/chezmoi" }
+function Set-Location-Chezmoi-Config { Set-Location "$env:USERPROFILE/.config/chezmoi" }
+Set-Alias -Name .chezmoi -Value Set-Location-Chezmoi -Description "Change to chezmoi directory"
+Set-Alias -Name .chezmoi.config -Value Set-Location-Chezmoi-Config -Description "Change to chezmoi configuration directory"
+{{  else -}}
+{{- end -}}
+
+{{ "" }}
 # Visual Studio
 Set-Alias -Name devenv -Value Invoke-VisualStudio -Description "Start Visual Studio"
 
