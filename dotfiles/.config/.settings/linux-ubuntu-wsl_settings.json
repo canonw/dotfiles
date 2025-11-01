@@ -32,6 +32,9 @@
         "rust": {},
         "ssh": {},
         "volta": {},
+        "vscode": {
+            "include": false
+        },
         "wget": {},
         "xclip": {},
         "zoxide": {},

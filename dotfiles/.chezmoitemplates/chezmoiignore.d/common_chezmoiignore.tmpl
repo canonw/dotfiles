@@ -138,6 +138,16 @@ windows*
 {{ if eq .apps.volta.include false }}
 {{ end -}}
 
+### vscode
+{{ if eq .apps.vscode.include false }}
+{{  if eq .chezmoi.os "darwin" -}}
+**/Library/Application Support/Code/**
+{{  else if eq .chezmoi.os "linux" -}}
+{{  else if eq .chezmoi.os "windows" -}}
+**/AppData/Roaming/Code/**
+{{  end -}}
+{{ end -}}
+
 ### wget
 {{ if eq .apps.wget.include false }}
 .wgetrc

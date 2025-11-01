@@ -30,6 +30,7 @@
         "rust": {},
         "ssh": {},
         "volta": {},
+        "vscode": {},
         "wget": {},
         "xclip": {
             "include": false
