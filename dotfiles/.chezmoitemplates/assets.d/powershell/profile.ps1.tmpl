@@ -348,9 +348,12 @@ $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 if (Test-Path($ChocolateyProfile)) {
     Import-Module "$ChocolateyProfile"
 }
-
-<# zoxide #>
+{{ "" }}
+{{- if eq .apps.zoxide.include true }}
+{{ template "assets.d/zoxide/header.sh.tmpl" . }}
 if (Get-Command "zoxide" -ErrorAction SilentlyContinue) {
     # Must call last; else cd not bind to zoxide
     Invoke-Expression (& { (zoxide init powershell | Out-String) })
 }
+{{  else -}}
+{{- end -}}
