@@ -22,18 +22,6 @@ function Set-Location-Documents { Set-Location "$HOME\Documents" }
 function Show-Location-Documents { Invoke-Item -Path "$HOME\Documents" }
 function Set-Location-Home { Set-Location "$HOME" }
 function Show-Location-Home { Invoke-Item -Path "$HOME" }
-function Set-Location-GitRoot {
-    $ErrorActionPreference = "Stop"
-
-    try {
-        $dir = $(git rev-parse --show-toplevel 2>&1)
-        Push-Location
-        Set-Location $dir
-    }
-    catch {
-        Write-Error "$($_.Exception.Message)"
-    }
-}
 function Set-Location-Nuget { Set-Location "$HOME\.nuget" }
 function Set-Location-NugetConfig { Set-Location "$env:APPDATA\Nuget" }
 
@@ -191,13 +179,6 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
             [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
         }
 }
-# Git
-# Required this to install
-#   Install-Module posh-git -Scope CurrentUser
-if (Get-Module -ListAvailable -Name posh-git)
-{
-    Import-Module posh-git
-}
 
 <## Utility functions #>
 <#
@@ -279,7 +260,6 @@ Set-Alias .doc Set-Location-Documents -Description "Change to Document directory
 Set-Alias .doc.ex Show-Location-Documents -Description "Open Document directory in explorer"
 Set-Alias .home Set-Location-Home -Description "Change to home directory"
 Set-Alias .home.ex Show-Location-Home -Description "Open home directory in explorer"
-Set-Alias .groot Set-Location-GitRoot -Description "Change to git repository root directory"
 Set-Alias .nuget Set-Location-Nuget -Description "Change to nuget root directory"
 Set-Alias .nuget.config Set-Location-NugetConfig -Description "Change to nuget configuration directory"
 # Directory related
@@ -310,6 +290,31 @@ function Set-Location-Chezmoi { Set-Location "$env:USERPROFILE/.local/share/chez
 function Set-Location-Chezmoi-Config { Set-Location "$env:USERPROFILE/.config/chezmoi" }
 Set-Alias -Name .chezmoi -Value Set-Location-Chezmoi -Description "Change to chezmoi directory"
 Set-Alias -Name .chezmoi.config -Value Set-Location-Chezmoi-Config -Description "Change to chezmoi configuration directory"
+{{  else -}}
+{{- end -}}
+
+{{- if eq .apps.git.include true }}
+{{ template "assets.d/git/header.sh.tmpl" . }}
+{{ "" }}
+function Set-Location-GitRoot {
+    $ErrorActionPreference = "Stop"
+
+    try {
+        $dir = $(git rev-parse --show-toplevel 2>&1)
+        Push-Location
+        Set-Location $dir
+    }
+    catch {
+        Write-Error "$($_.Exception.Message)"
+    }
+}
+
+## Import tab completion
+# if (Get-Module -ListAvailable -Name posh-git) {}
+# Install this when -- Install-Module posh-git -Scope CurrentUser
+Import-Module posh-git -ErrorAction SilentlyContinue
+
+Set-Alias .groot Set-Location-GitRoot -Description "Change to git repository root directory"
 {{  else -}}
 {{- end -}}
 

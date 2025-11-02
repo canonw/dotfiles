@@ -1,0 +1,15 @@
+{{/* Header script block */ -}}
+{{/* {{ template "assets.d/git/header.sh.tmpl" . }} */ -}}
+{{- if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
+#           _ __
+#    ____ _(_) /_
+#   / __ `/ / __/
+#  / /_/ / / /_
+#  \__, /_/\__/
+# /____/
+#
+# git
+#
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{- end -}}

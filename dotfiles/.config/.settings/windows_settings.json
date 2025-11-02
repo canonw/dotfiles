@@ -16,9 +16,7 @@
         "espanso": {},
         "fastfetch": {},
         "fzf": {},
-        "git": {
-            "include": false
-        },
+        "git": {},
         "gnupg": {
             "include": false
         },
