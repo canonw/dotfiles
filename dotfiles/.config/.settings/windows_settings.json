@@ -5,6 +5,7 @@
             "include": false
         },
         "chezmoi": {},
+        "chocolatey": {},
         "clipboard_project": {
             "include": false
         },

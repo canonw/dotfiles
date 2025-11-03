@@ -226,6 +226,21 @@ Set-Alias -Name .chezmoi.config -Value Set-Location-Chezmoi-Config -Description 
 {{  else -}}
 {{- end -}}
 
+{{- if eq .apps.chocolatey.include true }}
+{{ template "assets.d/chocolatey/header.sh.tmpl" . }}
+{{ "" }}
+# Import the Chocolatey Profile that contains the necessary code to enable
+# tab-completions to function for `choco`.
+# Be aware that if you are missing these lines from your profile, tab completion
+# for `choco` will not function.
+# See https://ch0.co/tab-completion for details.
+$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+if (Test-Path($ChocolateyProfile)) {
+    Import-Module "$ChocolateyProfile"
+}
+{{  else -}}
+{{- end -}}
+
 {{- if eq .apps.dotnet.include true }}
 {{ template "assets.d/dotnet/header.sh.tmpl" . }}
 {{ "" }}
@@ -352,15 +367,6 @@ Set-Alias -Name k -Value kubectl
 kubectl completion powershell | Out-String | Invoke-Expression
 Register-ArgumentCompleter -CommandName k -ScriptBlock $__kubectlCompleterBlock
 
-# Import the Chocolatey Profile that contains the necessary code to enable
-# tab-completions to function for `choco`.
-# Be aware that if you are missing these lines from your profile, tab completion
-# for `choco` will not function.
-# See https://ch0.co/tab-completion for details.
-$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-if (Test-Path($ChocolateyProfile)) {
-    Import-Module "$ChocolateyProfile"
-}
 {{ "" }}
 {{- if eq .apps.zoxide.include true }}
 {{ template "assets.d/zoxide/header.sh.tmpl" . }}
