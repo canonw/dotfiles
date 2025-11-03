@@ -116,18 +116,6 @@ function Invoke-VisualStudio {
     & "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\devenv.exe" $args
 }
 
-<## Code completion #>
-# Winget
-Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
-    param($wordToComplete, $commandAst, $cursorPosition)
-        [Console]::InputEncoding = [Console]::OutputEncoding = $OutputEncoding = [System.Text.Utf8Encoding]::new()
-        $Local:word = $wordToComplete.Replace('"', '""')
-        $Local:ast = $commandAst.ToString().Replace('"', '""')
-        winget complete --word="$Local:word" --commandline "$Local:ast" --position $cursorPosition | ForEach-Object {
-            [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
-        }
-}
-
 <## Utility functions #>
 <#
 .SYNOPSIS
@@ -329,6 +317,21 @@ Set-Alias .groot Set-Location-GitRoot -Description "Change to git repository roo
 {{  else -}}
 {{- end -}}
 
+{{- if eq .apps.winget.include true }}
+{{ template "assets.d/winget/header.sh.tmpl" . }}
+{{ "" }}
+Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
+    param($wordToComplete, $commandAst, $cursorPosition)
+        [Console]::InputEncoding = [Console]::OutputEncoding = $OutputEncoding = [System.Text.Utf8Encoding]::new()
+        $Local:word = $wordToComplete.Replace('"', '""')
+        $Local:ast = $commandAst.ToString().Replace('"', '""')
+        winget complete --word="$Local:word" --commandline "$Local:ast" --position $cursorPosition | ForEach-Object {
+            [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+        }
+}
+{{  else -}}
+{{- end -}}
+
 {{ "" }}
 # Visual Studio
 Set-Alias -Name devenv -Value Invoke-VisualStudio -Description "Start Visual Studio"
@@ -338,7 +341,6 @@ if (Test-Path -Path "$env:USERPROFILE\Documents\WindowsPowerShell\WorkProfile.ps
 {
     . "$env:USERPROFILE\Documents\WindowsPowerShell\WorkProfile.ps1"
 }
-
 
 oh-my-posh --init --shell pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/v$(oh-my-posh --version)/themes/marcduiker.omp.json | Invoke-Expression
 

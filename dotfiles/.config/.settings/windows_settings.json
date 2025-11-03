@@ -58,6 +58,7 @@
         "xclip": {
             "include": false
         },
+        "winget": {},
         "zoxide": {},
         "zsh": {
             "include": false

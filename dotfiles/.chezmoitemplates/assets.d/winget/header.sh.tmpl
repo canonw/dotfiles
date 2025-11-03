@@ -1,0 +1,15 @@
+{{/* Header script block */ -}}
+{{/* {{ template "assets.d/winget/header.sh.tmpl" . }} */ -}}
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
+#            _                  __
+#  _      __(_)___  ____ ____  / /_
+# | | /| / / / __ \/ __ `/ _ \/ __/
+# | |/ |/ / / / / / /_/ /  __/ /_
+# |__/|__/_/_/ /_/\__, /\___/\__/
+#                /____/
+#
+# winget
+# https://github.com/microsoft/winget-cli
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{- end -}}
