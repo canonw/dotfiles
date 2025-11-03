@@ -22,8 +22,6 @@ function Set-Location-Documents { Set-Location "$HOME\Documents" }
 function Show-Location-Documents { Invoke-Item -Path "$HOME\Documents" }
 function Set-Location-Home { Set-Location "$HOME" }
 function Show-Location-Home { Invoke-Item -Path "$HOME" }
-function Set-Location-Nuget { Set-Location "$HOME\.nuget" }
-function Set-Location-NugetConfig { Set-Location "$env:APPDATA\Nuget" }
 
 <## Browser related #>
 <#
@@ -108,47 +106,6 @@ function Remove-ToRecycleBin {
     }
 }
 
-<## C# related #>
-<#
-.SYNOPSIS
-    Remove bin and obj folders to recycle bin
-#>
-function Remove-ToRecycleBin-DotNet {
-    [CmdletBinding(SupportsShouldProcess = $true)]
-    Param
-    (
-        [Parameter(Mandatory = $true, HelpMessage = 'Directory path of file path for deletion.', ValueFromPipeline = $true)]
-        [String]$LiteralPath
-    )
-
-    # $Item = Get-Item -LiteralPath $LiteralPath -ErrorAction SilentlyContinue
-
-    If (-Not (Get-Item -LiteralPath $LiteralPath -ErrorAction SilentlyContinue).PSIsContainer) {
-        Write-Error("'{0}' not a directory" -f $LiteralPath)
-
-        return
-    }
-
-    # Old code left for reference
-    # $paths = Get-ChildItem -Path . -Directory -Recurse | Where-Object -FilterScript { $_.Name -in 'bin', 'obj' }
-    # $shell = New-Object -ComObject "Shell.Application"
-    # foreach($p in $paths) {
-    #     $path = $p.FullName
-    #     $item = $shell.Namespace(0).ParseName("$path")
-    #     $item.InvokeVerb("delete")
-    # }
-
-    Add-Type -AssemblyName Microsoft.VisualBasic
-
-    $Items = Get-ChildItem -Path . -Directory -Recurse | Where-Object -FilterScript { $_.Name -in 'bin', 'obj', 'TestResults' }
-    $Items | ForEach-Object {
-        If ($PSCmdlet.ShouldProcess($_, "Remove to Recycle Bin"))
-        {
-            Remove-ItemToRecycleBin $_
-        }
-    }
-}
-
 function Show-RecycleBin { Start-Process shell:RecycleBinFolder }
 
 <## Visual Studio #>
@@ -160,15 +117,6 @@ function Invoke-VisualStudio {
 }
 
 <## Code completion #>
-if (Get-Command dotnet -ErrorAction SilentlyContinue -CommandType All) {
-	# Auto completion https://learn.microsoft.com/en-us/dotnet/core/tools/enable-tab-autocomplete
-	Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
-		param($wordToComplete, $commandAst, $cursorPosition)
-			dotnet complete --position $cursorPosition "$commandAst" | ForEach-Object {
-				[System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
-			}
-	}
-}
 # Winget
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
@@ -260,14 +208,11 @@ Set-Alias .doc Set-Location-Documents -Description "Change to Document directory
 Set-Alias .doc.ex Show-Location-Documents -Description "Open Document directory in explorer"
 Set-Alias .home Set-Location-Home -Description "Change to home directory"
 Set-Alias .home.ex Show-Location-Home -Description "Open home directory in explorer"
-Set-Alias .nuget Set-Location-Nuget -Description "Change to nuget root directory"
-Set-Alias .nuget.config Set-Location-NugetConfig -Description "Change to nuget configuration directory"
 # Directory related
 Set-Alias pwd.cb Set-Clipboard-Pwd -Description "Copy current directory to clipboard"
 # File related
 Set-Alias -Name touch -Value Set-Touch-File -Description "Add a new file or update modified file datetime"
 Set-Alias -Name trash -Value Remove-ToRecycleBin -Description "Remove files or directories to recycle bin"
-Set-Alias -Name trash.dotnet -Value Remove-ToRecycleBin-DotNet -Description "Remove Dotnet build artifacts to recycle bin"
 # Program related
 # Set-Alias -Name which -Value (Get-Command ).Path -Description "Find application full path"
 # function which([string]$cmd) {gcm -ErrorAction "SilentlyContinue" $cmd | ft Definition}
@@ -290,6 +235,72 @@ function Set-Location-Chezmoi { Set-Location "$env:USERPROFILE/.local/share/chez
 function Set-Location-Chezmoi-Config { Set-Location "$env:USERPROFILE/.config/chezmoi" }
 Set-Alias -Name .chezmoi -Value Set-Location-Chezmoi -Description "Change to chezmoi directory"
 Set-Alias -Name .chezmoi.config -Value Set-Location-Chezmoi-Config -Description "Change to chezmoi configuration directory"
+{{  else -}}
+{{- end -}}
+
+{{- if eq .apps.dotnet.include true }}
+{{ template "assets.d/dotnet/header.sh.tmpl" . }}
+{{ "" }}
+# if (Get-Command dotnet -ErrorAction SilentlyContinue -CommandType All)
+
+# Auto completion https://learn.microsoft.com/en-us/dotnet/core/tools/enable-tab-autocomplete
+# PowerShell parameter completion shim for the dotnet CLI
+Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
+    param($wordToComplete, $commandAst, $cursorPosition)
+        dotnet complete --position $cursorPosition "$commandAst" | ForEach-Object {
+            [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+        }
+}
+
+<## C# related #>
+<#
+.SYNOPSIS
+    Remove bin and obj folders to recycle bin
+#>
+function Remove-ToRecycleBin-DotNet {
+    [CmdletBinding(SupportsShouldProcess = $true)]
+    Param
+    (
+        [Parameter(Mandatory = $true, HelpMessage = 'Directory path of file path for deletion.', ValueFromPipeline = $true)]
+        [String]$LiteralPath
+    )
+
+    # $Item = Get-Item -LiteralPath $LiteralPath -ErrorAction SilentlyContinue
+
+    If (-Not (Get-Item -LiteralPath $LiteralPath -ErrorAction SilentlyContinue).PSIsContainer) {
+        Write-Error("'{0}' not a directory" -f $LiteralPath)
+
+        return
+    }
+
+    # Old code left for reference
+    # $paths = Get-ChildItem -Path . -Directory -Recurse | Where-Object -FilterScript { $_.Name -in 'bin', 'obj' }
+    # $shell = New-Object -ComObject "Shell.Application"
+    # foreach($p in $paths) {
+    #     $path = $p.FullName
+    #     $item = $shell.Namespace(0).ParseName("$path")
+    #     $item.InvokeVerb("delete")
+    # }
+
+    Add-Type -AssemblyName Microsoft.VisualBasic
+
+    $Items = Get-ChildItem -Path . -Directory -Recurse | Where-Object -FilterScript { $_.Name -in 'bin', 'obj', 'TestResults' }
+    $Items | ForEach-Object {
+        If ($PSCmdlet.ShouldProcess($_, "Remove to Recycle Bin"))
+        {
+            Remove-ItemToRecycleBin $_
+        }
+    }
+}
+function Set-Location-Nuget { Set-Location "$env:USERPROFILE\.nuget" }
+function Set-Location-NugetConfig { Set-Location "$env:APPDATA\Nuget" }
+function Set-Location-DotnetTools { Set-Location "$env:USERPROFILE\.dotnet\tools" }
+
+Set-Alias -Name .nuget Set-Location-DotnetTools -Description "Change to nuget root directory"
+
+Set-Alias -Name trash.dotnet -Value Remove-ToRecycleBin-DotNet -Description "Remove Dotnet build artifacts to recycle bin"
+Set-Alias -Name .nuget Set-Location-Nuget -Description "Change to nuget root directory"
+Set-Alias -Name .dotnet_tools Set-Location-DotnetTools -Description "Change to dotnet global tools directory"
 {{  else -}}
 {{- end -}}
 
