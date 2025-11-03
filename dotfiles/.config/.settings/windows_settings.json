@@ -14,9 +14,7 @@
         },
         "dotnet": {},
         "espanso": {},
-        "fastfetch": {
-            "include": false
-        },
+        "fastfetch": {},
         "fzf": {},
         "git": {
             "include": false

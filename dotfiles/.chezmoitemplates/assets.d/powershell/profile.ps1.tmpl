@@ -1,7 +1,16 @@
 {{/* powershell profile script block */ -}}
 {{/* {{ template "assets.d/powershell/profile.ps1.tmpl" . }} */ -}}
-{{ if eq .chezmoi.os "windows" -}}
 
+{{- if eq .apps.fastfetch.include true }}
+{{ "" }}
+{{ template "assets.d/fastfetch/header.sh.tmpl" . }}
+if (Get-Command fastfetch -ErrorAction SilentlyContinue) {
+    fastfetch
+}
+{{  else -}}
+{{- end -}}
+
+{{ "" }}
 # Shared PowerShell profile
 #  $PROFILE="$HOME\Documents\WindowsPowerShell\profile.ps1"
 
@@ -340,7 +349,3 @@ if (Get-Command "zoxide" -ErrorAction SilentlyContinue) {
     # Must call last; else cd not bind to zoxide
     Invoke-Expression (& { (zoxide init powershell | Out-String) })
 }
-
-{{- else -}}
-{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
-{{ end -}}
