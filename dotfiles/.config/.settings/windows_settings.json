@@ -24,6 +24,7 @@
         "gopass": {
             "include": false
         },
+        "gsudo": {},
         "homebrew": {
             "include": false
         },

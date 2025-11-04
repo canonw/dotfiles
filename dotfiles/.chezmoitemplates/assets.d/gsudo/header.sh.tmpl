@@ -1,0 +1,15 @@
+{{/* Header script block */ -}}
+{{/* {{ template "assets.d/gsudo/header.sh.tmpl" . }} */ -}}
+{{- if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
+#                          __
+#    ____ ________  ______/ /___
+#   / __ `/ ___/ / / / __  / __ \
+#  / /_/ (__  ) /_/ / /_/ / /_/ /
+#  \__, /____/\__,_/\__,_/\____/
+# /____/
+#
+# gsudo
+# https://github.com/gerardog/gsudo
+{{- else -}}
+{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{- end -}}

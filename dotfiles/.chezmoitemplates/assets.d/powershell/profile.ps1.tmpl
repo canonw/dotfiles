@@ -332,6 +332,15 @@ Set-Alias .groot Set-Location-GitRoot -Description "Change to git repository roo
 {{  else -}}
 {{- end -}}
 
+{{- if eq .apps.gsudo.include true }}
+{{ template "assets.d/gsudo/header.sh.tmpl" . }}
+{{ "" }}
+if (Get-Module -ListAvailable -Name "gsudoModule") {
+  Import-Module "gsudoModule"
+}
+{{  else -}}
+{{- end -}}
+
 {{- if eq .apps.kubectl.include true }}
 {{ template "assets.d/kubectl/header.sh.tmpl" . }}
 {{ "" }}
@@ -366,10 +375,6 @@ Set-Alias -Name devenv -Value Invoke-VisualStudio -Description "Start Visual Stu
 if (Test-Path -Path "$env:USERPROFILE\Documents\WindowsPowerShell\WorkProfile.ps1" )
 {
     . "$env:USERPROFILE\Documents\WindowsPowerShell\WorkProfile.ps1"
-}
-
-if (Get-Module -ListAvailable -Name "gsudoModule") {
-  Import-Module "gsudoModule"
 }
 
 {{ "" }}
