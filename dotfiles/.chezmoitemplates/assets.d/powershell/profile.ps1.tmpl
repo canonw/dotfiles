@@ -204,8 +204,17 @@ Set-Alias -Name trash -Value Remove-ToRecycleBin -Description "Remove files or d
 # Program related
 # Set-Alias -Name which -Value (Get-Command ).Path -Description "Find application full path"
 # function which([string]$cmd) {gcm -ErrorAction "SilentlyContinue" $cmd | ft Definition}
-{{ "" }}
 
+# Visual Studio
+Set-Alias -Name devenv -Value Invoke-VisualStudio -Description "Start Visual Studio"
+
+<# Invoke other profiles #>
+if (Test-Path -Path "$env:USERPROFILE\Documents\WindowsPowerShell\WorkProfile.ps1" )
+{
+    . "$env:USERPROFILE\Documents\WindowsPowerShell\WorkProfile.ps1"
+}
+
+{{ "" }}
 {{- if eq .apps.powershell.include true }}
 {{ template "assets.d/powershell/header.sh.tmpl" . }}
 {{ "" }}
@@ -367,17 +376,6 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 {{  else -}}
 {{- end -}}
 
-{{ "" }}
-# Visual Studio
-Set-Alias -Name devenv -Value Invoke-VisualStudio -Description "Start Visual Studio"
-
-<# Invoke other profiles #>
-if (Test-Path -Path "$env:USERPROFILE\Documents\WindowsPowerShell\WorkProfile.ps1" )
-{
-    . "$env:USERPROFILE\Documents\WindowsPowerShell\WorkProfile.ps1"
-}
-
-{{ "" }}
 {{- if eq .apps.oh_my_posh.include true }}
 {{ template "assets.d/oh_my_posh/header.sh.tmpl" . }}
 {{ "" }}
