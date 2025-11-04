@@ -42,6 +42,7 @@
         "navi": {
             "include": false
         },
+        "oh_my_posh": {},
         "powershell": {},
         "python": {
             "include": false

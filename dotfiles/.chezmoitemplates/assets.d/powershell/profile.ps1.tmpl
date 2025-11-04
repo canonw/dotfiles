@@ -357,8 +357,6 @@ if (Test-Path -Path "$env:USERPROFILE\Documents\WindowsPowerShell\WorkProfile.ps
     . "$env:USERPROFILE\Documents\WindowsPowerShell\WorkProfile.ps1"
 }
 
-oh-my-posh --init --shell pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/v$(oh-my-posh --version)/themes/marcduiker.omp.json | Invoke-Expression
-
 if (Get-Module -ListAvailable -Name "gsudoModule") {
   Import-Module "gsudoModule"
 }
@@ -367,7 +365,16 @@ Set-Alias -Name k -Value kubectl
 kubectl completion powershell | Out-String | Invoke-Expression
 Register-ArgumentCompleter -CommandName k -ScriptBlock $__kubectlCompleterBlock
 
+
 {{ "" }}
+{{- if eq .apps.oh_my_posh.include true }}
+{{ template "assets.d/oh_my_posh/header.sh.tmpl" . }}
+{{ "" }}
+# oh-my-posh --init --shell pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/v$(oh-my-posh --version)/themes/marcduiker.omp.json | Invoke-Expression
+oh-my-posh --init --shell pwsh --config "$env:USERPROFILE/marcduiker.omp.json" | Invoke-Expression
+{{  else -}}
+{{- end -}}
+
 {{- if eq .apps.zoxide.include true }}
 {{ template "assets.d/zoxide/header.sh.tmpl" . }}
 if (Get-Command "zoxide" -ErrorAction SilentlyContinue) {
