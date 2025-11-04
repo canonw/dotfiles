@@ -332,6 +332,17 @@ Set-Alias .groot Set-Location-GitRoot -Description "Change to git repository roo
 {{  else -}}
 {{- end -}}
 
+{{- if eq .apps.kubectl.include true }}
+{{ template "assets.d/kubectl/header.sh.tmpl" . }}
+{{ "" }}
+Set-Alias -Name k -Value kubectl
+
+kubectl completion powershell | Out-String | Invoke-Expression
+
+Register-ArgumentCompleter -CommandName k -ScriptBlock $__kubectlCompleterBlock
+{{  else -}}
+{{- end -}}
+
 {{- if eq .apps.winget.include true }}
 {{ template "assets.d/winget/header.sh.tmpl" . }}
 {{ "" }}
@@ -360,11 +371,6 @@ if (Test-Path -Path "$env:USERPROFILE\Documents\WindowsPowerShell\WorkProfile.ps
 if (Get-Module -ListAvailable -Name "gsudoModule") {
   Import-Module "gsudoModule"
 }
-
-Set-Alias -Name k -Value kubectl
-kubectl completion powershell | Out-String | Invoke-Expression
-Register-ArgumentCompleter -CommandName k -ScriptBlock $__kubectlCompleterBlock
-
 
 {{ "" }}
 {{- if eq .apps.oh_my_posh.include true }}

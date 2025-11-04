@@ -27,9 +27,7 @@
         "homebrew": {
             "include": false
         },
-        "kubectl": {
-            "include": false
-        },
+        "kubectl": {},
         "lsd": {
             "include": false
         },
