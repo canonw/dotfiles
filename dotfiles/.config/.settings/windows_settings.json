@@ -27,9 +27,7 @@
             "include": false
         },
         "kubectl": {},
-        "lsd": {
-            "include": false
-        },
+        "lsd": {},
         "mintty": {
             "include": true
         },

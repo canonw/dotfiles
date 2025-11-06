@@ -1,6 +1,6 @@
 {{/* Header script block */ -}}
 {{/* {{ template "assets.d/lsd/header.sh.tmpl" . }} */ -}}
-{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
+{{- if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
 #     __         __
 #    / /________/ /
 #   / / ___/ __  /
@@ -9,6 +9,7 @@
 #
 #
 # lsd
+# https://github.com/lsd-rs/lsd
 {{- else -}}
-{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
-{{ end -}}
+{{    fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{- end -}}
