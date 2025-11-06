@@ -1,9 +1,7 @@
 {
     "apps": {
         "aws_cli": {},
-        "bash": {
-            "include": false
-        },
+        "bash": {},
         "chezmoi": {},
         "chocolatey": {},
         "clipboard_project": {

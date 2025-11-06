@@ -14,17 +14,17 @@
 
 # shellcheck shell=bash
 # shellcheck source=/dev/null
-{{- if eq .chezmoi.os "linux" -}}
+{{ if eq .chezmoi.os "linux" -}}
 {{ "" }}
-{{   template "assets.d/dot_bashrc/linux/build.sh.tmpl" . }}
+{{    template "assets.d/dot_bashrc/linux/build.sh.tmpl" . }}
 {{- else if eq .chezmoi.os "darwin" -}}
 {{ "" }}
-{{   template "assets.d/dot_bashrc/darwin.sh.tmpl" . }}
+{{    template "assets.d/dot_bashrc/darwin.sh.tmpl" . }}
 {{- else if eq .chezmoi.os "windows" -}}
 {{ "" }}
-# TODO: Update setup
+[ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
 {{- else -}}
-{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{    fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
 {{- end -}}
 
 {{- if eq .apps.python.include true }}

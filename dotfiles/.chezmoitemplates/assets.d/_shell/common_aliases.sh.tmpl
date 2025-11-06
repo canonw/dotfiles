@@ -240,6 +240,13 @@ else
     #alias safari='safari'
 fi
 
+{{- if (eq .chezmoi.os "windows") }}
+
+# Map Windows native applications
+alias npp='winpty "C:/Program Files/Notepad++/notepad++.exe"'
+alias bc='winpty "C:/Program Files/Beyond Compare 4/BComp.exe"'
+{{- end }}
+{{ "" }}
 # Development
 # -----------------------------------------------------------------------------
 
@@ -249,6 +256,8 @@ alias va='if [ -d ./.venv ]; then \. ./.venv/bin/activate; elif [ -d ./venv ]; t
 # Creates Python virtual environment `venv`.
 alias ve='python3 -m venv ./.venv'
 
+{{- if eq .chezmoi.os "darwin" -}}
+{{ ""}}
 # macOS
 # -----------------------------------------------------------------------------
 
@@ -265,7 +274,9 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     alias spotoff='sudo mdutil -a -i off'
     alias spoton='sudo mdutil -a -i on'
 fi
-
+{{- else -}}
+{{- end }}
+{{ "" }}
 # Various
 # -----------------------------------------------------------------------------
 
