@@ -235,6 +235,14 @@ Set-Alias -Name .chezmoi.config -Value Set-Location-Chezmoi-Config -Description 
 {{  else -}}
 {{- end -}}
 
+{{- if eq .apps.espanso.include true }}
+{{ template "assets.d/espanso/header.sh.tmpl" . }}
+{{ "" }}
+function Set-Location-Espanso { Set-Location "$env:APPDATA\espanso" }
+Set-Alias -Name .espanso -Value Set-Location-Espanso -Description "Change to Espanso directory"
+{{  else -}}
+{{- end -}}
+
 {{- if eq .apps.chocolatey.include true }}
 {{ template "assets.d/chocolatey/header.sh.tmpl" . }}
 {{ "" }}
