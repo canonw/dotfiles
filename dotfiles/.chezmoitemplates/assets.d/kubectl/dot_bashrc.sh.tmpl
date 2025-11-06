@@ -2,26 +2,29 @@
 {{/* {{ template "assets.d/kubectl/dot_bashrc.sh.tmpl" . }} */ -}}
 {{ template "assets.d/kubectl/header.sh.tmpl" . }}
 
-{{ if eq .chezmoi.os "linux" -}}
-{{-  if (and (eq .chezmoi.osRelease.id "ubuntu") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{-   if (and (eq .chezmoi.osRelease.id "ubuntu") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) -}}
+{{ "" }}
 if [ -x "$(command -v kubectl)" ]; then
-    source <(kubectl completion bash)
+  source <(kubectl completion bash)
 
-    alias k=kubectl
-    complete -o default -F __start_kubectl k
+{{ template "assets.d/kubectl/aliases.sh.tmpl" .}}
 fi
-{{    template "assets.d/kubectl/aliases.sh.tmpl" . }}
-{{-  else -}}
-{{    fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
-{{-  end -}}
+{{-   else -}}
+{{      fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{    end -}}
 {{- else if eq .chezmoi.os "darwin" -}}
+{{ "" }}
 if [ -x "$(command -v kubectl)" ]; then
-  alias k=kubectl
-  complete -o default -F __start_kubectl k
+{{  template "assets.d/kubectl/aliases.sh.tmpl" . }}
 fi
-{{    template "assets.d/kubectl/aliases.sh.tmpl" . }}
-{{- else if eq .chezmoi.os "windows" -}}
-# TODO: Update setup windows kubectl
+{{- else if eq .chezmoi.os "windows" }}
+{{ "" }}
+if [ -x "$(command -v kubectl)" ]; then
+  source <(kubectl completion bash)
+
+{{  template "assets.d/kubectl/aliases.sh.tmpl" .}}
+fi
 {{- else -}}
 {{    fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
 {{ end -}}
