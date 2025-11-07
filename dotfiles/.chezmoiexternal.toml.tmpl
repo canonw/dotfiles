@@ -35,16 +35,6 @@
 {{ else if eq .chezmoi.os "windows" -}}
 {{/* Update aws cli link */}}
 
-{{-   if eq .apps.oh_my_posh.include true -}}
-{{/* TODO: Read from command line */}}
-{{- $ohMyPoshVersion := "27.4.3" -}}
-["marcduiker.omp.json"]
-    type          = "file"
-    url           = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/v{{- $ohMyPoshVersion -}}/themes/marcduiker.omp.json"
-    refreshPeriod = "168h"
-{{    else -}}
-{{-   end -}}
-
 {{ else -}}
 {{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
 {{ end -}}

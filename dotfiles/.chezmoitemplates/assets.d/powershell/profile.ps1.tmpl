@@ -55,7 +55,7 @@ function Remove-ItemToRecycleBin {
         [Parameter(Mandatory = $true, HelpMessage = 'Directory path of file path for deletion.', ValueFromPipeline = $true)]
         [String]$LiteralPath
     )
-    
+
     Write-Debug("Start removing {0} to recycle bin" -f $LiteralPath)
 
     If ((Get-Item $LiteralPath).PSIsContainer) {
@@ -416,7 +416,7 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 {{ template "assets.d/oh_my_posh/header.sh.tmpl" . }}
 {{ "" }}
 # oh-my-posh --init --shell pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/v$(oh-my-posh --version)/themes/marcduiker.omp.json | Invoke-Expression
-oh-my-posh --init --shell pwsh --config "$env:USERPROFILE/marcduiker.omp.json" | Invoke-Expression
+oh-my-posh --init --shell pwsh --config "$env:POSH_THEMES_PATH/wholespace.omp.json" | Invoke-Expression
 {{  else -}}
 {{- end -}}
 
