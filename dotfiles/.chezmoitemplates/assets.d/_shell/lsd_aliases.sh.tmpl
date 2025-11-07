@@ -1,7 +1,9 @@
-{{/* shell alias script block */ -}}
+{{/* lsd shell alias script block */ -}}
 {{/* {{ template "assets.d/lsd/aliases.sh.tmpl" . }} */ -}}
-{{- if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
-{{ "" }}
+
+{{- if (or (and (eq .chezmoi.os "linux") (.is_ubuntu_wsl))
+        (eq .chezmoi.os "darwin")
+        (eq .chezmoi.os "windows")) }}
 if [[ $(command -v lsd) ]] ; then
     # alias ls='lsd'
     alias ll='lsd -l'
@@ -9,6 +11,7 @@ if [[ $(command -v lsd) ]] ; then
     alias lla='lsd -la'
     alias lt='lsd --tree'
 fi
+
 {{- else -}}
 {{    fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
-{{- end -}}
+{{  end -}}

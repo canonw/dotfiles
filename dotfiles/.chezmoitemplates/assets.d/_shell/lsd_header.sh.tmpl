@@ -1,6 +1,8 @@
-{{/* Header script block */ -}}
-{{/* {{ template "assets.d/lsd/header.sh.tmpl" . }} */ -}}
-{{- if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") (eq .chezmoi.os "windows")) -}}
+{{/* lsd header script block */ -}}
+{{/* {{ template "assets.d/_shell/lsd_header.sh.tmpl" . }} */ -}}
+{{- if (or (eq .chezmoi.os "linux")
+        (eq .chezmoi.os "darwin")
+        (eq .chezmoi.os "windows")) -}}
 #     __         __
 #    / /________/ /
 #   / / ___/ __  /

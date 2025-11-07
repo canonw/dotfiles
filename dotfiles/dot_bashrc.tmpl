@@ -101,8 +101,7 @@
 
 {{- if eq .apps.lsd.include true }}
 {{ "" }}
-{{    template "assets.d/lsd/dot_bashrc.sh.tmpl" . }}
-{{- else -}}
+{{    template "assets.d/_shell/lsd_shell.sh.tmpl" $context }}
 {{- end -}}
 
 {{- if eq .apps.navi.include true }}
