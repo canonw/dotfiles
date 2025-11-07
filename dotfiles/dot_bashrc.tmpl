@@ -3,18 +3,19 @@
 {{- if (ne $config.include true) -}}
 {{   fail (printf "❌ Unsupported app for the client system: %s" $app) }}
 {{ end -}}
-
-# -*-mode:bash-*- vim:ft=bash
-
-# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
-# =============================================================================
+{{- define "file_header_summary" -}}
 # Executed by bash for non-login shells.
 #
 # See https://www.gnu.org/software/bash/manual/html_node/index.html
 
 # shellcheck shell=bash
 # shellcheck source=/dev/null
-{{ if eq .chezmoi.os "linux" -}}
+{{- end -}}
+{{- $context := (dict "shell" "bash" "chezmoi" .chezmoi "is_wsl" .is_wsl "is_ubuntu_wsl" .is_ubuntu_wsl) -}}
+# -*-mode:bash-*- vim:ft=bash
+{{ "" }}
+{{ template "files.d/header.tmpl" . }}
+{{- if eq .chezmoi.os "linux" -}}
 {{ "" }}
 {{    template "assets.d/dot_bashrc/linux/build.sh.tmpl" . }}
 {{- else if eq .chezmoi.os "darwin" -}}

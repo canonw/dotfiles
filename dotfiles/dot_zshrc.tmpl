@@ -3,13 +3,14 @@
 {{- if (ne $config.include true) -}}
 {{   fail (printf "❌ Unsupported app for the client system: %s" $app) }}
 {{- end -}}
-# -*-mode:zsh-*- vim:ft=zsh
-
-# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
-# =============================================================================
+{{- define "file_header_summary" -}}
 #
-
-{{ if eq .chezmoi.os "linux" -}}
+{{- end -}}
+{{- $context := (dict "shell" "zsh" "chezmoi" .chezmoi "is_wsl" .is_wsl "is_ubuntu_wsl" .is_ubuntu_wsl) -}}
+# -*-mode:zsh-*- vim:ft=zsh
+{{ "" }}
+{{ template "files.d/header.tmpl" . }}
+{{- if eq .chezmoi.os "linux" -}}
 {{ "" }}
 {{    template "assets.d/dot_zshrc/linux/build.sh.tmpl" . }}
 {{ "" }}

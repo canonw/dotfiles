@@ -1,0 +1,5 @@
+# {{ .chezmoi.targetFile | replaceAllRegex .chezmoi.homeDir "~" }}
+# =============================================================================
+{{ block "file_header_summary" . }}
+#
+{{ end }}

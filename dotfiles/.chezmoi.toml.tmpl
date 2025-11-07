@@ -12,10 +12,12 @@
 {{- /* This file supports Go's text/template language. */}}
 
 {{/* os tags */}}
+{{- $is_ubuntu_wsl := false -}}
 {{- $is_wsl := false -}}
 {{- $os_id := .chezmoi.os -}}
 {{- if (and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id")) -}}
 {{-   $is_wsl = (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+{{-   $is_ubuntu_wsl = (and (eq .chezmoi.osRelease.id "ubuntu") ($is_wsl)) -}}
 {{-   $os_id = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
 {{- end -}}
 
@@ -43,6 +45,8 @@
     git_email = {{ $git_email | quote }}
     config_file_prefix = {{ $configFileNamePrefix | quote }}
     os_id = {{ $os_id | quote }}
+    is_ubuntu_wsl = {{ $is_ubuntu_wsl }}
+    is_wsl = {{ $is_wsl }}
 {{  range $app, $properties := $config.apps }}
 [data.apps.{{ $app }}]
 {{ $properties | toToml | indent 4 }}
