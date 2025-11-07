@@ -110,11 +110,9 @@
 {{- else -}}
 {{- end -}}
 
-{{- if eq .apps.kubectl.include true -}}
+{{- if eq .apps.kubectl.include true }}
 {{ "" }}
-{{    template "assets.d/kubectl/dot_zshrc.sh.tmpl" . }}
-{{ "" }}
-{{- else -}}
+{{    template "assets.d/_shell/kubectl_shell.sh.tmpl" $context }}
 {{- end -}}
 
 {{- if eq .apps.lsd.include true -}}

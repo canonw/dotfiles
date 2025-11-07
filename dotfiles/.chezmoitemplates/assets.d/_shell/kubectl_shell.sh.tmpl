@@ -1,30 +1,22 @@
-{{/* .bashrc script block */ -}}
-{{/* {{ template "assets.d/kubectl/dot_bashrc.sh.tmpl" . }} */ -}}
-{{ template "assets.d/kubectl/header.sh.tmpl" . }}
+{{/* kubectl .bashrc and .zhrc script block */ -}}
+{{/* {{ template "assets.d/_shell/kubectl_shell.sh.tmpl" . }} */ -}}
+{{ template "assets.d/_shell/kubectl_header.sh.tmpl" . }}
 
-{{- if eq .chezmoi.os "linux" -}}
-{{-   if (and (eq .chezmoi.osRelease.id "ubuntu") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) -}}
-{{ "" }}
-if [ -x "$(command -v kubectl)" ]; then
-  source <(kubectl completion bash)
+{{- if (or (and (eq .chezmoi.os "linux") (.is_ubuntu_wsl))
+  (eq .chezmoi.os "darwin")
+  (eq .chezmoi.os "windows")) }}
 
-{{ template "assets.d/kubectl/aliases.sh.tmpl" .}}
-fi
-{{-   else -}}
-{{      fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
-{{    end -}}
-{{- else if eq .chezmoi.os "darwin" -}}
-{{ "" }}
 if [ -x "$(command -v kubectl)" ]; then
-{{  template "assets.d/kubectl/aliases.sh.tmpl" . }}
-fi
-{{- else if eq .chezmoi.os "windows" }}
-{{ "" }}
-if [ -x "$(command -v kubectl)" ]; then
-  source <(kubectl completion bash)
 
-{{  template "assets.d/kubectl/aliases.sh.tmpl" .}}
+{{- /* Add bash shell completion */ -}}
+{{- if eq .shell "bash" }}
+{{-   if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "windows")) }}
+  source <(kubectl completion {{ .shell }})
+{{-   end -}}
+{{  end -}}
+{{ template "assets.d/_shell/kubectl_aliases.sh.tmpl" .}}
 fi
+
 {{- else -}}
 {{    fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
-{{ end -}}
+{{  end -}}

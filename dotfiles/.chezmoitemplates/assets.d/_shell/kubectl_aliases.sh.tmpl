@@ -1,24 +1,16 @@
-{{/* shell alias script block */ -}}
-{{/* {{ template "assets.d/kubectl/aliases.sh.tmpl" . }} */ -}}
-{{- if eq .chezmoi.os "linux" -}}
-{{-   if eq .chezmoi.osRelease.id "ubuntu" -}}
-{{-     if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
-{{ "" }}
-  alias k=kubectl
-  complete -o default -F __start_kubectl k
-{{-     else -}}
-{{-     end -}}
-{{-   end -}}
-{{- else if eq .chezmoi.os "darwin" -}}
-{{ "" }}
-  alias k=kubectl
-  complete -o default -F __start_kubectl k
-{{- else if eq .chezmoi.os "windows" -}}
-{{ "" }}
+{{/* kubectl shell alias script block */ -}}
+{{/* {{ template "assets.d/_shell/kubectl_aliases.sh.tmpl" . }} */ -}}
+
+{{- if (or (and (eq .chezmoi.os "linux") (.is_ubuntu_wsl))
+  (eq .chezmoi.os "darwin")
+  (eq .chezmoi.os "windows")) }}
   alias k=kubectl
   complete -o default -F __start_kubectl k
 
+{{-   if eq .chezmoi.os "windows" }}
+
   alias kubectl="kubectl.exe"
+{{-   end -}}
 {{- else -}}
-{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{    fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
 {{  end -}}
