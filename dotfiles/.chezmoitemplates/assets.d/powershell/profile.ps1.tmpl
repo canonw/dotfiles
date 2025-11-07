@@ -359,15 +359,14 @@ if (Get-Module -ListAvailable -Name "gsudoModule") {
 {{- end -}}
 
 {{- if eq .apps.kubectl.include true }}
-{{ template "assets.d/kubectl/header.sh.tmpl" . }}
+{{ template "assets.d/_shell/kubectl_header.sh.tmpl" . }}
 {{ "" }}
 Set-Alias -Name k -Value kubectl
 
 kubectl completion powershell | Out-String | Invoke-Expression
 
 Register-ArgumentCompleter -CommandName k -ScriptBlock $__kubectlCompleterBlock
-{{  else -}}
-{{- end -}}
+{{  end -}}
 
 {{- if eq .apps.winget.include true }}
 {{ template "assets.d/winget/header.sh.tmpl" . }}
