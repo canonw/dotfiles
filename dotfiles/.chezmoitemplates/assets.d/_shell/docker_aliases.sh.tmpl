@@ -1,0 +1,10 @@
+{{/* docker shell alias script block */ -}}
+{{/* {{ template "assets.d/_shell/docker_aliases.sh.tmpl" . }} */ -}}
+
+{{- if (or (and (eq .chezmoi.os "linux") (.is_ubuntu_wsl))
+  (eq .chezmoi.os "darwin")
+  (eq .chezmoi.os "windows")) }}
+# TODO Update docker aliases
+{{- else -}}
+{{    fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{  end -}}

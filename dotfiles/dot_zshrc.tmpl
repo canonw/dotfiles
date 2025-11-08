@@ -82,6 +82,11 @@
 {{- else -}}
 {{- end -}}
 
+{{- if eq .apps.docker.include true }}
+{{ "" }}
+{{    template "assets.d/_shell/docker_shell.sh.tmpl" $context }}
+{{- end -}}
+
 {{- if eq .apps.espanso.include true -}}
 {{ "" }}
 {{    template "assets.d/espanso/dot_zshrc.sh.tmpl" . }}

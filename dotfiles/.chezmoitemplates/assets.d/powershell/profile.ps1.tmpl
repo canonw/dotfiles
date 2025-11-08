@@ -258,6 +258,11 @@ if (Test-Path($ChocolateyProfile)) {
 {{  else -}}
 {{- end -}}
 
+{{- if eq .apps.docker.include true }}
+{{ template "assets.d/_shell/docker_header.sh.tmpl" . }}
+{{ "" }}
+{{  end -}}
+
 {{- if eq .apps.dotnet.include true }}
 {{ template "assets.d/dotnet/header.sh.tmpl" . }}
 {{ "" }}
@@ -371,10 +376,10 @@ Register-ArgumentCompleter -CommandName k -ScriptBlock $__kubectlCompleterBlock
 {{- if eq .apps.lsd.include true }}
 {{ template "assets.d/_shell/lsd_header.sh.tmpl" . }}
 {{ "" }}
-function Show-LsDeluxe-Extended { & lsd.exe -l $args } 
-function Show-LsDeluxe-IncludeDot { & lsd.exe -a $args } 
+function Show-LsDeluxe-Extended { & lsd.exe -l $args }
+function Show-LsDeluxe-IncludeDot { & lsd.exe -a $args }
 function Show-LsDeluxe-Extended-IncludeDot { & lsd.exe -la $args }
-function Show-LsDeluxe-RecursiveTree { & lsd.exe --tree $args } 
+function Show-LsDeluxe-RecursiveTree { & lsd.exe --tree $args }
 Set-Alias -Name ll -Value "Show-LsDeluxe-Extended"
 Set-Alias -Name la -Value "Show-LsDeluxe-IncludeDot"
 Set-Alias -Name lla -Value "Show-LsDeluxe-Extended-IncludeDot"

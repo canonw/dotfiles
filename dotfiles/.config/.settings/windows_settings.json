@@ -11,6 +11,7 @@
         "direnv": {
             "include": false
         },
+        "docker": {},
         "dotnet": {},
         "espanso": {},
         "fastfetch": {},

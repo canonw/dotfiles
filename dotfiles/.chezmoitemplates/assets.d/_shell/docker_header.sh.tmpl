@@ -1,0 +1,17 @@
+{{/* docker header script block */ -}}
+{{/* {{ template "assets.d/_shell/docker_header.sh.tmpl" . }} */ -}}
+{{- if (or (eq .chezmoi.os "linux")
+        (eq .chezmoi.os "darwin")
+        (eq .chezmoi.os "windows")) -}}
+#        __           __
+#   ____/ /___  _____/ /_____  _____
+#  / __  / __ \/ ___/ //_/ _ \/ ___/
+# / /_/ / /_/ / /__/ ,< /  __/ /
+# \__,_/\____/\___/_/|_|\___/_/
+#
+#
+# docker
+# https://docs.docker.com/
+{{- else -}}
+{{    fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{- end -}}

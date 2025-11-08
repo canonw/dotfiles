@@ -6,6 +6,7 @@
         "clipboard_project": {},
         "curl": {},
         "direnv": {},
+        "docker": {},
         "dotnet": {},
         "espanso": {
             "include": false

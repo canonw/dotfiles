@@ -1,0 +1,15 @@
+{{/* docker .bashrc and .zhrc script block */ -}}
+{{/* {{ template "assets.d/_shell/docker_shell.sh.tmpl" . }} */ -}}
+{{ template "assets.d/_shell/docker_header.sh.tmpl" . }}
+
+{{- if (or (and (eq .chezmoi.os "linux") (.is_ubuntu_wsl))
+      (eq .chezmoi.os "darwin")
+      (eq .chezmoi.os "windows")) }}
+
+# Homebrew pre-configure bash and shell completion
+
+# TODO Update docker shell
+{{ template "assets.d/_shell/docker_aliases.sh.tmpl" .}}
+{{- else -}}
+{{    fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{  end -}}
