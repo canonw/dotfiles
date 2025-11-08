@@ -368,6 +368,19 @@ kubectl completion powershell | Out-String | Invoke-Expression
 Register-ArgumentCompleter -CommandName k -ScriptBlock $__kubectlCompleterBlock
 {{  end -}}
 
+{{- if eq .apps.lsd.include true }}
+{{ template "assets.d/_shell/lsd_header.sh.tmpl" . }}
+{{ "" }}
+function Show-LsDeluxe-Extended { & lsd.exe -l $args } 
+function Show-LsDeluxe-IncludeDot { & lsd.exe -a $args } 
+function Show-LsDeluxe-Extended-IncludeDot { & lsd.exe -la $args }
+function Show-LsDeluxe-RecursiveTree { & lsd.exe --tree $args } 
+Set-Alias -Name ll -Value "Show-LsDeluxe-Extended"
+Set-Alias -Name la -Value "Show-LsDeluxe-IncludeDot"
+Set-Alias -Name lla -Value "Show-LsDeluxe-Extended-IncludeDot"
+Set-Alias -Name lt -Value "Show-LsDeluxe-RecursiveTree"
+{{  end -}}
+
 {{- if eq .apps.winget.include true }}
 {{ template "assets.d/winget/header.sh.tmpl" . }}
 {{ "" }}
