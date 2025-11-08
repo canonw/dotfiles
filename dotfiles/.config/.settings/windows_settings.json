@@ -47,10 +47,8 @@
         "rust": {
             "include": false
         },
+        "sqlite": {},
         "ssh": {},
-        "volta": {
-            "include": false
-        },
         "vscode": {},
         "wget": {},
         "xclip": {

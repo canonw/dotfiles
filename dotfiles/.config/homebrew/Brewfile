@@ -72,6 +72,7 @@ brew "openssl@3"
 brew "ripgrep"
 brew "shellcheck"
 # brew "sqlcmd"  # Microsoft SQL Server command-line interface
+brew "sqlite"
 brew "trash"
 brew "tree"
 # brew "unbound"  # Validating, recursive, caching DNS resolver

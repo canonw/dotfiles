@@ -139,6 +139,11 @@ windows*
 .ripgreprc
 {{ end -}}
 
+### SQLite
+{{ if (or (not (hasKey .apps "sqlite")) (eq .apps.sqlite.include false)) }}
+.sqliterc
+{{ end -}}
+
 ### ssh
 {{ if eq .apps.ssh.include false }}
 **/.ssh/**
