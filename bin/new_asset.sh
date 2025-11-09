@@ -3,105 +3,83 @@
 pushd .
 cd "$(git rev-parse --show-toplevel)" || exit 1
 
-asset_path="./dotfiles/.chezmoitemplates/assets.d/$1"
+asset_path="./dotfiles/.chezmoitemplates/assets.d/_shell"
 mkdir -p $asset_path
 
+# General purpose templates
+read -r -d '' HEADER_VAR << EOF
+{{/* FOO header script block */ -}}
+{{/* {{ template "assets.d/_shell/FOO_header.sh.tmpl" . }} */ -}}
+{{- if (or (eq .chezmoi.os "linux")
+        (eq .chezmoi.os "darwin")
+        (eq .chezmoi.os "windows")) -}}
+EOF
+
+read -r -d '' FOOTER_VAR << EOF
+{{- else -}}
+{{    fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{- end -}}
+EOF
+
 # Crete header file and content
-header_path="$asset_path/header.sh.tmpl"
+header_path="$asset_path/$1_header.sh.tmpl"
 if [ ! -f "$header_path" ]; then
-    echo "{{/* Header script block */ -}}" > $header_path
-    echo "{{/* {{ template \"assets.d/$1/header.sh.tmpl\" . }} */ -}}" >> $header_path
-    echo "{{- if (or (eq .chezmoi.os \"linux\") (eq .chezmoi.os \"darwin\") (eq .chezmoi.os \"windows\")) -}}" >> $header_path
+    echo "$HEADER_VAR" > $header_path
     ./bin/block_header.sh "$1" >> $header_path
     echo "" >> $header_path
-    echo "{{- else -}}" >> $header_path
-    echo "{{   fail (printf \"Unsupported OS for the client system: %s\" .chezmoi.os) }}" >> $header_path
-    echo "{{- end -}}" >> $header_path
-
-    # Trim trailing whitespace
-    sed -i 's/[[:space:]]*$//' $header_path
-fi
-
-# Crete .bashrc file and content
-dot_bashrc_path="$asset_path/dot_bashrc.sh.tmpl"
-if [ ! -f "$dot_bashrc_path" ]; then
-    echo "{{/* .bashrc script block */ -}}" > "$dot_bashrc_path"
-    echo "{{/* {{ template \"assets.d/$1/dot_bashrc.sh.tmpl\" . }} */ -}}" >> $dot_bashrc_path
-    cat >> "$dot_bashrc_path" << EOF
-{{ template "assets.d/$1/header.sh.tmpl" . }}
-
-{{ if eq .chezmoi.os "linux" -}}
-{{- if (and (eq .chezmoi.osRelease.id "ubuntu") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) -}}
-{{    template "assets.d/$1/aliases.sh.tmpl" . }}
-{{- else -}}
-{{    fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
-{{- end -}}
-{{- else if eq .chezmoi.os "darwin" -}}
-{{    template "assets.d/$1/aliases.sh.tmpl" . }}
-{{- else if eq .chezmoi.os "windows" -}}
-# TODO: Update setup windows $1
-{{- else -}}
-{{    fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
-{{ end -}}
-EOF
+    echo "$FOOTER_VAR" >> $header_path
+    sed -i "s/FOO/$1/" $header_path
 
     # # Trim trailing whitespace
-    # sed -i 's/[[:space:]]*$//' $dot_bashrc_path
+    # sed -i 's/[[:space:]]*$//' $header_path
 fi
 
-# Crete .zshrc file and content
-dot_zshrc_path="$asset_path/dot_zshrc.sh.tmpl"
-if [ ! -f "$dot_zshrc_path" ]; then
-    echo "{{/* .zshrc script block */ -}}" > "$dot_zshrc_path"
-    echo "{{/* {{ template \"assets.d/$1/dot_zshrc.sh.tmpl\" . }} */ -}}" >> $dot_zshrc_path
-    cat >> "$dot_zshrc_path" << EOF
-{{ template "assets.d/$1/header.sh.tmpl" . }}
+# Crete shell file and content
+# General purpose templates
+read -r -d '' FILE_VAR << EOF
+{{/* FOO .bashrc and .zhrc script block */ -}}
+{{/* {{ template "assets.d/_shell/FOO_shell.sh.tmpl" . }} */ -}}
+{{ template "assets.d/_shell/FOO_header.sh.tmpl" . }}
 
-{{ if eq .chezmoi.os "linux" -}}
-{{- if (and (eq .chezmoi.osRelease.id "ubuntu") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) -}}
-{{    template "assets.d/$1/aliases.sh.tmpl" . }}
+{{- if (or (and (eq .chezmoi.os "linux") (.is_ubuntu_wsl))
+        (eq .chezmoi.os "darwin")
+        (eq .chezmoi.os "windows")) }}
+
+# TODO Update FOO shell
+
+{{ template "assets.d/_shell/FOO_aliases.sh.tmpl" .}}
+
 {{- else -}}
 {{    fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
-{{- end -}}
-{{- else if eq .chezmoi.os "darwin" -}}
-{{    template "assets.d/$1/aliases.sh.tmpl" . }}
-{{- else if eq .chezmoi.os "windows" -}}
-# TODO: Update setup windows $1
-{{- else -}}
-{{    fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
-{{ end -}}
-EOF
-
-    # # Trim trailing whitespace
-    # sed -i 's/[[:space:]]*$//' $dot_zshrc_path
-fi
-
-# Crete aliases file and content
-aliases_path="$asset_path/aliases.sh.tmpl"
-if [ ! -f "$aliases_path" ]; then
-    echo "{{/* shell alias script block */ -}}" > "$aliases_path"
-    echo "{{/* {{ template \"assets.d/$1/aliases.sh.tmpl\" . }} */ -}}" >> $aliases_path
-    cat >> "$aliases_path" << EOF
-{{  if eq .chezmoi.os "linux" -}}
-{{- if eq .chezmoi.osRelease.id "ubuntu" -}}
-# TODO: Update setup ubuntu $1
-{{-   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
-# TODO: Update setup wsl $1
-{{-   else -}}
-# TODO: Update setup non-wsl $1
-{{-   end -}}
-{{- else -}}
-# TODO: Update setup non-ubuntu $1
-{{- end -}}
-{{- else if eq .chezmoi.os "darwin" -}}
-# TODO: Update setup darwin $1
-{{- else if eq .chezmoi.os "windows" -}}
-# TODO: Update setup windows $1
-{{- else -}}
-{{   fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
 {{  end -}}
 EOF
 
-    # # Trim trailing whitespace
-    # sed -i 's/[[:space:]]*$//' $aliases_path
+shell_path="$asset_path/$1_shell.sh.tmpl"
+if [ ! -f "$shell_path" ]; then
+    echo "$FILE_VAR" > $shell_path
+    sed -i "s/FOO/$1/" $shell_path
+fi
+
+
+# Crete aliases file and content
+# General purpose templates
+read -r -d '' FILE_VAR << EOF
+{{/* FOO shell alias script block */ -}}
+{{/* {{ template "assets.d/_shell/FOO_aliases.sh.tmpl" . }} */ -}}
+
+{{- if (or (and (eq .chezmoi.os "linux") (.is_ubuntu_wsl))
+  (eq .chezmoi.os "darwin")
+  (eq .chezmoi.os "windows")) }}
+
+# TODO Update FOO aliases
+
+{{- else -}}
+{{    fail (printf "Unsupported OS for the client system: %s" .chezmoi.os) }}
+{{  end -}}
+EOF
+
+aliases_path="$asset_path/$1_aliases.sh.tmpl"
+if [ ! -f "$aliases_path" ]; then
+    echo "$FILE_VAR" > $aliases_path
+    sed -i "s/FOO/$1/" $aliases_path
 fi
