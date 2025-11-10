@@ -40,7 +40,7 @@
 {{- else -}}
 {{- end -}}
 
-{{- if eq .apps.volta.include true }}
+{{- if (and (hasKey .apps "volta") (eq .apps.volta.include true)) }}
 {{ "" }}
 {{   template "assets.d/volta/dot_bashrc.sh.tmpl" . }}
 {{- else -}}

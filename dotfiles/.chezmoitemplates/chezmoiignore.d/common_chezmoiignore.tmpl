@@ -145,7 +145,7 @@ windows*
 {{ end -}}
 
 ### volta
-{{ if eq .apps.volta.include false }}
+{{ if (or (not (hasKey .apps "volta")) (eq .apps.volta.include false)) }}
 {{ end -}}
 
 ### vscode
