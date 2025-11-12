@@ -208,6 +208,17 @@ Set-Alias -Name trash -Value Remove-ToRecycleBin -Description "Remove files or d
 # Visual Studio
 Set-Alias -Name devenv -Value Invoke-VisualStudio -Description "Start Visual Studio"
 
+# Power management
+function Set-HibernateComputer { shutdown /h }
+function Set-LockComputer { rundll32.exe user32.dll,LockWorkStation }
+function Set-HibernateComputer { shutdown /h }
+function Set-ShutdownComputer { shutdown /s }
+
+Set-Alias -Name hibernate -Value Set-HibernateComputer -Description "Hibernate the local computer"
+Set-Alias -Name lock -Value Set-LockComputer -Description "Lock computer session"
+Set-Alias -Name reboot -Value Set-RebootComputer -Description "Full shutdown and restart the computer"
+Set-Alias -Name poweroff -Value Set-ShutdownComputer -Description "Shutdown the computer"
+
 <# Invoke other profiles #>
 if (Test-Path -Path "$env:USERPROFILE\Documents\WindowsPowerShell\WorkProfile.ps1" )
 {
