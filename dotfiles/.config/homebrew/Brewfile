@@ -63,6 +63,7 @@ brew "fastfetch"  # Replace neofetch
 brew "figlet"  # Banner-like program prints strings as ASCII art
 brew "fzf"
 # brew "gopass"  # Slightly more awesome Standard Unix Password Manager for Teams
+brew "ghostscript"
 brew "imagemagick"
 brew "jq"
 brew "kubernetes-cli"
