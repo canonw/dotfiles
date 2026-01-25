@@ -95,7 +95,8 @@ cask "dotnet-sdk10"
 
 # Git
 brew "git"
-brew "git-flow" # Extensions to follow Vincent Driessen's branching model
+# brew "git-flow" # Replaced by git-flow-avh
+brew "git-flow-avh" # Extensions to follow Vincent Driessen's branching model
 brew "git-open"
 brew "tig" # Text-mode interface for Git
 
