@@ -91,6 +91,7 @@ cask "docker-desktop"
 tap "isen-ng/dotnet-sdk-versions"
 cask "dotnet-sdk8"
 cask "dotnet-sdk9"
+cask "dotnet-sdk10"
 
 # Git
 brew "git"
