@@ -90,6 +90,7 @@ function Set-Configuration-WindowsTerminal {
 $DevPacakges = @()
 $DevPacakges += 'Microsoft.DotNet.SDK.8'
 $DevPacakges += 'Microsoft.DotNet.SDK.9'
+$DevPacakges += 'Microsoft.DotNet.SDK.10'
 
 function Install-Winget-Packages {
   $AllPackages = $($DevPacakges;)

@@ -66,6 +66,7 @@
             "xclip",
 
             # need ppa first
+            "dotnet-sdk-10.0",
             "dotnet-sdk-9.0",
             "dotnet-sdk-8.0",
         ]
