@@ -116,6 +116,7 @@ cask "keepingyouawake" # Prevents your Mac from going to sleep
 cask "rectangle"
 cask "shottr"
 # cask "tabby" # Terminal emulator, SSH and serial client
+cask "trilium-notes"
 
 # IDE
 cask "jetbrains-toolbox"

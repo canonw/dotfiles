@@ -26,6 +26,7 @@ $ChocoPackages += 'filezilla'
 $ChocoPackages += 'gpg4win'
 $ChocoPackages += 'joplin'
 $ChocoPackages += 'sharex'
+$ChocoPackages += 'trilium-notes'
 $ChocoPackages += 'wireshark' # Wireshark is the world’s foremost and widely-used network protocol analyzer.
 # $ChocoPackages += 'itunes'
 $ChocoPackages += 'ripgrep' # ripgrep is a line-oriented search tool that recursively searches your current directory for a regex pattern.
@@ -54,10 +55,10 @@ function Install-ChocoApplications {
       } else {
         Write-Host "'Installing' $package"
         choco install $package -y
-      }      
+      }
     }
   }
-  
+
   # https://community.chocolatey.org/packages/powershell-core/7.5.4#files
   choco install powershell-core -y --install-arguments="ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=1 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 USE_MU=1 ENABLE_MU=1 REGISTER_MANIFEST=1 ENABLE_PSREMOTING=1 DISABLE_TELEMETRY=1"
 
@@ -102,7 +103,7 @@ function Install-Winget-Packages {
   }
 }
 
-Install-ChocoApplications 
+Install-ChocoApplications
 
 # Install-Winget-Packages
 # Set-Configuration-WindowsTerminal
